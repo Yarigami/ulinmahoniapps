@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -136,7 +137,6 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-
                   ],
                 )
               else
@@ -236,11 +236,39 @@ class _HomePageState extends State<HomePage> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: const [
-                    HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'Jelambar'),
+                  children: [
+                    HousingCard(
+                        image: 'assets/images/ulinhouse.jpg',
+                        title: 'Jelambar',
+                        onTap: () {
+                            context.push('/comingsoon'); // Bisa disesuaikan juga target route-nya
+                        }
+                        ),
                     SizedBox(width: 16),
-                    HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'Jelambar'),
+                    HousingCard(
+                        image: 'assets/images/ulinhouse.jpg',
+                        title: 'Jelambar',
+                        onTap: () {
+                          context.push('/comingsoon'); // Bisa disesuaikan juga target route-nya
+                        }
+                    ),
                   ],
+                ),
+              ),
+
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    context.push('/browse-all'); // Gunakan .go jika mau ganti seluruh stack
+                  },
+                  child: const Text(
+                    'Browse All',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.black
+                    ),
+                  ),
                 ),
               ),
 
@@ -263,25 +291,37 @@ class _HomePageState extends State<HomePage> {
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        children: const [
+                        children:  [
                           HousingCard(
                             image: 'assets/images/ulinhouse.jpg',
                             title: 'ULIN HOUSE WEST JAKARTA',
+                              onTap: () {
+                                context.push('/comingsoon'); // Bisa disesuaikan juga target route-nya
+                              }
                           ),
                           SizedBox(width: 12),
                           HousingCard(
                             image: 'assets/images/ulinhouse.jpg',
                             title: 'ULIN HOUSE WEST JAKARTA 2',
+                              onTap: () {
+                                context.push('/comingsoon'); // Bisa disesuaikan juga target route-nya
+                              }
                           ),
                           SizedBox(width: 12),
                           HousingCard(
                             image: 'assets/images/ulinhouse.jpg',
                             title: 'ULIN HOUSE WEST JAKARTA 3',
+                              onTap: () {
+                                context.push('/comingsoon'); // Bisa disesuaikan juga target route-nya
+                              }
                           ),
                           SizedBox(width: 12),
                           HousingCard(
                             image: 'assets/images/ulinhouse.jpg',
                             title: 'ULIN HOUSE WEST JAKARTA 4',
+                            onTap: () {
+                              context.push('/comingsoon'); // Bisa disesuaikan juga target route-nya
+                            }
                           ),
                         ],
                       ),
@@ -330,10 +370,26 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
-                  children: const [
-                    Expanded(child: HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'Jakarta Barat')),
-                    SizedBox(width: 16),
-                    Expanded(child: HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'Bogor')),
+                  children: [
+                    Expanded(
+                      child: HousingCard(
+                        image: 'assets/images/ulinhouse.jpg',
+                        title: 'Jakarta Barat',
+                        onTap: () {
+                          context.push('/comingsoon');
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: HousingCard(
+                        image: 'assets/images/ulinhouse.jpg',
+                        title: 'Bogor',
+                        onTap: () {
+                          context.push('/comingsoon'); // Bisa disesuaikan juga target route-nya
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -389,10 +445,22 @@ class _HomePageState extends State<HomePage> {
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        children: const [
-                          HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'ULIN HOUSE WEST JAKARTA'),
+                        children: [
+                          HousingCard(
+                              image: 'assets/images/ulinhouse.jpg',
+                              title: 'ULIN HOUSE WEST JAKARTA',
+                              onTap: () {
+                                context.push('/comingsoon'); // Bisa disesuaikan juga target route-nya
+                              }
+                          ),
                           SizedBox(width: 16),
-                          HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'ULIN HOUSE EAST JAKARTA'),
+                          HousingCard(
+                              image: 'assets/images/ulinhouse.jpg',
+                              title: 'ULIN HOUSE EAST JAKARTA',
+                              onTap: () {
+                                context.push('/comingsoon'); // Bisa disesuaikan juga target route-nya
+                              }
+                          ),
                         ],
                       ),
                     ),
@@ -442,12 +510,17 @@ class _FilterTabState extends State<FilterTab> {
     );
   }
 }
-
 class HousingCard extends StatefulWidget {
   final String image;
   final String title;
+  final VoidCallback? onTap; // <-- tambahkan ini
 
-  const HousingCard({super.key, required this.image, required this.title});
+  const HousingCard({
+    super.key,
+    required this.image,
+    required this.title,
+    this.onTap, // <-- tambahkan ini
+  });
 
   @override
   State<HousingCard> createState() => _HousingCardState();
@@ -456,19 +529,23 @@ class HousingCard extends StatefulWidget {
 class _HousingCardState extends State<HousingCard> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 220,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.asset(widget.image, height: 120, width: 220, fit: BoxFit.cover),
-          ),
-          const SizedBox(height: 8),
-          Text(widget.title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal)),
-        ],
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: SizedBox(
+        width: 220,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(widget.image, height: 120, width: 220, fit: BoxFit.cover),
+            ),
+            const SizedBox(height: 8),
+            Text(widget.title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal)),
+          ],
+        ),
       ),
     );
   }
 }
+
