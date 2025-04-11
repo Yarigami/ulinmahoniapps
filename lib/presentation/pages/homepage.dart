@@ -11,6 +11,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late VideoPlayerController _controller;
   int _selectedBudgetIndex = 0;
+  int _selectedSubCategoryIndex = 0;
+  final TextEditingController _searchController = TextEditingController();
+
+  final maroon = const Color(0xFF800000);
+  final darkGreen = const Color(0xFF184D37);
+
+  final List<String> _budgetOptions = ['< 1 Juta', '1 - 2 Juta', '> 2 Juta'];
+
+  final List<Map<String, dynamic>> _subCategories = [
+    {'label': 'Populer', 'icon': Icons.thumb_up},
+    {'label': 'Bogor', 'icon': Icons.location_city},
+    {'label': 'Jelambar', 'icon': Icons.place},
+    {'label': 'Mewah', 'icon': Icons.diamond},
+    {'label': 'Terdekat', 'icon': Icons.near_me},
+    {'label': 'Strategis', 'icon': Icons.map},
+    {'label': 'Perkotaan', 'icon': Icons.apartment},
+  ];
+
+  final List<Map<String, dynamic>> _filterTabs = [
+    {'label': 'Housing', 'icon': Icons.home},
+    {'label': 'Apartment', 'icon': Icons.apartment},
+    {'label': 'Hotel', 'icon': Icons.hotel},
+    {'label': 'Villa', 'icon': Icons.villa},
+  ];
+  int _selectedFilterTabIndex = 0;
 
   @override
   void initState() {
@@ -28,11 +53,6 @@ class _HomePageState extends State<HomePage> {
     _controller.dispose();
     super.dispose();
   }
-
-  final maroon = const Color(0xFF800000);
-  final darkGreen = const Color(0xFF184D37);
-
-  final List<String> _budgetOptions = ['< 1 Juta', '1 - 2 Juta', '> 2 Juta'];
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                         bottomRight: Radius.circular(30),
                       ),
                       child: SizedBox(
-                        height: 600, // Tinggi video ditambah agar layout mirip desain
+                        height: 500,
                         width: double.infinity,
                         child: FittedBox(
                           fit: BoxFit.cover,
@@ -73,33 +93,50 @@ class _HomePageState extends State<HomePage> {
                         elevation: 4,
                         borderRadius: BorderRadius.circular(12),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                          height: 60,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Row(
                             children: [
-                              const Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text("Cari hunianmu", style: TextStyle(fontWeight: FontWeight.bold)),
-                                    SizedBox(height: 4),
-                                    Text("Tanggal - Lokasi", style: TextStyle(color: Colors.grey)),
-                                  ],
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _searchController,
+                                  cursorColor: Colors.grey,
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black45,
+                                  ),
+                                  decoration: const InputDecoration(
+                                    hintText: 'Cari hunianmu',
+                                    hintStyle: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black45,
+                                    ),
+                                    border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                  ),
                                 ),
                               ),
                               IconButton(
-                                icon: const Icon(Icons.search),
-                                onPressed: () {},
+                                icon: const Icon(Icons.search, size: 28, color: Colors.black),
+                                onPressed: () {
+                                  debugPrint("Mencari: ${_searchController.text}");
+                                },
                               ),
                             ],
                           ),
                         ),
                       ),
-                    )
+                    ),
+
                   ],
                 )
               else
@@ -108,138 +145,41 @@ class _HomePageState extends State<HomePage> {
                   child: Center(child: CircularProgressIndicator()),
                 ),
 
+
               const SizedBox(height: 12),
 
               SizedBox(
-                height: 40,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: const [
-                    FilterTab(label: 'Housing', icon: Icons.home, active: true),
-                    FilterTab(label: 'Apartment', icon: Icons.apartment),
-                    FilterTab(label: 'Hotel', icon: Icons.hotel),
-                    FilterTab(label: 'Villa', icon: Icons.villa),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 14),
-
-              SizedBox(
-                height: 40,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: const [
-                    SubCategoryTab(label: 'Populer'),
-                    SubCategoryTab(label: 'Bogor'),
-                    SubCategoryTab(label: 'Jelambar'),
-                    SubCategoryTab(label: 'Mewah'),
-                    SubCategoryTab(label: 'Terdekat'),
-                    SubCategoryTab(label: 'Strategis'),
-                    SubCategoryTab(label: 'Perkotaan'),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 14),
-
-              SizedBox(
-                height: 180,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: const [
-                    HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'Jelambar'),
-                    SizedBox(width: 16),
-                    HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'Jelambar'),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 28),
-
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text("Best Seller", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
-              const SizedBox(height: 12),
-              SizedBox(
-                height: 150,
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: const [
-                    HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'ULIN HOUSE WEST JAKARTA'),
-                  ],
-                ),
-              ),
-
-
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text("Promotion", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset('assets/images/ulinhouse.jpg', fit: BoxFit.cover),
-                ),
-              ),
-
-              const SizedBox(height: 28),
-
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text("Area Terpopuler", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: const [
-                    Expanded(child: HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'JAKARTA BARAT')),
-                    SizedBox(width: 16),
-                    Expanded(child: HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'BOGOR')),
-                  ],
-                ),
-              ),
-
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text("Sesuaikan Budgetmu", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
-              const SizedBox(height: 12),
-
-              SizedBox(
-                height: 40,
+                height: 50,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: _budgetOptions.length,
+                  itemCount: _filterTabs.length,
                   itemBuilder: (context, index) {
-                    final isSelected = _selectedBudgetIndex == index;
+                    final tab = _filterTabs[index];
+                    final isActive = _selectedFilterTabIndex == index;
                     return GestureDetector(
                       onTap: () {
-                        setState(() => _selectedBudgetIndex = index);
+                        setState(() {
+                          _selectedFilterTabIndex = index;
+                        });
                       },
                       child: Container(
                         margin: const EdgeInsets.only(right: 12),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                         decoration: BoxDecoration(
-                          color: isSelected ? darkGreen : Colors.grey[200],
+                          color: isActive ? darkGreen : Colors.grey[200],
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Center(
-                          child: Text(
-                            _budgetOptions[index],
-                            style: TextStyle(
-                              color: isSelected ? Colors.white : Colors.black,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                        child: Row(
+                          children: [
+                            Icon(tab['icon'], size: 16, color: isActive ? Colors.white : Colors.black),
+                            const SizedBox(width: 6),
+                            Text(tab['label'],
+                                style: TextStyle(
+                                  color: isActive ? Colors.white : Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                          ],
                         ),
                       ),
                     );
@@ -247,17 +187,215 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 14),
 
               SizedBox(
-                height: 180,
+                height: 70,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  children: List.generate(_subCategories.length, (index) {
+                    final isSelected = _selectedSubCategoryIndex == index;
+                    final color = isSelected ? darkGreen : maroon;
+                    final icon = _subCategories[index]['icon'] as IconData;
+                    final label = _subCategories[index]['label'] as String;
+
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedSubCategoryIndex = index;
+                        });
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(icon, size: 20, color: color),
+                            const SizedBox(height: 4),
+                            Text(label, style: TextStyle(fontSize: 12, color: color)),
+                            const SizedBox(height: 4),
+                            if (isSelected)
+                              Container(
+                                height: 2,
+                                width: 20,
+                                color: color,
+                              ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              SizedBox(
+                height: 160,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   children: const [
-                    HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'ULIN HOUSE WEST JAKARTA'),
+                    HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'Jelambar'),
                     SizedBox(width: 16),
-                    HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'ULIN HOUSE EAST JAKARTA'),
+                    HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'Jelambar'),
+                  ],
+                ),
+              ),
+
+              SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 26),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        "BEST SELLLER",
+                        style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      height: 200, // atur tinggi sesuai desain
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        children: const [
+                          HousingCard(
+                            image: 'assets/images/ulinhouse.jpg',
+                            title: 'ULIN HOUSE WEST JAKARTA',
+                          ),
+                          SizedBox(width: 12),
+                          HousingCard(
+                            image: 'assets/images/ulinhouse.jpg',
+                            title: 'ULIN HOUSE WEST JAKARTA 2',
+                          ),
+                          SizedBox(width: 12),
+                          HousingCard(
+                            image: 'assets/images/ulinhouse.jpg',
+                            title: 'ULIN HOUSE WEST JAKARTA 3',
+                          ),
+                          SizedBox(width: 12),
+                          HousingCard(
+                            image: 'assets/images/ulinhouse.jpg',
+                            title: 'ULIN HOUSE WEST JAKARTA 4',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 26),
+
+              SizedBox(
+                height: 200,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                      child: Text("PROMOTION", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: SizedBox(
+                          height: 140, // tambahkan tinggi eksplisit
+                          width: double.infinity,
+                          child: Image.asset(
+                            'assets/images/ulinhouse.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 26),
+
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text("AREA TERPOPULER", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
+              ),
+              const SizedBox(height: 14),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: const [
+                    Expanded(child: HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'Jakarta Barat')),
+                    SizedBox(width: 16),
+                    Expanded(child: HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'Bogor')),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 26),
+
+              SizedBox(
+                height: 290,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Text("SESUAIKAN BUDGETMU", style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
+                    ),
+                    const SizedBox(height: 14),
+                    SizedBox(
+                      height: 40,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        itemCount: _budgetOptions.length,
+                        itemBuilder: (context, index) {
+                          final isSelected = _selectedBudgetIndex == index;
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() => _selectedBudgetIndex = index);
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 12),
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              decoration: BoxDecoration(
+                                color: isSelected ? darkGreen : Colors.grey[200],
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  _budgetOptions[index],
+                                  style: TextStyle(
+                                    color: isSelected ? Colors.white : Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      height: 180,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        children: const [
+                          HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'ULIN HOUSE WEST JAKARTA'),
+                          SizedBox(width: 16),
+                          HousingCard(image: 'assets/images/ulinhouse.jpg', title: 'ULIN HOUSE EAST JAKARTA'),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -305,31 +443,6 @@ class _FilterTabState extends State<FilterTab> {
   }
 }
 
-class SubCategoryTab extends StatefulWidget {
-  final String label;
-
-  const SubCategoryTab({super.key, required this.label});
-
-  @override
-  State<SubCategoryTab> createState() => _SubCategoryTabState();
-}
-
-class _SubCategoryTabState extends State<SubCategoryTab> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey[300]!),
-      ),
-      child: Text(widget.label, style: const TextStyle(fontWeight: FontWeight.w500)),
-    );
-  }
-}
-
 class HousingCard extends StatefulWidget {
   final String image;
   final String title;
@@ -353,7 +466,7 @@ class _HousingCardState extends State<HousingCard> {
             child: Image.asset(widget.image, height: 120, width: 220, fit: BoxFit.cover),
           ),
           const SizedBox(height: 8),
-          Text(widget.title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Text(widget.title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal)),
         ],
       ),
     );
