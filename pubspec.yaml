@@ -53,6 +53,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/placeholder.png
+    - assets/images/house.jpg
   #    - assets/videos/intro.mp4
   #    - assets/images/ulinhouse.jpg
 
