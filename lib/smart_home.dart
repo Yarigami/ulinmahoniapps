@@ -16,13 +16,13 @@ class _SmartHomeState extends State<SmartHome> {
       MaterialPageRoute(builder: (context) => const SmartController()),
     );
   }
-  bool ispressed = true;
-  color pressed = Colors.
-  void pressed(){
-    setState(() {
-      ispressed = !ispressed;
-    });
-  }
+  // bool ispressed = true;
+  // color pressed = Colors.
+  // void pressed(){
+  //   setState(() {
+  //     ispressed = !ispressed;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
