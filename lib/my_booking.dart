@@ -33,16 +33,16 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
         bottom: PreferredSize(// USE TO SEPERATE THE TEXTBUTTON
           preferredSize: Size.fromHeight(48),//SIZE STARTING FROM THE END OF THE TEXTBUTTON HEIGHT
           child: Container(
-            color: Colors.green,
+            color: Colors.white,
             child: TabBar(
               controller: _tabController,
               indicator: BoxDecoration(
-                color: Colors.red,
+                color: Colors.green[500],
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
               ),
               // indicatorColor: Colors.black,
               labelColor: Colors.white,
-              unselectedLabelColor: Colors.green[300],
+              unselectedLabelColor: Colors.black,
               tabs: const [
                 Tab(child: SizedBox(width: 300, child: Center(child: Text("Pending")))),
                 Tab(child: SizedBox(width: 300, child: Center(child: Text("Completed"),),),),
