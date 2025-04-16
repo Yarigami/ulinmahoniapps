@@ -52,7 +52,7 @@ class _PromotionSectionState extends State<PromotionSection> {
                 title: _promotionData[index]['title']!,
                 onTap: () {
                   // Ganti dengan navigasi yang sesuai
-                  context.go('/comingsoon');
+                  context.push('/comingsoon');
                 },
               );
             },

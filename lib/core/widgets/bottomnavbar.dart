@@ -24,9 +24,6 @@ class BottomNavBar extends StatelessWidget {
       case 3:
         context.push('/comingsoon');
         break;
-      case 4:
-        context.push('/comingsoon');
-        break;
     }
   }
 
@@ -38,8 +35,7 @@ class BottomNavBar extends StatelessWidget {
     final List<Map<String, dynamic>> items = [
       {'icon': Icons.home, 'label': 'Home'},
       {'icon': Icons.calendar_today, 'label': 'My Booking'},
-      {'icon': FontAwesomeIcons.houseSignal, 'label': 'Smart Home'},
-      {'icon': Icons.sensor_door, 'label': 'UMI'},
+      {'icon': Icons.phone, 'label': 'UM'}, // UMI diganti dengan logo telepon
       {'icon': Icons.person, 'label': 'Profile'},
     ];
 

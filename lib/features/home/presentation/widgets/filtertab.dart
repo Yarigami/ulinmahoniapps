@@ -20,7 +20,7 @@ class FilterTabBar extends StatelessWidget {
     return SizedBox(
       height: 40,
       child: Container(
-        color: Colors.grey[200],
+        color: Colors.white,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -35,7 +35,7 @@ class FilterTabBar extends StatelessWidget {
                 margin: const EdgeInsets.only(right: 10),
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
-                  color: isActive ? Colors.white : Colors.grey[200],
+                  color: isActive ? Color(0xFFF5F2EA) : Colors.white,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),

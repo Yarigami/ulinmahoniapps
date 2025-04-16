@@ -12,7 +12,7 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
   State<Navbar> createState() => _NavbarState();
 
   @override
-  Size get preferredSize => const Size.fromHeight(60.0);
+  Size get preferredSize => const Size.fromHeight(80.0); // AppBar tinggi 80
 }
 
 class _NavbarState extends State<Navbar> {
@@ -32,20 +32,20 @@ class _NavbarState extends State<Navbar> {
       children: [
         AppBar(
           backgroundColor: Colors.white,
-          elevation: 0,
-          shadowColor: Colors.transparent,
           leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(
-              'assets/images/ulinmahonilogo.png',
-              height: 100,
-              width: 100,
-              fit: BoxFit.contain,
+            padding: EdgeInsets.symmetric(horizontal: 3),
+            child: SizedBox(
+              height: 55, // 2/3 dari 80
+              width: 55,
+              child: Image.asset(
+                'assets/images/ulinmahonilogo.png',
+                fit: BoxFit.contain,
+              ),
             ),
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: DropdownButtonHideUnderline(
                 child: StatefulBuilder(
                   builder: (context, setInnerState) {
@@ -67,18 +67,18 @@ class _NavbarState extends State<Navbar> {
                       items: const [
                         DropdownMenuItem(
                           value: 'ID',
-                          child: Text('Bahasa Indonesia'),
+                          child: Text('ID'),
                         ),
                         DropdownMenuItem(
                           value: 'EN',
-                          child: Text('English'),
+                          child: Text('EN'),
                         ),
                       ],
                       icon: Icon(
                         isDropdownOpen
-                            ? Icons.arrow_drop_up   // ▲ saat terbuka
-                            : Icons.arrow_drop_down, // ▼ saat tertutup
-                        color: Color(0xFF006400), // Hijau tua
+                            ? Icons.arrow_drop_up
+                            : Icons.arrow_drop_down,
+                        color: Color(0xFF006400),
                       ),
                       dropdownColor: Colors.white,
                     );

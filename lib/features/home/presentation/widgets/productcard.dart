@@ -40,7 +40,7 @@ class _ProductCardState extends State<ProductCard> {
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(5),
                   child: Image.asset(
                     widget.image,
                     height: 170,
@@ -86,15 +86,15 @@ class _ProductCardState extends State<ProductCard> {
             Text(
               widget.title,
               style:
-              const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 4),
             Text(
               widget.detail,
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 14,
                   fontStyle: FontStyle.italic,
-                  color: Colors.grey),
+                  color: Colors.black),
             ),
             const SizedBox(height: 6),
             if (widget.badgeText != null && widget.badgeText!.isNotEmpty)
@@ -106,14 +106,14 @@ class _ProductCardState extends State<ProductCard> {
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(
                     color: Colors.green.shade600, // Warna border hijau
-                    width: 2, // Lebar border, bisa disesuaikan
+                    width: 1, // Lebar border, bisa disesuaikan
                   ),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.check_circle,
-                        size: 14, color: Colors.black),
+                    Icon(Icons.check_circle,
+                        size: 14, color: Colors.green[800]),
                     const SizedBox(width: 4),
                     Text(
                       widget.badgeText!,

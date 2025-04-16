@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/services.dart'; // Menambahkan import untuk mengatur orientasi layar
 import '../../../../core/layout/mainlayout.dart'; // ganti sesuai path project kamu
 
 class ComingSoonPage extends StatelessWidget {
@@ -7,11 +8,13 @@ class ComingSoonPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Mengunci orientasi layar ke portrait
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
     const maroon = Color(0xFF800000);
     const darkGreen = Color(0xFF184D37);
 
     final screenSize = MediaQuery.of(context).size;
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
 
     return MainLayout(
       currentIndex: 0,
@@ -36,19 +39,18 @@ class ComingSoonPage extends StatelessWidget {
                           child: const Icon(Icons.arrow_back),
                         ),
                       ),
-                      const SizedBox(height: 32),
                       Center(
                         child: Image.asset(
                           'assets/images/ulinmahonilogo.png',
-                          width: isLandscape ? screenSize.height * 0.6 : screenSize.width * 0.7,
-                          height: isLandscape ? screenSize.height * 0.6 : screenSize.width * 0.7,
+                          width: screenSize.width * 0.7,
+                          height: screenSize.width * 0.7,
                         ),
                       ),
-                      const SizedBox(height: 32),
+
                       Text(
                         'COMING',
                         style: TextStyle(
-                          fontSize: isLandscape ? 28 : 36,
+                          fontSize: 45,
                           fontWeight: FontWeight.bold,
                           color: maroon,
                         ),
@@ -56,12 +58,12 @@ class ComingSoonPage extends StatelessWidget {
                       Text(
                         'SOON',
                         style: TextStyle(
-                          fontSize: isLandscape ? 28 : 36,
+                          fontSize: 45,
                           fontWeight: FontWeight.bold,
                           color: darkGreen,
                         ),
                       ),
-                      const SizedBox(height: 24),
+
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Text(
@@ -73,7 +75,6 @@ class ComingSoonPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 32),
                     ],
                   ),
                 ),

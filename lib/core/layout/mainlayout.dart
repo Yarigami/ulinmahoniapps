@@ -19,7 +19,8 @@ class MainLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFF5F2EA),
+      appBar: showNavBar ? const Navbar(initialLanguage: 'ID') : null,
       body: child,
       bottomNavigationBar:
       showBottomNav ? BottomNavBar(currentIndex: currentIndex) : null,
