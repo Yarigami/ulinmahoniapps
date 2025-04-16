@@ -1,4 +1,3 @@
-// import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
@@ -10,6 +9,34 @@ class SmartController extends StatefulWidget {
 }
 
 class _SmartControllerState extends State<SmartController> {
+  bool tempPressed = false;
+  bool lightPressed = false;
+  bool lockPressed = false;
+  Color tempColor = Colors.grey.shade200;
+  Color lightColor = Colors.grey.shade200;
+  Color lockColor = Colors.grey.shade200;
+
+  void _tempPressed(){
+    setState(() {
+      tempPressed = !tempPressed;
+      tempColor = tempPressed ? Colors.green.shade400 : Colors.grey.shade200;
+    });
+  }
+
+  void _lightPressed(){
+    setState(() {
+      lightPressed = !lightPressed;
+      lightColor = lightPressed ? Colors.green.shade400 : Colors.grey.shade200;
+    });
+  }
+
+  void _lockPressed(){
+    setState(() {
+      lockPressed = !lockPressed;
+      lockColor = lockPressed ? Colors.green.shade400 : Colors.grey.shade200;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,20 +55,29 @@ class _SmartControllerState extends State<SmartController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               // padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
-              ElevatedButton(onPressed: (){},
-                  style: ElevatedButton.styleFrom(fixedSize: ui.Size(150,150)),
+              ElevatedButton(onPressed: _tempPressed,
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: ui.Size(150,150),
+                    backgroundColor: tempColor,
+                  ),
                   child: Icon(Icons.device_thermostat, size: 60,)),
               SizedBox(width: 50),
-              ElevatedButton(onPressed: (){},
-                  style: ElevatedButton.styleFrom(fixedSize: ui.Size(150,150)),
+              ElevatedButton(onPressed: _lightPressed,
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: ui.Size(150,150),
+                    backgroundColor: lightColor,
+                  ),
                   child: Icon(Icons.light_mode_outlined, size: 60))
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ElevatedButton(onPressed: (){},
-                  style: ElevatedButton.styleFrom(fixedSize: ui.Size(150,150)),
+              ElevatedButton(onPressed: _lockPressed,
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: ui.Size(150,150),
+                    backgroundColor: lockColor,
+                  ),
                   child: Icon(Icons.lock, size: 60))
             ],
           ),

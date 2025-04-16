@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ulinmahoniapps/smart_controller.dart';
-// import 'assets/images/placeholder.png';
 
 class SmartHome extends StatefulWidget {
   const SmartHome({super.key});
@@ -16,13 +15,6 @@ class _SmartHomeState extends State<SmartHome> {
       MaterialPageRoute(builder: (context) => const SmartController()),
     );
   }
-  // bool ispressed = true;
-  // color pressed = Colors.
-  // void pressed(){
-  //   setState(() {
-  //     ispressed = !ispressed;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
