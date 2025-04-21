@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'booking_detail.dart';
 
 class MyBooking extends StatefulWidget {
   const MyBooking({super.key});
@@ -20,6 +21,10 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  void detailPage(){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const BookingDetail()));
   }
 
   @override
@@ -135,9 +140,17 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
           children: [
             SizedBox(height: 4),
             Text(type),
-            SizedBox(height: 6),
-            Text(checkIn),
-            Text(checkOut),
+            // SizedBox(height: 6),
+            // Text(checkIn),
+            // Text(checkOut),
+            SizedBox(height: 8),
+            TextButton(onPressed: detailPage,
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green.shade400),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                    child: Text("Booking Detail"),
+            ),
           ],
         ),
       ),

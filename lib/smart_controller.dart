@@ -51,8 +51,17 @@ class _SmartControllerState extends State<SmartController> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          // const Padding(
+          //   padding: EdgeInsets.only(top: 10),
+          //   // mainAxisAlignment: MainAxisAlignment.start,
+          //   // crossAxisAlignment: CrossAxisAlignment.start,
+          //   child: Center(
+          //     child: Text("test"),
+          //   ),
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               // padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
               ElevatedButton(onPressed: _tempPressed,
@@ -72,6 +81,7 @@ class _SmartControllerState extends State<SmartController> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ElevatedButton(onPressed: _lockPressed,
                   style: ElevatedButton.styleFrom(

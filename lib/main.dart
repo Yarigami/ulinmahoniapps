@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'my_booking.dart';
 import 'smart_controller.dart';
 import 'smart_home.dart';
+import 'my_profile.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Sticky Navbar App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
       home: MainHomePage(),
     );
@@ -26,9 +28,9 @@ class _MainHomePageState extends State<MainHomePage> {
   final List<Widget> _pages = [
     Center(child: Text("Home", style: TextStyle(fontSize: 24))),
     MyBooking(),
-    SmartHome(),
+    // SmartHome(),
     Center(child: Text("UMI", style: TextStyle(fontSize: 24))),
-    Center(child: Text("My Profile", style: TextStyle(fontSize: 24))),
+    MyProfile(),
   ];
 
   @override
@@ -48,8 +50,8 @@ class _MainHomePageState extends State<MainHomePage> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "My Booking"),
-          BottomNavigationBarItem(icon: Icon(Icons.home_work), label: "Smart Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.location_city), label: "UMI"),
+          // BottomNavigationBarItem(icon: Icon(Icons.home_work), label: "Smart Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.call), label: "UMI"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "My Profile"),
         ],
       ),
