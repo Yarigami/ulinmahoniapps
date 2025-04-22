@@ -1,10 +1,11 @@
 import 'package:go_router/go_router.dart';
+import 'package:ulinmahoniapps/features/booking/presentation/DetailHousePage.dart';
+import 'package:ulinmahoniapps/features/housing/presentation/pages/housingpage.dart';
+import 'package:ulinmahoniapps/features/UM/presentation/pages/UMpage.dart';
 import 'package:ulinmahoniapps/features/comingsoon/presentation/pages/comingsoon.dart';
 import 'package:ulinmahoniapps/features/splashscreen/presentation/pages/splashscreen.dart';
 import 'package:ulinmahoniapps/features/home/presentation/pages/homepage.dart';
-import 'package:ulinmahoniapps/features/mybooking/presentation/pages/bookingpage.dart';
-import 'package:ulinmahoniapps/features/smarthome/presentation/pages/smarthome.dart';
-import 'package:ulinmahoniapps/features/umi/presentation/pages/umi.dart';
+import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybookingpage.dart';
 import 'package:ulinmahoniapps/features/profiles/presentation/pages/profilepage.dart';
 import 'package:ulinmahoniapps/features/propertytype/presentation/pages/propertytypepage.dart';
 import 'package:ulinmahoniapps/core/layout/mainlayout.dart';
@@ -29,15 +30,11 @@ final GoRouter appRouter = GoRouter(
         ),
         GoRoute(
           path: '/booking',
-          builder: (context, state) => const BookingPage(),
+          builder: (context, state) => MyBookingPage(),
         ),
         GoRoute(
-          path: '/smart-home',
-          builder: (context, state) => const SmartHomePage(),
-        ),
-        GoRoute(
-          path: '/umi',
-          builder: (context, state) => const UmiPage(),
+          path: '/um',
+          builder: (context, state) => const UMpage(),
         ),
         GoRoute(
           path: '/profile',
@@ -51,6 +48,14 @@ final GoRouter appRouter = GoRouter(
           path: '/comingsoon',
           builder: (context, state) => const ComingSoonPage(),
         ),
+        GoRoute(
+          path: '/housing',
+          builder: (context, state) => const HousingPage(),
+        ),
+        GoRoute(
+          path: '/detailhouse',
+          builder: (context, state) => const DetailHousePage(),
+        ),
       ],
     ),
   ],
@@ -62,12 +67,10 @@ int _getCurrentIndex(String path) {
       return 0;
     case '/booking':
       return 1;
-    case '/smart-home':
-      return 2;
-    case '/umi':
-      return 3;
     case '/profile':
-      return 4;
+      return 2;
+    case '/um':
+      return 3;
     default:
       return 0;
   }

@@ -15,7 +15,7 @@ class BottomNavBar extends StatelessWidget {
         context.push('/home');
         break;
       case 1:
-        context.push('/comingsoon');
+        context.push('/booking');
         break;
       case 2:
         context.push('/comingsoon');
@@ -35,7 +35,7 @@ class BottomNavBar extends StatelessWidget {
       {'icon': Icons.home, 'label': 'Home'},
       {'icon': Icons.calendar_today, 'label': 'My Booking'},
       {'icon': Icons.phone, 'label': 'UM'}, // UMI diganti dengan logo telepon
-      {'icon': Icons.person, 'label': 'Profile'},
+      {'icon': Icons.person, 'label': 'Login'},
     ];
 
     return Container(

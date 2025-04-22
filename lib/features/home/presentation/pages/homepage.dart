@@ -3,11 +3,12 @@ import 'package:ulinmahoniapps/features/home/presentation/widgets/populararea.da
 import 'package:ulinmahoniapps/features/home/presentation/widgets/promotion.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/VideoSearchBanner.dart';
-import '../widgets/productcard.dart';
+import '../../../../core/widgets/productcard.dart';
 import '../widgets/filtertab.dart';
 import '../widgets/filtertype.dart';
 import '../widgets/bestseller.dart';
 import '../widgets/budget.dart';
+import '../widgets/browseallbutton.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -96,33 +97,37 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              Center(
-                child: TextButton(
-                  onPressed: () {
-                    context.push('/browse-all');
-                  },
-                  child: const Text(
-                    'Browse All',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.black
-                    ),
-                  ),
-                ),
+              BrowseAllButton(),
+
+              SizedBox(
+                height: 20,
               ),
 
-              BestSellerSection(),
+              Container(
+                height: 5,
+                color: Color(0xFFECE8E1), // Ganti dengan warna yang diinginkan
+              ),
 
-              const SizedBox(height: 20),
+              BestSellerSection(backgroundColor: Color(0xFFE8E3D9),),
+
+              Container(
+                height: 5,
+                color: Color(0xFFECE8E1), // Ganti dengan warna yang diinginkan
+              ),
 
               PromotionSection(),
 
-              const SizedBox(height: 20),
+              Container(
+                height: 5,
+                color: Color(0xFFECE8E1), // Ganti dengan warna yang diinginkan
+              ),
 
-              AreaPopularSection(),
+              AreaPopularSection(backgroundColor: Color(0xFFECE7DE),),
 
-              const SizedBox(height: 20),
+              Container(
+                height: 5,
+                color: Color(0xFFECE8E1), // Ganti dengan warna yang diinginkan
+              ),
 
               BudgetSection()
             ],

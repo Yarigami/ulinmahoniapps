@@ -2,7 +2,7 @@ final List<Map<String, String>> categories = [
   {
     'title': 'House & Room',
     'image': 'assets/images/ulinhouse.jpg',
-    'route': '/comingsoon',
+    'route': '/housing',
   },
   {
     'title': 'Apartment',

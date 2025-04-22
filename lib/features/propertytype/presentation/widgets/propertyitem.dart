@@ -24,7 +24,7 @@ class PropertyItem extends StatelessWidget {
               title,
               style: const TextStyle(
                 fontSize: 21,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w400,
               ),
             ),
             const SizedBox(height: 10),

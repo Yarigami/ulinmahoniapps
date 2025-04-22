@@ -6,20 +6,22 @@ class MainLayout extends StatelessWidget {
   final int currentIndex;
   final Widget child;
   final bool showBottomNav;
-  final bool showNavBar; // <- Tambahan variabel ini
+  final bool showNavBar;
+  final Color backgroundColor; // <- Tambahkan properti ini
 
   const MainLayout({
-    super.key,
+    Key? key,
     required this.currentIndex,
     required this.child,
     this.showBottomNav = true,
-    this.showNavBar = true, // <- Default true
-  });
+    this.showNavBar = true,
+    this.backgroundColor = const Color(0xFFF5F2EA), // <- Nilai default
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F2EA),
+      backgroundColor: backgroundColor, // <- Gunakan properti backgroundColor
       appBar: showNavBar ? const Navbar(initialLanguage: 'ID') : null,
       body: child,
       bottomNavigationBar:
