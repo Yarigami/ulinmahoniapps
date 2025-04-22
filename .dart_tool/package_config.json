@@ -92,6 +92,18 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "intl_phone_field",
+      "rootUri": "file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/intl_phone_field-3.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "leak_tracker",
       "rootUri": "file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/leak_tracker-10.0.8",
       "packageUri": "lib/",
@@ -248,7 +260,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-04-15T12:45:41.055326Z",
+  "generated": "2025-04-22T08:31:23.034434Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///C:/Users/yarig/OneDrive/Documents/flutter/flutter",

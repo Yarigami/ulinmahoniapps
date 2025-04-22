@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'profile_page.dart';
+import 'help_page.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
@@ -9,6 +11,18 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   bool idvalue = false;
+  
+  void _profilePage(){
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ProfilePage()));
+  }
+
+  void _helpPage(){
+    Navigator.push(
+        context, 
+        MaterialPageRoute(builder: (context) => const HelpPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,47 +35,53 @@ class _MyProfileState extends State<MyProfile> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                height: 100,
-                color: Colors.green,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 12.0),
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: AssetImage("assets/images/placeholder.png"),
-                            radius: 36,
-                          ),
-                          SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 8),
-                                Text("User", style: TextStyle(fontWeight: FontWeight.bold),),
-                                SizedBox(height: 12),
-                                Text("User@gmail.com",),
-                              ],
+              InkWell(
+                onTap: _profilePage,
+                child: Container(
+                  width: double.infinity,
+                  height: 100,
+                  color: Colors.green,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 12.0),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundImage: AssetImage("assets/images/placeholder.png"),
+                              radius: 36,
                             ),
-                          ),
-                          IconButton(
-                            onPressed: (){},
-                            icon: Icon(
-                              Icons.create,
-                              size: 25,
-                              color: Colors.white,
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 8),
+                                  Text("User", style: TextStyle(fontWeight: FontWeight.bold),),
+                                  SizedBox(height: 12),
+                                  Text("User@gmail.com",),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                            // Center(
+                            //   child:
+                              IconButton(
+                                onPressed: (){},
+                                icon: Icon(
+                                  Icons.create,
+                                  size: 25,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            // ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 16,),
@@ -300,7 +320,7 @@ class _MyProfileState extends State<MyProfile> {
               Material(
                 color: Colors.grey[300],
                 child: InkWell(
-                  onTap: (){},
+                  onTap: _helpPage,
                   child: Container(
                     width: double.infinity,
                     height: 80,
