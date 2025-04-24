@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ulinmahoniapps/features/home/presentation/widgets/populararea.dart';
 import 'package:ulinmahoniapps/features/home/presentation/widgets/promotion.dart';
 import 'package:go_router/go_router.dart';
-import '../widgets/VideoSearchBanner.dart';
+import '../widgets/videosearchbanner.dart';
 import '../../../../core/widgets/productcard.dart';
-import '../widgets/filtertab.dart';
 import '../widgets/filtertype.dart';
+import '../widgets/filter.dart';
 import '../widgets/bestseller.dart';
 import '../widgets/budget.dart';
 import '../widgets/browseallbutton.dart';
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              FilterTabBar(
+              Filtertype(
                 selectedIndex: _selectedFilterTabIndex,
                 onTabSelected: (index) {
                   setState(() {
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
 
               const SizedBox(height: 14),
 
-              FilterTypeBar(
+              Filter(
                 selectedIndex: _selectedSubCategoryIndex,
                 onTypeSelected: (index) {
                   setState(() {

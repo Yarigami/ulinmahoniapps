@@ -1,55 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:ulinmahoniapps/features/home/data/filtertype_data.dart';
 
-class FilterTypeBar extends StatelessWidget {
+class Filtertype extends StatefulWidget {
   final int selectedIndex;
-  final ValueChanged<int> onTypeSelected;
-  final Color selectedColor;
-  final Color unselectedColor;
+  final ValueChanged<int> onTabSelected;
+  final Color activeColor;
+  final Color inactiveColor;
 
-  const FilterTypeBar({
-    super.key,
+  const Filtertype({
+    Key? key,
     required this.selectedIndex,
-    required this.onTypeSelected,
-    this.selectedColor = const Color(0xFF004D40), // darkGreen
-    this.unselectedColor = const Color(0xFF800000), // maroon
-  });
+    required this.onTabSelected,
+    this.activeColor = const Color(0xFF004D40), // default darkGreen
+    this.inactiveColor = Colors.black,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 70,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        children: List.generate(subCategories.length, (index) {
-          final isSelected = selectedIndex == index;
-          final color = isSelected ? selectedColor : unselectedColor;
-          final icon = subCategories[index]['icon'] as IconData;
-          final label = subCategories[index]['label'] as String;
+  State<Filtertype> createState() => _FiltertypeState();
+}
 
-          return GestureDetector(
-            onTap: () => onTypeSelected(index),
-            child: Container(
-              margin: const EdgeInsets.only(right: 16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(icon, size: 20, color: color),
-                  const SizedBox(height: 4),
-                  Text(label, style: TextStyle(fontSize: 12, color: color)),
-                  const SizedBox(height: 4),
-                  if (isSelected)
-                    Container(
-                      height: 2,
-                      width: 20,
-                      color: color,
+class _FiltertypeState extends State<Filtertype> {
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final containerWidth = screenWidth * (7 / 8);
+
+    return SizedBox(
+      height: 40,
+      width: double.infinity,
+      child: Container(
+        width: containerWidth,
+        color: Colors.white,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: filtertypedata.length,
+          itemBuilder: (context, index) {
+            final tab = filtertypedata[index];
+            final isActive = widget.selectedIndex == index;
+
+            return GestureDetector(
+              onTap: () => widget.onTabSelected(index),
+              child: Container(
+                margin: const EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                decoration: BoxDecoration(
+                  color: isActive ? Color(0xFFF5F2EA) : Colors.white,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      tab['icon'],
+                      size: 16,
+                      color: isActive ? widget.activeColor : widget.inactiveColor,
                     ),
-                ],
+                    const SizedBox(width: 6),
+                    Text(
+                      tab['label'],
+                      style: TextStyle(
+                        color: isActive ? widget.activeColor : widget.inactiveColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ),
     );
   }

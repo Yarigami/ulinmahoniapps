@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:ulinmahoniapps/features/booking/presentation/DetailHousePage.dart';
+import 'package:ulinmahoniapps/features/book/presentation/bookhousepage.dart';
+import 'package:ulinmahoniapps/features/detailhouse/presentation/pages/detailhousepage.dart';
 import 'package:ulinmahoniapps/features/housing/presentation/pages/housingpage.dart';
 import 'package:ulinmahoniapps/features/UM/presentation/pages/UMpage.dart';
 import 'package:ulinmahoniapps/features/comingsoon/presentation/pages/comingsoon.dart';
@@ -17,6 +18,7 @@ final GoRouter appRouter = GoRouter(
       path: '/splash',
       builder: (context, state) => const SplashScreen(),
     ),
+    // ShellRoute untuk halaman-halaman yang menggunakan MainLayout
     ShellRoute(
       builder: (context, state, child) {
         final path = state.uri.toString();
@@ -29,7 +31,7 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
-          path: '/booking',
+          path: '/mybooking',
           builder: (context, state) => MyBookingPage(),
         ),
         GoRoute(
@@ -41,22 +43,26 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) => const ProfilePage(),
         ),
         GoRoute(
-          path: '/browse-all',
-          builder: (context, state) => const PropertyTypePage(),
-        ),
-        GoRoute(
           path: '/comingsoon',
           builder: (context, state) => const ComingSoonPage(),
         ),
-        GoRoute(
-          path: '/housing',
-          builder: (context, state) => const HousingPage(),
-        ),
-        GoRoute(
-          path: '/detailhouse',
-          builder: (context, state) => const DetailHousePage(),
-        ),
       ],
+    ),
+    GoRoute(
+      path: '/browse-all',
+      builder: (context, state) => const PropertyTypePage(),
+    ),
+    GoRoute(
+      path: '/bookhouse',
+      builder: (context, state) => const BookHousePage(),
+    ),
+    GoRoute(
+      path: '/housing',
+      builder: (context, state) => const HousingPage(),
+    ),
+    GoRoute(
+      path: '/detailhouse',
+      builder: (context, state) => const DetailHousePage(),
     ),
   ],
 );

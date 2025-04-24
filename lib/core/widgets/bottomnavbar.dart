@@ -15,7 +15,7 @@ class BottomNavBar extends StatelessWidget {
         context.push('/home');
         break;
       case 1:
-        context.push('/booking');
+        context.push('/mybooking');
         break;
       case 2:
         context.push('/comingsoon');
