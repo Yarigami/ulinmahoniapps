@@ -36,6 +36,10 @@ dependencies:
   go_router: ^14.8.1
   intl_phone_field: ^3.2.0
   intl: ^0.18.1
+  grouped_list: ^4.2.0
+  link_text: ^0.2.1
+#  passwordfield: ^0.2.0
+#  flutter_signin_button: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +59,11 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/placeholder.png
+    - assets/images/apple.png
+    - assets/images/facebook.png
+    - assets/images/google.png
+    - assets/images/logo.png
+    - assets/images/login_bg.png
     - assets/images/house.jpg
   #    - assets/videos/intro.mp4
   #    - assets/images/ulinhouse.jpg

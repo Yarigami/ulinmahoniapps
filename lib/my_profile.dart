@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ulinmahoniapps/login/login_page.dart';
 import 'profile_page.dart';
 import 'help_page.dart';
 
@@ -108,9 +109,9 @@ class _MyProfileState extends State<MyProfile> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("My Account", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),),
-                                  SizedBox(height: 8),
-                                  Text("Make changes to your account", style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                                  Text("My Account", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis,),
+                                  SizedBox(height: 4),
+                                  Flexible(child: Text("Make changes to your account", style: TextStyle(fontSize: 12, color: Colors.grey[600]), overflow: TextOverflow.ellipsis, maxLines: 2,)),
                                 ],
                               ),
                             ),
@@ -152,9 +153,9 @@ class _MyProfileState extends State<MyProfile> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Saved Beneficiary", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),),
-                                  SizedBox(height: 8),
-                                  Text("Manage your saved account", style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                                  Text("Saved Beneficiary", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis,),
+                                  SizedBox(height: 4),
+                                  Flexible(child: Text("Manage your saved account", style: TextStyle(fontSize: 12, color: Colors.grey[600]), overflow: TextOverflow.ellipsis, maxLines: 2,)),
                                 ],
                               ),
                             ),
@@ -196,9 +197,9 @@ class _MyProfileState extends State<MyProfile> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Face ID/Touch ID", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),),
-                                  SizedBox(height: 8),
-                                  Text("Manage your device security", style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                                  Text("Face ID/Touch ID", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis,),
+                                  SizedBox(height: 4),
+                                  Flexible(child: Text("Manage your device security", style: TextStyle(fontSize: 12, color: Colors.grey[600]), overflow: TextOverflow.ellipsis, maxLines: 2,)),
                                 ],
                               ),
                             ),
@@ -245,9 +246,9 @@ class _MyProfileState extends State<MyProfile> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Two Factor Authentication", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),),
-                                  SizedBox(height: 8),
-                                  Text("Further secure your account for safety", style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                                  Text("Two Factor Authentication", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis,),
+                                  SizedBox(height: 4),
+                                  Flexible(child: Text("Further secure your account for safety", style: TextStyle(fontSize: 12, color: Colors.grey[600]), overflow: TextOverflow.ellipsis, maxLines: 2,)),
                                 ],
                               ),
                             ),
@@ -269,7 +270,12 @@ class _MyProfileState extends State<MyProfile> {
               Material(
                 color: Colors.grey[300],
                 child: InkWell(
-                  onTap: (){},
+                  onTap: (){
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage())
+                    );
+                  },
                   child: Container(
                     width: double.infinity,
                     height: 80,
@@ -289,9 +295,9 @@ class _MyProfileState extends State<MyProfile> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Log out", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),),
-                                  SizedBox(height: 8),
-                                  Text("Further Secure your Account for safety", style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                                  Text("Log out", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis,),
+                                  SizedBox(height: 4),
+                                  Flexible(child: Text("Further Secure your Account for safety", style: TextStyle(fontSize: 12, color: Colors.grey[600]), overflow: TextOverflow.ellipsis, maxLines: 2,)),
                                 ],
                               ),
                             ),

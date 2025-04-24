@@ -16,9 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController _dateController = TextEditingController();
   
   void _myProfile(){
-    Navigator.push(
-        context, 
-        MaterialPageRoute(builder: (context) => const MyProfile()));
+    Navigator.pop(context);
   }
 
   @override
