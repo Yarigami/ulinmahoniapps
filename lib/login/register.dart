@@ -15,191 +15,149 @@ class _RegisteringState extends State<Registering> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                // SizedBox(height: 10,),
-                Image(image: AssetImage("assets/images/logo.png"), width: 150, height: 150,),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    "Hello! Register to get started",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Container(
-                    width: double.infinity,
-                    color: Colors.grey[300],
-                    child: TextField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(12),
-                        hintText: "Username",
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    Image.asset("assets/images/logo.png", width: 150, height: 150),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        "Hello! Register to get started",
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Container(
-                    width: double.infinity,
-                    color: Colors.grey[300],
-                    child: TextField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(12),
-                        hintText: "Email",
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Container(
-                    width: double.infinity,
-                    color: Colors.grey[300],
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(12),
-                        hintText: "Password",
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Container(
-                    width: double.infinity,
-                    color: Colors.grey[300],
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(12),
-                        hintText: "Confirm password",
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 8,),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     TextButton(
-                //         onPressed: (){},
-                //         style: ButtonStyle(
-                //           backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                //           foregroundColor: MaterialStateProperty.all(Colors.grey[600]),
-                //           overlayColor: MaterialStateProperty.all(Colors.transparent),
-                //           // alignment: Alignment.centerRight,
-                //         ),
-                //         child: Text("Forgot Password?")
-                //     ),
-                //   ],
-                // ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.green[800]),
-                        foregroundColor: MaterialStateProperty.all(Colors.white),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(2),
+                    SizedBox(height: 20),
+                    _inputField("Username"),
+                    SizedBox(height: 16),
+                    _inputField("Email"),
+                    SizedBox(height: 16),
+                    _inputField("Password", obscure: true),
+                    SizedBox(height: 16),
+                    _inputField("Confirm password", obscure: true),
+                    SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: TextButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.green[800]),
+                            foregroundColor: MaterialStateProperty.all(Colors.white),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            "Register ",
+                            style: TextStyle(fontSize: 20),
                           ),
                         ),
                       ),
-                      child: const Text(
-                        "Register ",
-                        style: TextStyle(fontSize: 20),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          double spacing = constraints.maxWidth * 0.03;
+
+                          return Row(
+                            children: [
+                              Expanded(
+                                  child: Divider(
+                                    thickness: 1,
+                                    color: Colors.grey,
+                                    endIndent: spacing,
+                                  )),
+                              Text("Or Login With"),
+                              Expanded(
+                                  child: Divider(
+                                    thickness: 1,
+                                    color: Colors.grey,
+                                    endIndent: spacing,
+                                  )),
+                            ],
+                          );
+                        },
                       ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: LayoutBuilder(
-                    builder: (context, constraints){
-                      double spacing = constraints.maxWidth * 0.03;
-
-                      return Row(
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(child: Divider(
-                            thickness: 1,
-                            color: Colors.grey,
-                            endIndent: spacing,
-                          )),
-                          Text("Or Login With"),
-                          Expanded(child: Divider(
-                            thickness: 1,
-                            color: Colors.grey,
-                            endIndent: spacing,
-                          )),
+                          SizedBox(),
+                          _socialMedia("assets/images/facebook.png"),
+                          _socialMedia("assets/images/google.png"),
+                          _socialMedia("assets/images/apple.png"),
+                          SizedBox(),
                         ],
-                      );
-                    },
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 32.0),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context) => LoggingIn()));
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                    foregroundColor: MaterialStateProperty.all(Colors.green),
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _socialMedia("assets/images/facebook.png"),
-                      _socialMedia("assets/images/google.png"),
-                      _socialMedia("assets/images/apple.png"),
+                      Text("Already have an account? ", style: TextStyle(color: Colors.black)),
+                      Text("Login Now"),
                     ],
                   ),
                 ),
-
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 32.0),
-            child: TextButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoggingIn()));
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                foregroundColor: MaterialStateProperty.all(Colors.green),
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Already have an account? ", style: TextStyle(color: Colors.black),),
-                  Text("Login Now",),
-                ],
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _socialMedia(String imgPath){
+  Widget _inputField(String hint, {bool obscure = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Container(
+        width: double.infinity,
+        color: Colors.grey[300],
+        child: TextField(
+          obscureText: obscure,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(12),
+            hintText: hint,
+            border: InputBorder.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _socialMedia(String imgPath) {
     return InkWell(
-      onTap: (){},
+      onTap: () {},
       child: Container(
         height: 80,
-        width: 120,
+        width: 80,
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.white,
