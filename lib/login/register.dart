@@ -69,22 +69,23 @@ class _RegisteringState extends State<Registering> {
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           double spacing = constraints.maxWidth * 0.03;
-
                           return Row(
                             children: [
                               Expanded(
-                                  child: Divider(
-                                    thickness: 1,
-                                    color: Colors.grey,
-                                    endIndent: spacing,
-                                  )),
+                                child: Divider(
+                                  thickness: 1,
+                                  color: Colors.grey,
+                                  endIndent: spacing,
+                                )
+                              ),
                               Text("Or Login With"),
                               Expanded(
-                                  child: Divider(
-                                    thickness: 1,
-                                    color: Colors.grey,
-                                    endIndent: spacing,
-                                  )),
+                                child: Divider(
+                                  thickness: 1,
+                                  color: Colors.grey,
+                                  endIndent: spacing,
+                                )
+                              ),
                             ],
                           );
                         },

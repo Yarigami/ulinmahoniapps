@@ -12,12 +12,12 @@ class CustSupport extends StatefulWidget {
 class Message {
   final String text;
   final DateTime date;
-  final bool SentByMe;
+  final bool sentByMe;
 
   const Message({
     required this.text,
     required this.date,
-    required this.SentByMe,
+    required this.sentByMe,
   });
 }
 
@@ -26,19 +26,24 @@ class _CustSupportState extends State<CustSupport> {
     Message(
       text: "test text 2",
       date: DateTime.now().subtract(Duration(days: 2, minutes: 10)),
-      SentByMe: false,
+      sentByMe: false,
     ),
     Message(
       text: "test text",
-      date: DateTime.now().subtract(Duration(days: 2, minutes: 5)),
-      SentByMe: true,
+      date: DateTime.now().subtract(Duration(days: 2, minutes: 15)),
+      sentByMe: true,
     ),
   ].reversed.toList();
+
+  // Add a TextEditingController
+  TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 1,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
@@ -57,10 +62,10 @@ class _CustSupportState extends State<CustSupport> {
           Expanded(
             child: GroupedListView<Message, DateTime>(
               padding: const EdgeInsets.all(8),
-              reverse: true,
-              order: GroupedListOrder.DESC,
+              order: GroupedListOrder.DESC, // Sorted from newest to oldest
               useStickyGroupSeparators: true,
               floatingHeader: true,
+              reverse: true,
               elements: messages,
               groupBy: (message) => DateTime(
                 message.date.year,
@@ -68,10 +73,12 @@ class _CustSupportState extends State<CustSupport> {
                 message.date.day,
               ),
               groupHeaderBuilder: (Message message) => SizedBox(
-                height: 40,
+                height: 45,
                 child: Center(
                   child: Card(
-                    color: Theme.of(context).primaryColor,
+                    // color: Theme.of(context).primaryColor,
+                    color: Colors.green[900],
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50),),
                     child: Padding(
                       padding: const EdgeInsets.all(8),
                       child: Text(
@@ -82,37 +89,103 @@ class _CustSupportState extends State<CustSupport> {
                   ),
                 ),
               ),
-              itemBuilder: (context, Message message) => Align(
-                alignment: message.SentByMe
+              itemBuilder: (context, Message message) =>
+                Align(
+                alignment: message.sentByMe
                     ? Alignment.centerRight
                     : Alignment.centerLeft,
-                child: Card(
-                  elevation: 8,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text(message.text),
+                child: Container(
+                  // elevation: 8,
+                  margin: EdgeInsets.symmetric(vertical: 4),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  constraints: BoxConstraints(maxWidth: 250),
+                  decoration: BoxDecoration(
+                    color: message.sentByMe ? Colors.green : Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(16),
+                      topLeft: Radius.circular(16),
+                      bottomRight: message.sentByMe ? Radius.circular(0) : Radius.circular(16),
+                      bottomLeft: message.sentByMe ? Radius.circular(16) : Radius.circular(0),
+                    ),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black, blurRadius: 4, offset: Offset(2, 2)),
+                    ],
+                  ),
+                  child: Text(
+                    message.text,
+                    style: TextStyle(
+                        color: message.sentByMe ? Colors.white : Colors.black,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
           Container(
-            color: Colors.grey[200],
-            child: TextField(
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(12),
-                hintText: "Message",
-              ),
-              onSubmitted: (text) {
-                final message = Message(
-                  text: text,
-                  date: DateTime.now(),
-                  SentByMe: true,
-                );
-                setState(() {
-                  messages.add(message);
-                });
-              },
+            // color: Colors.grey[200],
+            decoration: BoxDecoration(
+              color: Color(0xFFF5F2EA),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            // padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(12),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                        // borderSide: BorderSide(color: Colors.red),
+                      ),
+                      hintText: "Message",
+                      suffixIcon: IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.image),
+                      ),
+                    ),
+                    onSubmitted: (text) {
+                      if (text.isNotEmpty) {
+                        final message = Message(
+                          text: text,
+                          date: DateTime.now(),
+                          sentByMe: true,
+                        );
+                        setState(() {
+                          messages.add(message);
+                        });
+                        _controller.clear();
+                      }
+                    },
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    final text = _controller.text;
+                    if (text.isNotEmpty) {
+                      final message = Message(
+                        text: text,
+                        date: DateTime.now(),
+                        sentByMe: true,
+                      );
+                      setState(() {
+                        messages.add(message);
+                      });
+                      _controller.clear();
+                    }
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                  ),
+                  icon: Icon(
+                    Icons.send,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -120,3 +193,4 @@ class _CustSupportState extends State<CustSupport> {
     );
   }
 }
+

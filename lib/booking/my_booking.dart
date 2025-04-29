@@ -31,9 +31,15 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextButton(onPressed: (){},
-            child: Icon(Icons.arrow_back_ios, color: Colors.white,)),
-        // title: Text("My Booking"),
+        title: Row(
+          children: [
+            IconButton(onPressed: (){},
+                icon: Icon(Icons.arrow_back_ios, color: Colors.white,),
+            ),
+            Text("My Booking", style: TextStyle(color: Colors.white),),
+          ],
+        ),
+        // title: Text("My Booking", style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.green.shade700,
         bottom: PreferredSize(// USE TO SEPERATE THE TEXTBUTTON
           preferredSize: Size.fromHeight(48),//SIZE STARTING FROM THE END OF THE TEXTBUTTON HEIGHT
@@ -61,12 +67,15 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
           )
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _pendingBookings(),
-          _completedBookings(),
-        ],
+      body: Container(
+        color: Color(0xFFF5F2EA),
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            _pendingBookings(),
+            _completedBookings(),
+          ],
+        ),
       ),
     );
   }
@@ -79,41 +88,55 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
     required String status,
   }) {
     return Card(
-      child: ListTile(
-        // contentPadding: const EdgeInsets.all(12),
-        minVerticalPadding: 16,
-        leading: SizedBox(
-          width: 150,
-          height: 150,
-          child: Image.asset(
-            "assets/images/placeholder.png",
-            fit: BoxFit.cover,
-          ),
-        ),
-        title: Text(name),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      elevation: 4,
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Row(
           children: [
-            SizedBox(height: 4),
-            Text(type),
-            SizedBox(height: 6),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: status.toLowerCase() == "pending" ? Colors.red[100] : Colors.green[100],
-                border: Border.all(color: status.toLowerCase() == "pending" ? Colors.red[800]! : Colors.green[800]!),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(
-                status,
-                style: TextStyle(
-                  color: status.toLowerCase() == "pending" ? Colors.red[900] : Colors.green[900],
-                ),
+            ClipRRect(
+              // borderRadius: BorderRadius.circular(12),
+              child: Image.asset("assets/images/house.png",
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
               ),
             ),
-            SizedBox(height: 6),
-            Text(checkIn),
-            Text(checkOut),
+            SizedBox(width: 16,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.apartment, size: 20,),
+                      SizedBox(width: 8,),
+                      Expanded(
+                          child: Text(name),
+                      ),
+                    ],
+                  ),
+                  Text(type),
+                  Text(checkIn),
+                  Text(checkOut),
+                  SizedBox(height: 4,),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: status.toLowerCase() == "pending" ? Colors.red[100] : Colors.green[100],
+                      border: Border.all(color: status.toLowerCase() == "pending" ? Colors.red[800]! : Colors.green[800]!),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      status,
+                      style: TextStyle(
+                        color: status.toLowerCase() == "pending" ? Colors.red[900] : Colors.green[900]
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            )
           ],
         ),
       ),
@@ -127,32 +150,46 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
     required String checkOut,
   }) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(12),
-        minVerticalPadding: 16,
-        leading: SizedBox(
-          width: 150,
-          height: 150,
-          child: Image.asset(
-            "assets/images/placeholder.png",
-            fit: BoxFit.cover,
-          ),
-        ),
-        title: Text(name),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      elevation: 4,
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Row(
           children: [
-            SizedBox(height: 4),
-            Text(type),
-            SizedBox(height: 8),
-            TextButton(onPressed: detailPage,
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.green[400]),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                ),
-                    child: Text("Booking Detail"),
+            ClipRRect(
+              // borderRadius: BorderRadius.circular(12),
+              child: Image.asset("assets/images/house.png",
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
             ),
+            SizedBox(width: 16,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.apartment, size: 20,),
+                      SizedBox(width: 8,),
+                      Expanded(
+                        child: Text(name),
+                      ),
+                    ],
+                  ),
+                  Text(type),
+                  SizedBox(height: 4,),
+                  TextButton(onPressed: detailPage,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.green[400]),
+                        foregroundColor: MaterialStateProperty.all(Colors.white),
+                      ),
+                          child: Text("Booking Detail"),
+                  ),
+                ],
+              )
+            )
           ],
         ),
       ),

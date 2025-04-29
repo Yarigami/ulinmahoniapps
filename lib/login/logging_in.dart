@@ -14,13 +14,13 @@ class _LoggingInState extends State<LoggingIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true, // Ensures layout adjusts when keyboard appears
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: const EdgeInsets.all(12.0), // Only padding here like Registering
           child: Column(
             children: [
               Padding(
@@ -36,29 +36,10 @@ class _LoggingInState extends State<LoggingIn> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: double.infinity,
-                      color: Colors.grey[300],
-                      child: TextField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(12),
-                          hintText: "Enter your email",
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Container(
-                      width: double.infinity,
-                      color: Colors.grey[300],
-                      child: TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(12),
-                          hintText: "Enter your password",
-                        ),
-                      ),
-                    ),
+                    SizedBox(height: 20),
+                    _inputField("Enter your email"),
+                    SizedBox(height: 16),
+                    _inputField("Enter your password", obscure: true),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -175,6 +156,20 @@ class _LoggingInState extends State<LoggingIn> {
     );
   }
 
+  Widget _inputField(String hint, {bool obscure = false}) {
+    return Container(
+      width: double.infinity,
+      color: Colors.grey[300],
+      child: TextField(
+        obscureText: obscure,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(12),
+          hintText: hint,
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
 
   Widget _socialMedia(String imgPath) {
     return InkWell(
