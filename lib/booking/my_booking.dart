@@ -97,8 +97,8 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
             ClipRRect(
               // borderRadius: BorderRadius.circular(12),
               child: Image.asset("assets/images/house.png",
-                width: 100,
-                height: 100,
+                width: 120,
+                height: 120,
                 fit: BoxFit.cover,
               ),
             ),
@@ -159,8 +159,8 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
             ClipRRect(
               // borderRadius: BorderRadius.circular(12),
               child: Image.asset("assets/images/house.png",
-                width: 100,
-                height: 100,
+                width: 120,
+                height: 120,
                 fit: BoxFit.cover,
               ),
             ),
