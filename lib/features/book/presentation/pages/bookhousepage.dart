@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import '../../../../../core/layout/mainlayout.dart';
 import '../../../../../core/widgets/backbutton.dart';
 import '../../data/bookhouse_data.dart';
@@ -16,8 +17,10 @@ class _BookHousePageState extends State<BookHousePage> {
   bool _isLoading = false;
   dynamic _propertyData = {}; // Inisialisasi dengan Map kosong
   String? _errorMessage;
-  DateTime? _checkInDate;
-  DateTime? _checkOutDate;
+
+  // Controller untuk TextField tanggal
+  TextEditingController _checkInDateController = TextEditingController();
+  TextEditingController _checkOutDateController = TextEditingController();
 
   @override
   void initState() {
@@ -45,20 +48,21 @@ class _BookHousePageState extends State<BookHousePage> {
     }
   }
 
-  Future<void> _selectDate(BuildContext context, String type) async {
-    final DateTime? picked = await showDatePicker(
+  Future<void> _selectDate(TextEditingController controller) async {
+    DateTime initialDate = DateTime.now();
+    DateTime firstDate = DateTime(2000);
+    DateTime lastDate = DateTime.now();
+
+    DateTime? _picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
+      initialDate: initialDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
     );
-    if (picked != null) {
+    if (_picked != null) {
+      String dateFormat = DateFormat('dd-MM-yyyy').format(_picked);
       setState(() {
-        if (type == 'Check In') {
-          _checkInDate = picked;
-        } else {
-          _checkOutDate = picked;
-        }
+        controller.text = dateFormat;
       });
     }
   }
@@ -195,17 +199,66 @@ class _BookHousePageState extends State<BookHousePage> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Tambahkan Check In & Check Out
-                      _buildCheckInOut(
-                        'Check In',
-                        _checkInDate,
-                            () => _selectDate(context, 'Check In'),
+                      // Check In TextField
+                      // Check In TextField (Styled)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                        child: InkWell(
+                          onTap: () {
+                            _selectDate(_checkInDateController);
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  _checkInDateController.text.isEmpty
+                                      ? 'Check In'
+                                      : _checkInDateController.text,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                const Icon(Icons.arrow_drop_down),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 16),
-                      _buildCheckInOut(
-                        'Check Out',
-                        _checkOutDate,
-                            () => _selectDate(context, 'Check Out'),
+
+                      // Check Out TextField (Styled)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                        child: InkWell(
+                          onTap: () {
+                            _selectDate(_checkOutDateController);
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  _checkOutDateController.text.isEmpty
+                                      ? 'Check Out'
+                                      : _checkOutDateController.text,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                const Icon(Icons.arrow_drop_down),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
 
                       // Room Facility
@@ -280,36 +333,6 @@ class _BookHousePageState extends State<BookHousePage> {
         const SizedBox(height: 4),
         Text(label, style: const TextStyle(color: Color(0xFF004D40))),
       ],
-    );
-  }
-
-  // Widget pembantu untuk membuat Check In & Check Out
-  Widget _buildCheckInOut(String label, DateTime? selectedDate, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(25),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(fontSize: 16),
-            ),
-            Text(
-              selectedDate == null
-                  ? 'Pilih Tanggal'
-                  : '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            const Icon(Icons.calendar_today),
-          ],
-        ),
-      ),
     );
   }
 
@@ -388,32 +411,17 @@ class _BookHousePageState extends State<BookHousePage> {
             ],
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(width: 16),
       ],
     );
   }
-}
-
-// Halaman Detail
-class DetailPage extends StatelessWidget {
-  final Map<String, String> priceData;
-
-  const DetailPage({Key? key, required this.priceData}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Detail Harga')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Label: ${priceData['label'] ?? ''}'),
-            Text('Price: ${priceData['price'] ?? ''}'),
-            Text('Discount: ${priceData['discount'] ?? 'No Discount'}'),
-          ],
-        ),
-      ),
-    );
+  void dispose() {
+    _checkInDateController.dispose();
+    _checkOutDateController.dispose();
+    super.dispose();
   }
 }
+
+

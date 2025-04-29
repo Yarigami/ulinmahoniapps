@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 final Map<String, dynamic> roomData = {
   'name': 'Alpha Room',
+  'type': 'House',
   'location': 'Ulin House West Jakarta',
   'image': 'assets/images/ulinhouse.jpg',
   'checkIn': 'Sab, 15 Mar 2025 (14:00 - 16:00)',

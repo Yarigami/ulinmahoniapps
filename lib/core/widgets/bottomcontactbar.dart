@@ -7,15 +7,29 @@ const Color forestGreenColor = Color(0xFF005F21);
 
 class BottomContactBar extends StatelessWidget {
   // Ganti dengan nomor WhatsApp Anda (dengan kode negara)
-  final String whatsappNumber = '+628xxxxxxxxxx';
+  final String whatsappNumber = '+6285694608028';
 
   // Fungsi untuk membuka WhatsApp
-  _launchWhatsApp() async {
+  _launchWhatsApp(BuildContext context) async {
     var whatsappUrl = "whatsapp://send?phone=$whatsappNumber&text=Halo"; //pesan default
-    if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
-      await launchUrl(Uri.parse(whatsappUrl));
-    } else {
-      throw 'Tidak dapat membuka WhatsApp';
+    try {
+      if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
+        await launchUrl(Uri.parse(whatsappUrl));
+      } else {
+        // Menampilkan pesan error jika WhatsApp tidak dapat dibuka
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('WhatsApp tidak dapat dibuka. Pastikan aplikasi terpasang.'),
+          ),
+        );
+      }
+    } catch (e) {
+      // Menampilkan pesan error jika terjadi kesalahan lain
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Terjadi kesalahan: ${e.toString()}'),
+        ),
+      );
     }
   }
 
@@ -59,7 +73,7 @@ class BottomContactBar extends StatelessWidget {
                       text: "Rp ",
                       style: TextStyle(
                         color: firebrickColor,
-                        fontWeight: FontWeight.w500, // FontWeight diubah menjadi w500
+                        fontWeight: FontWeight.w500,
                         fontSize: 20,
                       ),
                     ),
@@ -67,14 +81,14 @@ class BottomContactBar extends StatelessWidget {
                       text: "200.000",
                       style: TextStyle(
                         color: firebrickColor,
-                        fontWeight: FontWeight.w500, // FontWeight diubah menjadi w500
+                        fontWeight: FontWeight.w500,
                         fontSize: 20,
                       ),
                     ),
                     TextSpan(
                       text: " / Hari",
                       style: TextStyle(
-                        fontWeight: FontWeight.w500, // FontWeight diubah menjadi w500
+                        fontWeight: FontWeight.w500,
                         fontSize: 20,
                       ),
                     ),
@@ -83,9 +97,9 @@ class BottomContactBar extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.2),
+                  color: forestGreenColor.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.green, width: 1),
+                  border: Border.all(color: forestGreenColor, width: 1),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 child: Row(
@@ -93,14 +107,14 @@ class BottomContactBar extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.local_offer,
-                      color: Colors.green,
+                      color: forestGreenColor,
                       size: 16,
                     ),
                     SizedBox(width: 4),
                     Text(
                       "Diskon Sewa 1 bulan",
                       style: TextStyle(
-                        color: Colors.green,
+                        color: forestGreenColor,
                         fontSize: 12,
                       ),
                     ),
@@ -109,20 +123,24 @@ class BottomContactBar extends StatelessWidget {
               ),
             ],
           ),
-          ElevatedButton.icon(
-            onPressed: _launchWhatsApp, // Panggil fungsi untuk membuka WhatsApp
-            icon: Icon(Icons.phone, color: Colors.white), // Ganti dengan ikon telepon
-            label: Text(
-              "Hubungi Kami",
-              style: TextStyle(fontSize: 16, color: Colors.white),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: forestGreenColor, // Warna forestGreen yang diperbarui
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
+          Builder(
+            builder: (BuildContext context) {
+              return ElevatedButton.icon(
+                onPressed: () => _launchWhatsApp(context), // Panggil fungsi untuk membuka WhatsApp dengan context
+                icon: Icon(Icons.phone, color: Colors.white),
+                label: Text(
+                  "Hubungi Kami",
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: forestGreenColor,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

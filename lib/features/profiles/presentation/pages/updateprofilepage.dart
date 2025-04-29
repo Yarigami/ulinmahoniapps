@@ -13,6 +13,7 @@ const List<String> gender = <String>["Male", "Female"];
 class _UpdateProfileState extends State<UpdateProfile> {
   String genderValue = gender.first;
   TextEditingController _dateController = TextEditingController();
+  Color forestGreenColor = Color(0xFF005F21);
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +31,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundColor: Colors.green,
-                  backgroundImage: AssetImage("assets/images/ulinhouse.png"),
+                  backgroundImage: AssetImage("assets/images/ulinhouse.jpg"),
                 ),
               ],
             ),

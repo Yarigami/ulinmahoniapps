@@ -51,16 +51,9 @@ class _PaymentPageState extends State<PaymentPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Color(0xFF005F21),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Text(
-                            'House',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                        Text(
+                         roomData['type'] ?? '',
+                          style: const TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ],
                     ),
