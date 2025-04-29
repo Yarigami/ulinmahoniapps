@@ -37,6 +37,9 @@ dependencies:
   flutter_launcher_icons: ^0.14.3
   country_icons: ^3.0.0
   google_fonts: ^6.2.1
+  intl: ^0.20.2
+  url_launcher: ^6.3.1
+  intl_phone_field: ^3.2.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +67,7 @@ flutter:
     - assets/videos/myvideo.mp4
     - assets/images/ulinhouse.jpg
     - assets/images/ulinmahonilogo.png
+    - assets/images/whatsapplogo.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

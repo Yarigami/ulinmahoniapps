@@ -35,7 +35,7 @@ class RoomTypeSection extends StatelessWidget {
                     price: room['price'],
                     onTap: () {
                       // Navigasi ke halaman detail dengan data room
-                      context.go('/bookhouse', extra: room);
+                      context.push('/bookhouse', extra: room);
                     },
                     width: 200,
                     height: 250,

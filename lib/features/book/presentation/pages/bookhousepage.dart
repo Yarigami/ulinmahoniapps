@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/layout/mainlayout.dart';
-import '../../../../core/widgets/backbutton.dart';
-import '../data/bookhouse_data.dart'; // Impor yang benar
+import '../../../../../core/layout/mainlayout.dart';
+import '../../../../../core/widgets/backbutton.dart';
+import '../../data/bookhouse_data.dart';
 
 class BookHousePage extends StatefulWidget {
   const BookHousePage({Key? key}) : super(key: key);
@@ -16,6 +16,8 @@ class _BookHousePageState extends State<BookHousePage> {
   bool _isLoading = false;
   dynamic _propertyData = {}; // Inisialisasi dengan Map kosong
   String? _errorMessage;
+  DateTime? _checkInDate;
+  DateTime? _checkOutDate;
 
   @override
   void initState() {
@@ -43,12 +45,31 @@ class _BookHousePageState extends State<BookHousePage> {
     }
   }
 
+  Future<void> _selectDate(BuildContext context, String type) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null) {
+      setState(() {
+        if (type == 'Check In') {
+          _checkInDate = picked;
+        } else {
+          _checkOutDate = picked;
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MainLayout(
       currentIndex: 0,
       showNavBar: false,
       showBottomNav: false,
+      showContactBar: true,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: _isLoading
@@ -74,14 +95,10 @@ class _BookHousePageState extends State<BookHousePage> {
                     ),
                   ),
 
-                  // Back Button
                   Positioned(
-                    top: 16,
-                    left: 16,
-                    child: GestureDetector(
-                      onTap: () => context.pop(),
-                      child: CustomBackButton(),
-                    ),
+                      top: 16,
+                      left: 16,
+                      child: CustomBackButton()
                   ),
 
                   // Teks di Atas Card
@@ -179,9 +196,17 @@ class _BookHousePageState extends State<BookHousePage> {
                       const SizedBox(height: 16),
 
                       // Tambahkan Check In & Check Out
-                      _buildCheckInOut('Check In'),
+                      _buildCheckInOut(
+                        'Check In',
+                        _checkInDate,
+                            () => _selectDate(context, 'Check In'),
+                      ),
                       const SizedBox(height: 16),
-                      _buildCheckInOut('Check Out'),
+                      _buildCheckInOut(
+                        'Check Out',
+                        _checkOutDate,
+                            () => _selectDate(context, 'Check Out'),
+                      ),
 
                       // Room Facility
                       const SizedBox(height: 16),
@@ -199,7 +224,7 @@ class _BookHousePageState extends State<BookHousePage> {
                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 16),
-                      _buildPriceSection(context),
+                      _buildPriceSection(context, _propertyData['prices']),
                     ],
                   ),
                 ),
@@ -227,18 +252,22 @@ class _BookHousePageState extends State<BookHousePage> {
   }
 
   // Widget untuk menampilkan bagian Price
-  Widget _buildPriceSection(BuildContext context) {
+  Widget _buildPriceSection(BuildContext context, List<Map<String, String>> prices) {
     return Row(
-      children: [
-        Expanded(
-          child: _buildPriceContent('Daily', 'assets/images/ulinhouse.jpg', 'Rp 244.678 / Hari', context: context),
+      children: prices.map((price) => Expanded(
+        child: GestureDetector(
+          onTap: () {
+            context.push('/payment');
+          },
+          child: _buildPriceContent(
+            price['label'] ?? '',
+            'assets/images/ulinhouse.jpg',
+            price['price'] ?? '',
+            discount: price['discount'],
+            context: context,
+          ),
         ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: _buildPriceContent('Monthly', 'assets/images/ulinhouse.jpg', 'Rp 6.991.123 / Bulan',
-              discount: 'Hemat 5%', context: context),
-        ),
-      ],
+      )).toList(),
     );
   }
 
@@ -255,19 +284,31 @@ class _BookHousePageState extends State<BookHousePage> {
   }
 
   // Widget pembantu untuk membuat Check In & Check Out
-  Widget _buildCheckInOut(String label) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(25),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label, style: const TextStyle(fontSize: 16)),
-          const Icon(Icons.arrow_drop_down),
-        ],
+  Widget _buildCheckInOut(String label, DateTime? selectedDate, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(25),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              label,
+              style: const TextStyle(fontSize: 16),
+            ),
+            Text(
+              selectedDate == null
+                  ? 'Pilih Tanggal'
+                  : '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const Icon(Icons.calendar_today),
+          ],
+        ),
       ),
     );
   }
@@ -320,7 +361,7 @@ class _BookHousePageState extends State<BookHousePage> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: Color(0xFF005F21),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Text(
@@ -351,5 +392,28 @@ class _BookHousePageState extends State<BookHousePage> {
       ],
     );
   }
+}
 
+// Halaman Detail
+class DetailPage extends StatelessWidget {
+  final Map<String, String> priceData;
+
+  const DetailPage({Key? key, required this.priceData}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Detail Harga')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Label: ${priceData['label'] ?? ''}'),
+            Text('Price: ${priceData['price'] ?? ''}'),
+            Text('Discount: ${priceData['discount'] ?? 'No Discount'}'),
+          ],
+        ),
+      ),
+    );
+  }
 }

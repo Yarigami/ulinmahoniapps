@@ -12,16 +12,16 @@ class BottomNavBar extends StatelessWidget {
   void _onTap(BuildContext context, int index) {
     switch (index) {
       case 0:
-        context.push('/home');
+        context.go('/home');
         break;
       case 1:
-        context.push('/mybooking');
+        context.go('/mybooking');
         break;
       case 2:
-        context.push('/comingsoon');
+        context.go('/comingsoon');
         break;
       case 3:
-        context.push('/comingsoon');
+        context.go('/profile');
         break;
     }
   }

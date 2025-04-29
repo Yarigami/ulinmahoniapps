@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../data/propertytype_data.dart';
 import '../widgets/propertyitem.dart';
-import '../../../../core/widgets/backbutton.dart';
 import '../../../../core/layout/mainlayout.dart';
+import '../../../../core/widgets/appbar.dart';
 
 class PropertyTypePage extends StatelessWidget {
   const PropertyTypePage({Key? key}) : super(key: key);
@@ -20,45 +20,12 @@ class PropertyTypePage extends StatelessWidget {
           children: [
             CustomAppBar(
               title: 'Property Type',
-              leading: CustomBackButton(iconColor: Colors.white),
             ),
             Expanded(
               child: PropertyTypeList(categories: categories),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({Key? key, required this.title, this.leading})
-      : super(key: key);
-
-  final String title;
-  final Widget? leading;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: const BoxDecoration(
-        color: Color(0xFF005F21),
-      ),
-      child: Row(
-        children: [
-          if (leading != null) leading!,
-          const SizedBox(width: 8),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w300,
-              fontSize: 20,
-            ),
-          ),
-        ],
       ),
     );
   }

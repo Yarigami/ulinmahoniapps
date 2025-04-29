@@ -87,7 +87,7 @@ class _BudgetSectionState extends State<BudgetSection> {
                       image: item['image']!,
                       title: item['title']!,
                       onTap: () {
-                        context.push('/comingsoon');
+                        context.push('/detailhouse');
                       },
                     ),
                   );

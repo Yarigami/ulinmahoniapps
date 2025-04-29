@@ -39,7 +39,7 @@ class _PromotionSectionState extends State<PromotionSection> {
                   image: promotionData[index]['image']!,
                   title: promotionData[index]['title']!,
                   onTap: () {
-                    context.push('/comingsoon');
+                    context.push('/detailhouse');
                   },
                 );
               },

@@ -1,9 +1,12 @@
 import 'package:go_router/go_router.dart';
-import 'package:ulinmahoniapps/features/book/presentation/bookhousepage.dart';
-import 'package:ulinmahoniapps/features/detailhouse/presentation/pages/detailhousepage.dart';
+import 'package:ulinmahoniapps/features/book/presentation/pages/bookhousepage.dart';
+import 'package:ulinmahoniapps/features/detailproperty/presentation/pages/detailhousepage.dart';
 import 'package:ulinmahoniapps/features/housing/presentation/pages/housingpage.dart';
 import 'package:ulinmahoniapps/features/UM/presentation/pages/UMpage.dart';
 import 'package:ulinmahoniapps/features/comingsoon/presentation/pages/comingsoon.dart';
+import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybookingdetailspage.dart';
+import 'package:ulinmahoniapps/features/payment/presentation/paymentpage.dart';
+import 'package:ulinmahoniapps/features/profiles/presentation/pages/updateprofilepage.dart';
 import 'package:ulinmahoniapps/features/splashscreen/presentation/pages/splashscreen.dart';
 import 'package:ulinmahoniapps/features/home/presentation/pages/homepage.dart';
 import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybookingpage.dart';
@@ -32,21 +35,21 @@ final GoRouter appRouter = GoRouter(
         ),
         GoRoute(
           path: '/mybooking',
-          builder: (context, state) => MyBookingPage(),
+          builder: (context, state) => const MyBookingPage(),
         ),
         GoRoute(
           path: '/um',
           builder: (context, state) => const UMpage(),
         ),
         GoRoute(
-          path: '/profile',
-          builder: (context, state) => const ProfilePage(),
-        ),
-        GoRoute(
           path: '/comingsoon',
           builder: (context, state) => const ComingSoonPage(),
         ),
       ],
+    ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) => const ProfilePage(),
     ),
     GoRoute(
       path: '/browse-all',
@@ -64,6 +67,20 @@ final GoRouter appRouter = GoRouter(
       path: '/detailhouse',
       builder: (context, state) => const DetailHousePage(),
     ),
+    GoRoute(
+      path: '/payment',
+      builder: (context, state) => PaymentPage(),
+    ),
+    GoRoute(
+      path: '/mybookingdetails',
+      builder: (context, GoRouterState state) {
+        return const MyBookingDetail();
+      },
+    ),
+    GoRoute(
+      path: '/updateprofile',
+      builder: (context, state) => UpdateProfile(),
+    ),
   ],
 );
 
@@ -71,13 +88,13 @@ int _getCurrentIndex(String path) {
   switch (path) {
     case '/home':
       return 0;
-    case '/booking':
+    case '/mybooking':
       return 1;
-    case '/profile':
-      return 2;
     case '/um':
+      return 2;
+    case '/profile':
       return 3;
     default:
-      return 0;
+      return 4;
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../core/layout/mainlayout.dart';
 import '../../../../core/widgets/backbutton.dart';
-import '../../../../core/widgets/productcard.dart';
 import '../../data/detailhouse_data.dart';
 import '../../presentation/widgets/roomtype.dart';
 
@@ -51,6 +49,7 @@ class _DetailHousePageState extends State<DetailHousePage> {
       currentIndex: 0,
       showNavBar: false,
       showBottomNav: false,
+      showContactBar: true,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: _isLoading
@@ -80,10 +79,7 @@ class _DetailHousePageState extends State<DetailHousePage> {
                   Positioned(
                     top: 16,
                     left: 16,
-                    child: GestureDetector(
-                      onTap: () => context.pop(),
-                      child: CustomBackButton(),
-                    ),
+                    child: CustomBackButton()
                   ),
 
                   // Teks di Atas Card

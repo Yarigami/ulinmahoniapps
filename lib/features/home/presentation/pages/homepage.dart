@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                         image: 'assets/images/ulinhouse.jpg',
                         title: 'Jelambar',
                         onTap: () {
-                          context.push('/comingsoon');
+                          context.push('/detailhouse');
                         }
                     ),
                     SizedBox(width: 16),
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                         image: 'assets/images/ulinhouse.jpg',
                         title: 'Jelambar',
                         onTap: () {
-                          context.push('/comingsoon');
+                          context.push('/detailhouse');
                         }
                     ),
                     SizedBox(width: 16),
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                         image: 'assets/images/ulinhouse.jpg',
                         title: 'Jelambar',
                         onTap: () {
-                          context.push('/comingsoon');
+                          context.push('/detailhouse');
                         }
                     ),
                   ],
@@ -103,17 +103,7 @@ class _HomePageState extends State<HomePage> {
                 height: 20,
               ),
 
-              Container(
-                height: 5,
-                color: Color(0xFFECE8E1), // Ganti dengan warna yang diinginkan
-              ),
-
               BestSellerSection(backgroundColor: Color(0xFFE8E3D9),),
-
-              Container(
-                height: 5,
-                color: Color(0xFFECE8E1), // Ganti dengan warna yang diinginkan
-              ),
 
               PromotionSection(),
 

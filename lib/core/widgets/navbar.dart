@@ -4,9 +4,9 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
   final String initialLanguage;
 
   const Navbar({
-    super.key,
+    Key? key,
     this.initialLanguage = 'ID',
-  });
+  }) : super(key: key);
 
   @override
   State<Navbar> createState() => _NavbarState();
@@ -33,7 +33,7 @@ class _NavbarState extends State<Navbar> {
         AppBar(
           backgroundColor: Colors.white,
           leading: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 3),
+            padding: const EdgeInsets.symmetric(horizontal: 3),
             child: SizedBox(
               height: 55, // 2/3 dari 80
               width: 55,
@@ -78,12 +78,59 @@ class _NavbarState extends State<Navbar> {
                         isDropdownOpen
                             ? Icons.arrow_drop_up
                             : Icons.arrow_drop_down,
-                        color: Color(0xFF006400),
+                        color: const Color(0xFF006400),
                       ),
                       dropdownColor: Colors.white,
                     );
                   },
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                children: [
+                  const Text(
+                    'Masuk',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const Text(
+                    ' / ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30, // Mengatur tinggi tombol
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Tambahkan logika untuk tombol Daftar di sini
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF006400),
+                        textStyle: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 10), // Mengatur padding horizontal
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero, // Tanpa border radius
+                        ),
+                      ),
+                      child: const Text(
+                        'Daftar',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12, // Mengatur ukuran font
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

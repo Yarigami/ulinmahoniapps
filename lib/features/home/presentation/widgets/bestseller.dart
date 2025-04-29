@@ -42,8 +42,7 @@ class _BestSellerSectionState extends State<BestSellerSection> {
                   image: bestSellerData[index]['image']!,
                   title: bestSellerData[index]['title']!,
                   onTap: () {
-                    // Ganti dengan navigasi yang sesuai
-                    context.push('/comingsoon');
+                    context.push('/detailhouse');
                   },
                 );
               },

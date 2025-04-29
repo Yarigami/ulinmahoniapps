@@ -39,7 +39,7 @@ class _AreaPopularSectionState extends State<AreaPopularSection> {
                   image: areaPopularData[index]['image']!,
                   title: areaPopularData[index]['title']!,
                   onTap: () {
-                    context.push('/comingsoon');
+                    context.push('/detailhouse');
                   },
                 );
               },

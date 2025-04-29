@@ -17,7 +17,7 @@ class ComingSoonPage extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
 
     return MainLayout(
-      currentIndex: 0,
+      currentIndex: 4,
       showBottomNav: false,
       showNavBar: false,
       child: SafeArea(

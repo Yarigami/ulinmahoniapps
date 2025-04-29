@@ -4,19 +4,19 @@ final List<Map<String, String>> categories = [
     'image': 'assets/images/ulinhouse.jpg',
     'route': '/housing',
   },
-  {
-    'title': 'Apartment',
-    'image': 'assets/images/ulinhouse.jpg',
-    'route': '/comingsoon',
-  },
-  {
-    'title': 'Villa',
-    'image': 'assets/images/ulinhouse.jpg',
-    'route': '/comingsoon',
-  },
-  {
-    'title': 'Hotels',
-    'image': 'assets/images/ulinhouse.jpg',
-    'route': '/comingsoon',
-  },
+  // {
+  //   'title': 'Apartment',
+  //   'image': 'assets/images/ulinhouse.jpg',
+  //   'route': '/apartment',
+  // },
+  // {
+  //   'title': 'Villa',
+  //   'image': 'assets/images/ulinhouse.jpg',
+  //   'route': '/villa',
+  // },
+  // {
+  //   'title': 'Hotels',
+  //   'image': 'assets/images/ulinhouse.jpg',
+  //   'route': '/hotel',
+  // },
 ];
