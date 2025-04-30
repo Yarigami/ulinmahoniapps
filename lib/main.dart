@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'booking/my_booking.dart';
 import 'smart_controller.dart';
 import 'smart_home.dart';
-import 'profile/my_profile.dart';
+import 'profile/profile_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,7 +30,7 @@ class _MainHomePageState extends State<MainHomePage> {
     MyBooking(),
     // SmartHome(),
     Center(child: Text("UMI", style: TextStyle(fontSize: 24))),
-    MyProfile(),
+    ProfilePage(),
   ];
 
   @override

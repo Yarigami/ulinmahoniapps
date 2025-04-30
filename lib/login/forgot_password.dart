@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'OTP_page.dart';
-import 'logging_in.dart';
+import 'login_page.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -82,7 +82,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoggingIn()));
+                        MaterialPageRoute(builder: (context) => const LoginPage()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.transparent),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'logging_in.dart';
+import 'login_page.dart';
 
 class Registering extends StatefulWidget {
   const Registering({super.key});
@@ -114,7 +114,7 @@ class _RegisteringState extends State<Registering> {
                   child: TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context) => LoggingIn()));
+                          context, MaterialPageRoute(builder: (context) => LoginPage()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.transparent),

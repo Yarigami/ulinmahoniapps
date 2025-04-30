@@ -5,16 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4359c8e-3893-4e7c-a259-60fc433b460c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/login/welcome_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/login/OTP_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/OTP_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/cs_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/help/cs_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/help_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/help/help_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/login/forgot_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/forgot_password.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/login/logging_in.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/logging_in.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/login/logging_in.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/login/login_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/login_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/login/new_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/new_password.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/login/password_changed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/password_changed.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/login/register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/register.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/profile/edit_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/profile/edit_profile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/profile/my_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/profile/my_profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/profile/my_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/profile/profile_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,11 +86,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\yarig\StudioProjects\flutter_list\ulinmahoniapps\lib\help" />
       <recent name="C:\Users\yarig\StudioProjects\flutter_list\ulinmahoniapps\lib\profile" />
       <recent name="C:\Users\yarig\StudioProjects\flutter_list\ulinmahoniapps\lib" />
       <recent name="C:\Users\yarig\StudioProjects\flutter_list\ulinmahoniapps\lib\booking" />
       <recent name="C:\Users\yarig\StudioProjects\flutter_list\ulinmahoniapps\lib\login" />
-      <recent name="C:\Users\yarig\StudioProjects\flutter_list\ulinmahoniapps\lib\lib" />
     </key>
   </component>
   <component name="RunManager">

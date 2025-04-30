@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
-import 'my_profile.dart';
+import 'profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

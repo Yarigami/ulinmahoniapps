@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:ulinmahoniapps/login/login_page.dart';
+import 'package:ulinmahoniapps/login/welcome_page.dart';
 import 'edit_profile.dart';
-import '../help_page.dart';
+import '../help/help_page.dart';
 
-class MyProfile extends StatefulWidget {
-  const MyProfile({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<MyProfile> createState() => _MyProfileState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _MyProfileState extends State<MyProfile> {
+class _ProfilePageState extends State<ProfilePage> {
   bool idvalue = false;
   
   void _profilePage(){
@@ -307,7 +307,7 @@ class _MyProfileState extends State<MyProfile> {
                     onTap: (){
                       Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage())
+                          MaterialPageRoute(builder: (context) => WelcomePage())
                       );
                     },
                     child: Container(

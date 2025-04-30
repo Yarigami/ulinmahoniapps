@@ -1,8 +1,7 @@
-import "package:flutter/material.dart";
-import "package:link_text/link_text.dart";
-import "logging_in.dart";
+import 'package:flutter/material.dart';
 import 'register.dart';
-import "../main.dart";
+import 'package:ulinmahoniapps/main.dart';
+import 'forgot_password.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,124 +13,187 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background Image
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/login_bg.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          // Foreground Content
-          SafeArea(
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: size.height,
-                width: size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(height: size.height * 0.2),
-                    Flexible(
-                      child: Column(
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
+      body: Container(
+        color: Colors.white,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(12.0), // Only padding here like Registering
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      Image.asset("assets/images/logo.png", width: 150, height: 150),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          "Welcome back! Glad to see you again!",
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      _inputField("Enter your email"),
+                      SizedBox(height: 16),
+                      _inputField("Enter your password", obscure: true),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          SizedBox(
-                            // height: size.height * 0.15,
-                            child: Image.asset("assets/images/logo.png"),
-                          ),
-                          const SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                            child: SizedBox(
-                              width: double.infinity,
-                              height: 50,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const LoggingIn()),
-                                  );
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(Colors.green[800]),
-                                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                                child: const Text("Login", style: TextStyle(fontSize: 20)),
-                              ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const ForgotPassword()));
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                              foregroundColor: MaterialStateProperty.all(Colors.grey[600]),
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
                             ),
-                          ),
-                          const SizedBox(height: 16),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                            child: SizedBox(
-                              width: double.infinity,
-                              height: 50,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const Registering()),
-                                  );
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                                  side: MaterialStateProperty.all(
-                                    const BorderSide(color: Colors.black, width: 1),
-                                  ),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                                child: const Text("Register", style: TextStyle(fontSize: 20)),
-                              ),
-                            ),
+                            child: Text("Forgot Password?"),
                           ),
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 32.0),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => MainHomePage()),
-                          );
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                          foregroundColor: MaterialStateProperty.all(Colors.green),
-                          overlayColor: MaterialStateProperty.all(Colors.transparent),
-                        ),
-                        child: const Text(
-                          "Continue as a guest",
-                          style: TextStyle(
-                            color: Colors.black,
-                            decoration: TextDecoration.underline,
+                      SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => MainHomePage()),
+                            );
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.green[800]),
+                            foregroundColor: MaterialStateProperty.all(Colors.white),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(fontSize: 20),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            double spacing = constraints.maxWidth * 0.03;
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: Divider(
+                                    thickness: 1,
+                                    color: Colors.grey,
+                                    endIndent: spacing,
+                                  ),
+                                ),
+                                Text("Or Login With"),
+                                Expanded(
+                                  child: Divider(
+                                    thickness: 1,
+                                    color: Colors.grey,
+                                    endIndent: spacing,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SizedBox(),
+                            _socialMedia("assets/images/facebook.png"),
+                            _socialMedia("assets/images/google.png"),
+                            _socialMedia("assets/images/apple.png"),
+                            SizedBox(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 32.0, top: 16.0),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Registering()),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                      foregroundColor: MaterialStateProperty.all(Colors.green),
+                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text("Don't have an account? ", style: TextStyle(color: Colors.black)),
+                        Text("Register Now"),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
+      ),
+    );
+  }
+
+  Widget _inputField(String hint, {bool obscure = false}) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Color(0xFFF7F8F9),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: Color(0xFFE8ECF4),
+        )
+      ),
+      child: TextField(
+        obscureText: obscure,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(12),
+          hintText: hint,
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+
+  Widget _socialMedia(String imgPath) {
+    return InkWell(
+      onTap: () {},
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        height: 80,
+        width: 80,
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.grey),
+        ),
+        child: Image.asset(imgPath),
       ),
     );
   }
