@@ -15,6 +15,7 @@ class _PaymentPageState extends State<PaymentPage> {
     return MainLayout(
       currentIndex: 0,
       showBottomNav: false,
+      showNavBar: false,
       child: Scaffold(
         backgroundColor: Color(0xFF333333),
         body: SingleChildScrollView(
@@ -212,20 +213,26 @@ class _PaymentPageState extends State<PaymentPage> {
                       ),
                       SizedBox(height: 24),
                       // Tombol Bayar
-                      ElevatedButton(
-                        onPressed: () {
-                          // TODO: Tambahkan logika pembayaran di sini
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF005F21),
-                          foregroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 120, vertical: 15),
-                          textStyle: TextStyle(fontSize: 18),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      Center(
+                        child: FractionallySizedBox(
+                          widthFactor: 0.925, // 7/8 dari lebar layar
+                          alignment: Alignment.center,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // TODO: Tambahkan logika pembayaran di sini
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF005F21),
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              textStyle: const TextStyle(fontSize: 18),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Center(child: Text('Bayar Sekarang')), // Memastikan teks terpusat
                           ),
                         ),
-                        child: Text('Bayar Sekarang'),
                       ),
                     ],
                   ),

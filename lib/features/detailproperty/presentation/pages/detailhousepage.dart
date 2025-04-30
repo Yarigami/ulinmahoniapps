@@ -44,15 +44,15 @@ class _DetailHousePageState extends State<DetailHousePage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return MainLayout(
       currentIndex: 0,
       showNavBar: false,
       showBottomNav: false,
       showContactBar: true,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: _isLoading
+      child: SafeArea(
+        child: _isLoading
             ? Center(child: CircularProgressIndicator())
             : _errorMessage != null
             ? Center(child: Text('Error: $_errorMessage'))
@@ -63,7 +63,6 @@ class _DetailHousePageState extends State<DetailHousePage> {
               // Stack untuk Gambar Utama dan Back Button
               Stack(
                 children: [
-                  // Gambar Utama
                   Container(
                     height: 400,
                     decoration: BoxDecoration(
@@ -74,18 +73,14 @@ class _DetailHousePageState extends State<DetailHousePage> {
                       ),
                     ),
                   ),
-
-                  // Back Button
                   Positioned(
                     top: 16,
                     left: 16,
-                    child: CustomBackButton()
+                    child: CustomBackButton(),
                   ),
-
-                  // Teks di Atas Card
                   Positioned(
-                    bottom: 60, // Atur posisi vertikal teks
-                    left: 20, // Atur posisi horizontal teks
+                    bottom: 60,
+                    left: 20,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -107,7 +102,6 @@ class _DetailHousePageState extends State<DetailHousePage> {
                 ],
               ),
 
-              // Informasi Properti (Card)
               Transform.translate(
                 offset: Offset(0, -50),
                 child: Container(
@@ -128,7 +122,6 @@ class _DetailHousePageState extends State<DetailHousePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Komentar: Judul dan jenis properti sudah dipindahkan ke atas card
                       Text(
                         "Tentang",
                         style: TextStyle(
@@ -160,7 +153,10 @@ class _DetailHousePageState extends State<DetailHousePage> {
                             onPressed: () {
                               // Navigasi ke halaman komentar
                             },
-                            child: Text('Lihat Komentar >', style: TextStyle(color: Color(0xFF004D40))),
+                            child: Text(
+                              'Lihat Komentar >',
+                              style: TextStyle(color: Color(0xFF004D40)),
+                            ),
                           ),
                         ],
                       ),
@@ -178,13 +174,14 @@ class _DetailHousePageState extends State<DetailHousePage> {
                   ),
                 ),
               ),
-              RoomTypeSection(propertyData: _propertyData)
+              RoomTypeSection(propertyData: _propertyData),
             ],
           ),
         ),
       ),
     );
   }
+
 
   // Widget pembantu untuk membuat ikon fasilitas
   Widget _buildFacilityIcon(IconData icon, String label) {
