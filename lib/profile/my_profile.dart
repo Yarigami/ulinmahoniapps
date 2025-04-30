@@ -38,7 +38,7 @@ class _MyProfileState extends State<MyProfile> {
         ),
       ),
       body: Container(
-        // color: Color(0xFFF5F2EA),
+        color: Colors.white,
         child: Padding(
           padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
           child: SingleChildScrollView(
