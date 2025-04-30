@@ -27,7 +27,7 @@ class _BookingDetailState extends State<BookingDetail> {
             width: double.infinity,
             height: 300,
             child: Image.asset(
-              "assets/images/placeholder.png",
+              "assets/images/house.png",
               fit: BoxFit.cover,
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ulinmahoniapps/login/login_page.dart';
-import 'profile_page.dart';
+import 'edit_profile.dart';
 import '../help_page.dart';
 
 class MyProfile extends StatefulWidget {
@@ -45,7 +45,7 @@ class _MyProfileState extends State<MyProfile> {
             child: Column(
               children: [
                 InkWell(
-                  onTap: _profilePage,
+                  onTap: (){},
                   child: Container(
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.green),
                     width: double.infinity,
@@ -63,16 +63,16 @@ class _MyProfileState extends State<MyProfile> {
                                 backgroundImage: AssetImage("assets/images/placeholder.png"),
                                 radius: 36,
                               ),
-                              SizedBox(width: 16),
+                              SizedBox(width: 12),
                               Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SizedBox(height: 8),
-                                    Text("User", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                                    SizedBox(height: 4),
-                                    Text("User@gmail.com", style: TextStyle(fontSize: 14),),
+                                    // SizedBox(height: 8),
+                                    Text("User", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.white),),
+                                    // SizedBox(height: 2),
+                                    Text("User@gmail.com", style: TextStyle(fontSize: 12, color: Colors.white),),
                                   ],
                                 ),
                               ),
@@ -99,7 +99,7 @@ class _MyProfileState extends State<MyProfile> {
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(4),
                   child: InkWell(
-                    onTap: (){},
+                    onTap: _profilePage,
                     child: SizedBox(
                       width: double.infinity,
                       height: 80,

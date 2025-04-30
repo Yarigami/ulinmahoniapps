@@ -174,6 +174,7 @@ class _LoggingInState extends State<LoggingIn> {
   Widget _socialMedia(String imgPath) {
     return InkWell(
       onTap: () {},
+      borderRadius: BorderRadius.circular(20),
       child: Container(
         height: 80,
         width: 80,

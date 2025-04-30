@@ -102,7 +102,7 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(width: 16,),
+            SizedBox(width: 8,),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,24 +116,39 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
                       ),
                     ],
                   ),
-                  Text(type),
-                  Text(checkIn),
-                  Text(checkOut),
-                  SizedBox(height: 4,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: status.toLowerCase() == "pending" ? Colors.red[100] : Colors.green[100],
-                      border: Border.all(color: status.toLowerCase() == "pending" ? Colors.red[800]! : Colors.green[800]!),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Text(
-                      status,
-                      style: TextStyle(
-                        color: status.toLowerCase() == "pending" ? Colors.red[900] : Colors.green[900]
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 1),
+                    child: Row(
+                      children: [
+                        Text(type),
+                        SizedBox(width: 6,),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 0),
+                          decoration: BoxDecoration(
+                            color: status.toLowerCase() == "pending" ? Colors.red[100] : Colors.green[100],
+                            border: Border.all(color: status.toLowerCase() == "pending" ? Colors.red[800]! : Colors.green[800]!),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            status,
+                            style: TextStyle(
+                              color: status.toLowerCase() == "pending" ? Colors.red[900] : Colors.green[900],
+                              fontSize: 10
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 1.0),
+                    child: Text(checkIn),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 1.0),
+                    child: Text(checkOut),
+                  ),
+                  SizedBox(height: 4,),
                 ],
               )
             )
@@ -164,7 +179,7 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(width: 16,),
+            SizedBox(width: 8,),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,8 +193,11 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
                       ),
                     ],
                   ),
-                  Text(type),
-                  SizedBox(height: 4,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 1.0),
+                    child: Text(type),
+                  ),
+                  // SizedBox(height: 4,),
                   TextButton(onPressed: detailPage,
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.green[400]),

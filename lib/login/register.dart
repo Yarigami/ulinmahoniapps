@@ -64,33 +64,33 @@ class _RegisteringState extends State<Registering> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          double spacing = constraints.maxWidth * 0.03;
-                          return Row(
-                            children: [
-                              Expanded(
-                                child: Divider(
-                                  thickness: 1,
-                                  color: Colors.grey,
-                                  endIndent: spacing,
-                                )
-                              ),
-                              Text("Or Login With"),
-                              Expanded(
-                                child: Divider(
-                                  thickness: 1,
-                                  color: Colors.grey,
-                                  endIndent: spacing,
-                                )
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(12.0),
+                    //   child: LayoutBuilder(
+                    //     builder: (context, constraints) {
+                    //       double spacing = constraints.maxWidth * 0.03;
+                    //       return Row(
+                    //         children: [
+                    //           Expanded(
+                    //             child: Divider(
+                    //               thickness: 1,
+                    //               color: Colors.grey,
+                    //               endIndent: spacing,
+                    //             )
+                    //           ),
+                    //           Text("Or Login With"),
+                    //           Expanded(
+                    //             child: Divider(
+                    //               thickness: 1,
+                    //               color: Colors.grey,
+                    //               endIndent: spacing,
+                    //             )
+                    //           ),
+                    //         ],
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -156,6 +156,7 @@ class _RegisteringState extends State<Registering> {
   Widget _socialMedia(String imgPath) {
     return InkWell(
       onTap: () {},
+      borderRadius: BorderRadius.circular(20),
       child: Container(
         height: 80,
         width: 80,

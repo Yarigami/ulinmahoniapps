@@ -14,7 +14,7 @@ const List<String> gender = <String>["Male", "Female"];
 class _ProfilePageState extends State<ProfilePage> {
   String genderValue = gender.first;
   TextEditingController _dateController = TextEditingController();
-  
+
   void _myProfile(){
     Navigator.pop(context);
   }
@@ -23,20 +23,22 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text("Bio-data"),
+        title: Text("Bio-data",),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            SizedBox(height: 16,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundColor: Colors.green,
-                  // backgroundImage: AssetImage("assets/images/placeholder.png"),
+                  // backgroundColor: Colors.green,
+                  backgroundImage: AssetImage("assets/images/placeholder.png"),
                 ),
               ],
             ),
@@ -46,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("User"),
+                  Text("User", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                 ],
               ),
             ),
@@ -54,7 +56,7 @@ class _ProfilePageState extends State<ProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("User@gmail.com"),
+                Text("User@gmail.com", style: TextStyle(color: Colors.grey),),
               ],
             ),
             SizedBox(height: 24,),
@@ -120,7 +122,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 controller: _dateController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: "Date",
+                  hintText: "Birth Date",
                   prefixIcon: Icon(Icons.calendar_today),
                   // enabledBorder: OutlineInputBorder(
                   //   borderSide: BorderSide()

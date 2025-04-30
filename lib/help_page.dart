@@ -24,6 +24,7 @@ class _HelpPageState extends State<HelpPage> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
+  String selected = "General";
   bool _expanded = false;
   @override
   Widget build(BuildContext context) {
@@ -84,38 +85,10 @@ class _HelpPageState extends State<HelpPage> with SingleTickerProviderStateMixin
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                TextButton(
-                  onPressed: (){},
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green.shade600),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                  ),
-                  child: Text("General"),
-                ),
-                TextButton(
-                  onPressed: (){},
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green.shade600),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                  ),
-                  child: Text("Account"),
-                ),
-                TextButton(
-                  onPressed: (){},
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green.shade600),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                  ),
-                  child: Text("Payment"),
-                ),
-                TextButton(
-                  onPressed: (){},
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green.shade600),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                  ),
-                  child: Text("Services"),
-                ),
+                _options("General"),
+                _options("Account"),
+                _options("Payment"),
+                _options("Services"),
               ],
             ),
           ),
@@ -178,6 +151,22 @@ class _HelpPageState extends State<HelpPage> with SingleTickerProviderStateMixin
           ),
         ),
       ],
+    );
+  }
+
+  Widget _options(String option,){
+    final isSelected = option == selected;
+    return TextButton(
+      onPressed: (){
+        setState(() {
+          selected = option;
+        });
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isSelected ? Colors.green[600] : Colors.grey[200],
+        foregroundColor: isSelected ? Colors.white : Colors.black,
+      ),
+      child: Text(option),
     );
   }
 
