@@ -3,15 +3,15 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
 import 'profile_page.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
 const List<String> gender = <String>["Male", "Female"];
-class _ProfilePageState extends State<ProfilePage> {
+class _EditProfileState extends State<EditProfile> {
   String genderValue = gender.first;
   TextEditingController _dateController = TextEditingController();
 
@@ -22,140 +22,147 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text("Bio-data",),
       ),
-      body: Container(
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 16,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 16,),
+            Container(
+              // margin: EdgeInsets.symmetric(horizontal: 100, vertical: 0),
+              padding: EdgeInsets.symmetric(vertical: 16,),
+              color: Color(0xFFF5F2EA),
+              child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    // backgroundColor: Colors.green,
-                    backgroundImage: AssetImage("assets/images/placeholder.png"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        // backgroundColor: Colors.green,
+                        backgroundImage: AssetImage("assets/images/placeholder.png"),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 12, 0, 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("User", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("User@gmail.com", style: TextStyle(color: Colors.grey),),
+                    ],
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 12, 0, 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("User", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                  ],
+            ),
+            SizedBox(height: 24,),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
+              // padding: const EdgeInsets.all(32.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "First Name",
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("User@gmail.com", style: TextStyle(color: Colors.grey),),
-                ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
+              // padding: const EdgeInsets.all(32.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Last Name",
+                ),
               ),
-              SizedBox(height: 24,),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
-                // padding: const EdgeInsets.all(32.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "First Name",
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
+              child: IntlPhoneField(
+                decoration: InputDecoration(
+                  labelText: "Phone Number",
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(),
+                  ),
+                  counterText: "",
+                ),
+                initialCountryCode: "ID",
+                inputFormatters: [],// max number of input
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0 ),
+              child: DropdownButtonFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Gender",
+                ),
+                value: genderValue,
+                onChanged: (String? newValue){
+                  setState(() {
+                    genderValue = newValue!;
+                  });
+                },
+                // item list
+                items: gender.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value)
+                  );
+                }).toList(),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
+              child: TextField(
+                controller: _dateController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Birth Date",
+                  prefixIcon: Icon(Icons.calendar_today),
+                  // enabledBorder: OutlineInputBorder(
+                  //   borderSide: BorderSide()
+                  // )
+                ),
+                readOnly: true,
+                onTap: (){
+                  _selectDate();
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 32.0),
+              child: SizedBox(
+                width: 200,
+                height: 60,
+                child: TextButton(
+                  onPressed: _myProfile,
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Color(0xFF0d9488)),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                  child: Text(
+                    "Update Profile",
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
-                // padding: const EdgeInsets.all(32.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Last Name",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
-                child: IntlPhoneField(
-                  decoration: InputDecoration(
-                    labelText: "Phone Number",
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(),
-                    ),
-                    counterText: "",
-                  ),
-                  initialCountryCode: "ID",
-                  inputFormatters: [],// max number of input
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0 ),
-                child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Gender",
-                  ),
-                  value: genderValue,
-                  onChanged: (String? newValue){
-                    setState(() {
-                      genderValue = newValue!;
-                    });
-                  },
-                  // item list
-                  items: gender.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value)
-                    );
-                  }).toList(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
-                child: TextField(
-                  controller: _dateController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Birth Date",
-                    prefixIcon: Icon(Icons.calendar_today),
-                    // enabledBorder: OutlineInputBorder(
-                    //   borderSide: BorderSide()
-                    // )
-                  ),
-                  readOnly: true,
-                  onTap: (){
-                    _selectDate();
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 32.0),
-                child: SizedBox(
-                  width: 200,
-                  height: 60,
-                  child: TextButton(
-                    onPressed: _myProfile,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.green[400]),
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                    ),
-                    child: Text(
-                      "Update Profile",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'booking_detail.dart';
+import 'package:ulinmahoniapps/profile/profile_page.dart';
 
 class MyBooking extends StatefulWidget {
   const MyBooking({super.key});
@@ -30,36 +31,40 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Color(0xFFF5F2EA),
       appBar: AppBar(
-        title: Row(
-          children: [
-            IconButton(onPressed: (){},
-                icon: Icon(Icons.arrow_back_ios, color: Colors.white,),
+        title: Text("My Booking", style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 4,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFd2c8ae), Colors.white],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
-            Text("My Booking", style: TextStyle(color: Colors.white),),
-          ],
+          ),
         ),
-        // title: Text("My Booking", style: TextStyle(color: Colors.white),),
-        backgroundColor: Colors.green.shade700,
         bottom: PreferredSize(// USE TO SEPERATE THE TEXTBUTTON
-          preferredSize: Size.fromHeight(48),//SIZE STARTING FROM THE END OF THE TEXTBUTTON HEIGHT
+          preferredSize: Size.fromHeight(56),//SIZE STARTING FROM THE END OF THE TEXTBUTTON HEIGHT
           child: Column(
             children: [
-              Container(height: 16, color: Colors.white,),
+              Container(height: 28, color: Colors.white,),
               Container(
                 color: Colors.white,
                 child: TabBar(
                   controller: _tabController,
                   indicator: BoxDecoration(
-                    color: Colors.green[500],
+                    color: Color(0xFFF5F2EA),
                     borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                   ),
                   // indicatorColor: Colors.black,
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.black,
+                  labelColor: Color(0xFF0d9488),
+                  unselectedLabelColor: Colors.grey,
                   tabs: const [
-                    Tab(child: SizedBox(width: 300, child: Center(child: Text("Pending")))),
-                    Tab(child: SizedBox(width: 300, child: Center(child: Text("Completed"),),),),
+                    Tab(child: SizedBox(width: 300, child: Center(child: Text("Upcoming", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),))),
+                    Tab(child: SizedBox(width: 300, child: Center(child: Text("Completed", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),),)),
                   ],
                 ),
               ),
@@ -68,11 +73,18 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
         ),
       ),
       body: Container(
-        color: Color(0xFFF5F2EA),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFFF5F2EA), Colors.white],
+            begin: Alignment.topRight,
+            end: Alignment.bottomCenter
+          )
+        ),
+
         child: TabBarView(
           controller: _tabController,
           children: [
-            _pendingBookings(),
+            _upcomingBookings(),
             _completedBookings(),
           ],
         ),
@@ -80,7 +92,7 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
     );
   }
 
-  Widget _pendingCard({
+  Widget _upcomingCard({
     required String name,
     required String type,
     required String checkIn,
@@ -102,7 +114,7 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(width: 8,),
+            SizedBox(width: 11,),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,14 +137,17 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 2, vertical: 0),
                           decoration: BoxDecoration(
-                            color: status.toLowerCase() == "pending" ? Colors.red[100] : Colors.green[100],
-                            border: Border.all(color: status.toLowerCase() == "pending" ? Colors.red[800]! : Colors.green[800]!),
+                            color: status.toLowerCase() == "upcoming" ? Colors.red[100]
+                                : status.toLowerCase() == "waiting" ? Colors.yellow[100] : Colors.green[100],
+                            border: Border.all(color: status.toLowerCase() == "upcoming" ? Colors.red[800]!
+                                : status.toLowerCase() == "waiting" ? Colors.yellow[800]! : Colors.green[800]!),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
                             status,
                             style: TextStyle(
-                              color: status.toLowerCase() == "pending" ? Colors.red[900] : Colors.green[900],
+                              color: status.toLowerCase() == "upcoming" ? Colors.red[900]
+                                  : status.toLowerCase() == "waiting" ? Colors.yellow[900] : Colors.green[900],
                               fontSize: 10
                             ),
                           ),
@@ -179,7 +194,7 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(width: 8,),
+            SizedBox(width: 11,),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,7 +215,7 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
                   // SizedBox(height: 4,),
                   TextButton(onPressed: detailPage,
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.green[400]),
+                        backgroundColor: MaterialStateProperty.all(Color(0xFF0d9488)),
                         foregroundColor: MaterialStateProperty.all(Colors.white),
                       ),
                           child: Text("Booking Detail"),
@@ -214,23 +229,30 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
     );
   }
 
-  Widget _pendingBookings() {
+  Widget _upcomingBookings() {
     return ListView(
       padding: EdgeInsets.all(10),
       children: [
-        _pendingCard(
+        _upcomingCard(
           name: "Ulin Mahoni West Jakarta",
           type: "Alpha Room",
           checkIn: "check in 15 Mar 2025",
           checkOut: "check out 17 Mar 2025",
           status: "On-going",
         ),
-        _pendingCard(
+        _upcomingCard(
           name: "Ulin Mahoni West Jakarta",
           type: "Alpha Room",
           checkIn: "check in 19 Mar 2025",
           checkOut: "check out 21 Mar 2025",
-          status: "Pending",
+          status: "Waiting",
+        ),
+        _upcomingCard(
+          name: "Ulin Mahoni West Jakarta",
+          type: "Alpha Room",
+          checkIn: "check in 19 Mar 2025",
+          checkOut: "check out 21 Mar 2025",
+          status: "Upcoming",
         ),
       ],
     );

@@ -1,4 +1,4 @@
-#Wed Apr 30 13:03:05 WIB 2025
+#Fri May 02 12:49:59 WIB 2025
 base.0=C\:\\Users\\yarig\\StudioProjects\\flutter_list\\ulinmahoniapps\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\yarig\\StudioProjects\\flutter_list\\ulinmahoniapps\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
 base.2=C\:\\Users\\yarig\\StudioProjects\\flutter_list\\ulinmahoniapps\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex

@@ -41,6 +41,7 @@ class _CustSupportState extends State<CustSupport> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
@@ -77,7 +78,7 @@ class _CustSupportState extends State<CustSupport> {
                 child: Center(
                   child: Card(
                     // color: Theme.of(context).primaryColor,
-                    color: Colors.green[900],
+                    color: Color(0xFF0d9488),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50),),
                     child: Padding(
                       padding: const EdgeInsets.all(8),
@@ -100,7 +101,7 @@ class _CustSupportState extends State<CustSupport> {
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   constraints: BoxConstraints(maxWidth: 250),
                   decoration: BoxDecoration(
-                    color: message.sentByMe ? Colors.green : Colors.white,
+                    color: message.sentByMe ? Color(0xFF0d9488) : Colors.white,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(16),
                       topLeft: Radius.circular(16),
@@ -178,7 +179,7 @@ class _CustSupportState extends State<CustSupport> {
                     }
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                    backgroundColor: MaterialStateProperty.all(Color(0xFF0d9488)),
                   ),
                   icon: Icon(
                     Icons.send,

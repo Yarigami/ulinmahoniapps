@@ -36,24 +36,38 @@ class _MainHomePageState extends State<MainHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.green,
-        unselectedItemColor: Colors.red,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "My Booking"),
-          // BottomNavigationBarItem(icon: Icon(Icons.home_work), label: "Smart Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.call), label: "UMI"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "My Profile"),
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          // color: Colors.red,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 10,
+              spreadRadius: 2,
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          selectedItemColor: Colors.green,
+          unselectedItemColor: Colors.red,
+          backgroundColor: Colors.white,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          type: BottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "My Booking"),
+            // BottomNavigationBarItem(icon: Icon(Icons.home_work), label: "Smart Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.call), label: "UMI"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "My Profile"),
+          ],
+        ),
       ),
     );
   }

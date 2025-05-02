@@ -15,10 +15,21 @@ class _BookingDetailState extends State<BookingDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        // title: TextButton(onPressed: (){},
-        //     child: Icon(Icons.arrow_back_ios, color: Colors.white,)),
-        backgroundColor: Colors.green.shade700,
+        title: Text("Ulin Mahoni West Jakarta", style: TextStyle(fontWeight: FontWeight.bold),),
+        backgroundColor: Color(0xFFd2c8ae),
+        elevation: 4,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFd2c8ae), Color(0xFFF5F2EA)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          )
+        ),
+        foregroundColor: Colors.black,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,6 +45,13 @@ class _BookingDetailState extends State<BookingDetail> {
           Container(
             // margin: EdgeInsets.all(16),
             width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFFF5F2EA), Color(0xFFF5F2EA)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
             padding: EdgeInsets.all(24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,18 +65,11 @@ class _BookingDetailState extends State<BookingDetail> {
                 _info("Harga Per Malam:", "RP. 200.000"),
                 _info("Jumlah Malam:", "3"),
                 _info("Harga Per Malam:", "RP. 200.000"),
-                _info("Harga Total:", "RP. 600.000", labelColor: Colors.green[700]),
+                _info("Harga Total:", "RP. 600.000", labelColor: Colors.green),
                 _info("Diskon:", "10% (RP. 60.000)"),
                 Divider(height: 20, color: Colors.black,),
-                _info("Harga Terakhir:", "RP. 540.000", isBold: true, labelColor: Colors.green[800],),
+                _info("Harga Terakhir:", "RP. 540.000", isBold: true, labelColor: Color(0xFF0d9488),),
                 SizedBox(height: 16,),
-                // TextButton(onPressed: myBooking,
-                //   style: ButtonStyle(
-                //     backgroundColor: MaterialStateProperty.all(Colors.green.shade400),
-                //     foregroundColor: MaterialStateProperty.all(Colors.white),
-                //   ),
-                //   child: Text("Return")
-                // ),
               ],
             ),
           )
