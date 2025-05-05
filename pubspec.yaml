@@ -38,7 +38,9 @@ dependencies:
   intl: ^0.18.1
   grouped_list: ^4.2.0
   link_text: ^0.2.1
-#  passwordfield: ^0.2.0
+  social_login_buttons: ^1.0.7
+#  simple_icons: ^6.0.0
+#  auth_buttons: ^3.0.0
 #  flutter_signin_button: ^2.0.0
 
 dev_dependencies:
@@ -62,6 +64,7 @@ flutter:
     - assets/images/apple.png
     - assets/images/facebook.png
     - assets/images/google.png
+    - assets/images/google.webp
     - assets/images/logo.png
     - assets/images/login_bg.png
     - assets/images/Successmark.png

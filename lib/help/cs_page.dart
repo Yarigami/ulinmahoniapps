@@ -95,60 +95,83 @@ class _CustSupportState extends State<CustSupport> {
                 alignment: message.sentByMe
                     ? Alignment.centerRight
                     : Alignment.centerLeft,
-                child: Container(
-                  // elevation: 8,
-                  margin: EdgeInsets.symmetric(vertical: 4),
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  constraints: BoxConstraints(maxWidth: 250),
-                  decoration: BoxDecoration(
-                    color: message.sentByMe ? Color(0xFF0d9488) : Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(16),
-                      topLeft: Radius.circular(16),
-                      bottomRight: message.sentByMe ? Radius.circular(0) : Radius.circular(16),
-                      bottomLeft: message.sentByMe ? Radius.circular(16) : Radius.circular(0),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Container(
+                    // elevation: 8,
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    constraints: BoxConstraints(maxWidth: 250),
+                    decoration: BoxDecoration(
+                      color: message.sentByMe ? Color(0xFF0d9488) : Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(16),
+                        topLeft: Radius.circular(16),
+                        bottomRight: message.sentByMe ? Radius.circular(0) : Radius.circular(16),
+                        bottomLeft: message.sentByMe ? Radius.circular(16) : Radius.circular(0),
+                      ),
+                      boxShadow: [
+                        BoxShadow(color: Colors.black, blurRadius: 4, offset: Offset(2, 2)),
+                      ],
                     ),
-                    boxShadow: [
-                      BoxShadow(color: Colors.black, blurRadius: 4, offset: Offset(2, 2)),
-                    ],
-                  ),
-                  child: Text(
-                    message.text,
-                    style: TextStyle(
-                        color: message.sentByMe ? Colors.white : Colors.black,
+                    child: Text(
+                      message.text,
+                      style: TextStyle(
+                          color: message.sentByMe ? Colors.white : Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
           ),
-          Container(
-            // color: Colors.grey[200],
-            decoration: BoxDecoration(
-              color: Color(0xFFF5F2EA),
-              borderRadius: BorderRadius.circular(30),
-            ),
-            // padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(12),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        // borderSide: BorderSide(color: Colors.red),
+          // send message
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+            child: Container(
+              // color: Colors.grey[200],
+              decoration: BoxDecoration(
+                color: Color(0xFFF5F2EA),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              // padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(12),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                          // borderSide: BorderSide(color: Colors.red),
+                        ),
+                        hintText: "Message",
+                        suffixIcon: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.image),
+                        ),
                       ),
-                      hintText: "Message",
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.image),
-                      ),
+                      onSubmitted: (text) {
+                        if (text.isNotEmpty) {
+                          final message = Message(
+                            text: text,
+                            date: DateTime.now(),
+                            sentByMe: true,
+                          );
+                          setState(() {
+                            messages.add(message);
+                          });
+                          _controller.clear();
+                        }
+                      },
                     ),
-                    onSubmitted: (text) {
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      final text = _controller.text;
                       if (text.isNotEmpty) {
                         final message = Message(
                           text: text,
@@ -161,32 +184,16 @@ class _CustSupportState extends State<CustSupport> {
                         _controller.clear();
                       }
                     },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Color(0xFF0d9488)),
+                    ),
+                    icon: Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    final text = _controller.text;
-                    if (text.isNotEmpty) {
-                      final message = Message(
-                        text: text,
-                        date: DateTime.now(),
-                        sentByMe: true,
-                      );
-                      setState(() {
-                        messages.add(message);
-                      });
-                      _controller.clear();
-                    }
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Color(0xFF0d9488)),
-                  ),
-                  icon: Icon(
-                    Icons.send,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

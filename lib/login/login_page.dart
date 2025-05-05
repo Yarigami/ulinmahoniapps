@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'register.dart';
 import 'package:ulinmahoniapps/main.dart';
 import 'forgot_password.dart';
+import 'package:social_login_buttons/social_login_buttons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -118,10 +120,19 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           SizedBox(),
-                          _socialMedia("assets/images/facebook.png"),
-                          _socialMedia("assets/images/google.png"),
-                          _socialMedia("assets/images/apple.png"),
-                          SizedBox(),
+                          // _socialMedia("assets/images/facebook.png"),
+                          _socialMedia(icon: Icon(FontAwesomeIcons.facebook, color: Colors.blue, size: 40,)),
+                          _socialMedia(imgPath: "assets/images/google.webp"),
+                          _socialMedia(icon:  Icon(FontAwesomeIcons.apple, color: Colors.black, size: 40,)),
+                          // _socialMedia("assets/images/apple.png"),
+                          // SizedBox(),
+                          // SocialLoginButton(
+                          //   buttonType: SocialLoginButtonType.google,
+                          //   onPressed: () {},
+                          // ),
+                          // Icon(FontAwesomeIcons.facebook, color: Colors.blue),
+                          // Icon(FontAwesomeIcons.google),
+                          // Icon(FontAwesomeIcons.apple, color: Colors.black),
                         ],
                       ),
                     ),
@@ -180,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _socialMedia(String imgPath) {
+  Widget _socialMedia({String? imgPath, Icon? icon}) {
     return InkWell(
       onTap: () {},
       borderRadius: BorderRadius.circular(20),
@@ -193,7 +204,8 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: Colors.grey),
         ),
-        child: Image.asset(imgPath),
+        child: imgPath != null ?
+        Image.asset(imgPath) : icon ?? Container()
       ),
     );
   }
