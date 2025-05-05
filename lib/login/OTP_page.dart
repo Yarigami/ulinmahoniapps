@@ -38,7 +38,7 @@ class _OtpPageState extends State<OtpPage> {
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
                         "Enter the verification code we just sent on you email address.",
-                        // style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Color(0xFF8391A1)),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -102,14 +102,14 @@ class _OtpPageState extends State<OtpPage> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                    foregroundColor: MaterialStateProperty.all(Colors.green),
+                    foregroundColor: MaterialStateProperty.all(Color(0xFF124624)),
                     overlayColor: MaterialStateProperty.all(Colors.transparent),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Didn't recieve code? ", style: TextStyle(color: Colors.black)),
-                      Text("Resend"),
+                      Text("Didn't recieve code? ", style: TextStyle(color: Color(0xFF1E232C))),
+                      Text("Resend", style: TextStyle(fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),

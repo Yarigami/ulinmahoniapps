@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                            foregroundColor: MaterialStateProperty.all(Colors.grey[600]),
+                            foregroundColor: MaterialStateProperty.all(Color(0xFF6A707C)),
                             overlayColor: MaterialStateProperty.all(Colors.transparent),
                           ),
                           child: Text("Forgot Password?"),
@@ -95,15 +95,15 @@ class _LoginPageState extends State<LoginPage> {
                               Expanded(
                                 child: Divider(
                                   thickness: 1,
-                                  color: Colors.grey,
+                                  color: Color(0xFFE8ECF4),
                                   endIndent: spacing,
                                 ),
                               ),
-                              Text("Or Login With"),
+                              Text("Or Login With", style: TextStyle(color: Color(0xFF6A707C)),),
                               Expanded(
                                 child: Divider(
                                   thickness: 1,
-                                  color: Colors.grey,
+                                  color: Color(0xFFE8ECF4),
                                   endIndent: spacing,
                                 ),
                               ),
@@ -145,8 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
-                      Text("Don't have an account? ", style: TextStyle(color: Colors.black)),
-                      Text("Register Now"),
+                      Text("Don't have an account? ", style: TextStyle(color: Color(0xFF1E232C))),
+                      Text("Register Now", style: TextStyle(fontWeight: FontWeight.bold),),
                     ],
                   ),
                 ),
@@ -173,6 +173,7 @@ class _LoginPageState extends State<LoginPage> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(12),
           hintText: hint,
+          hintStyle: TextStyle(color: Color(0xFF8391A1)),
           border: InputBorder.none,
         ),
       ),

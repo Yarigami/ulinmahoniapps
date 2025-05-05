@@ -5,20 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4359c8e-3893-4e7c-a259-60fc433b460c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/59a48ca32f6b635e5126abc51af02e84/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/59a48ca32f6b635e5126abc51af02e84/.filecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/59a48ca32f6b635e5126abc51af02e84/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/59a48ca32f6b635e5126abc51af02e84/app.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/59a48ca32f6b635e5126abc51af02e84/kernel_snapshot_program.d" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/59a48ca32f6b635e5126abc51af02e84/kernel_snapshot_program.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/59a48ca32f6b635e5126abc51af02e84/kernel_snapshot_program.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/59a48ca32f6b635e5126abc51af02e84/kernel_snapshot_program.stamp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/kernel_blob.bin.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/kernel_blob.bin.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/cxx/Debug/551o6h72/logs/arm64-v8a/generate_cxx_metadata_80_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/cxx/Debug/551o6h72/logs/arm64-v8a/generate_cxx_metadata_80_timing.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/cxx/Debug/551o6h72/logs/armeabi-v7a/generate_cxx_metadata_84_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/cxx/Debug/551o6h72/logs/armeabi-v7a/generate_cxx_metadata_84_timing.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/cxx/Debug/551o6h72/logs/x86/generate_cxx_metadata_84_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/cxx/Debug/551o6h72/logs/x86/generate_cxx_metadata_84_timing.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/cxx/Debug/551o6h72/logs/x86_64/generate_cxx_metadata_84_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/cxx/Debug/551o6h72/logs/x86_64/generate_cxx_metadata_84_timing.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/.last_build_id" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/.last_build_id" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/merge-state" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/merge-state" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_native_libs/debug/mergeDebugNativeLibs/out/lib/x86_64/libflutter.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/stripped_native_libs/debug/stripDebugDebugSymbols/out/lib/x86_64/libflutter.so" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk.sha1" afterDir="false" />
@@ -30,7 +26,6 @@
       <change beforePath="$PROJECT_DIR$/lib/login/password_changed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/password_changed.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/login/register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/register.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/login/welcome_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/welcome_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/profile/profile_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/profile/profile_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

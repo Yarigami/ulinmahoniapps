@@ -120,7 +120,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         child: const Text(
                           "Continue as a guest",
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Color(0xFF124624),
                             decoration: TextDecoration.underline,
                           ),
                         ),

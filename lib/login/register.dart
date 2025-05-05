@@ -123,8 +123,8 @@ class _RegisteringState extends State<Registering> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Already have an account? ", style: TextStyle(color: Colors.black)),
-                      Text("Login Now"),
+                      Text("Already have an account? ", style: TextStyle(color: Color(0xFF1E232C))),
+                      Text("Login Now", style: TextStyle(fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
@@ -153,6 +153,7 @@ class _RegisteringState extends State<Registering> {
           decoration: InputDecoration(
             contentPadding: EdgeInsets.all(12),
             hintText: hint,
+            hintStyle: TextStyle(color: Color(0xFF8391A1)),
             border: InputBorder.none,
           ),
         ),
@@ -171,7 +172,7 @@ class _RegisteringState extends State<Registering> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.grey),
+          border: Border.all(color: Color(0xFF6A707C)),
         ),
         child: Image.asset(imgPath),
       ),

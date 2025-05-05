@@ -40,6 +40,7 @@ class _PasswordChangedState extends State<PasswordChanged> {
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
                         "Your password has been changed succesfully",
+                        style: TextStyle(color: Color(0xFF8391A1)),
                       ),
                     ),
                     SizedBox(height: 20),

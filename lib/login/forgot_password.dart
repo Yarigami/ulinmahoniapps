@@ -39,7 +39,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
                         "Don't worry! It occurs. Please enter the email address linked with your account.",
-                        // style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Color(0xFF8391A1)),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -91,8 +91,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Remember Password? ", style: TextStyle(color: Colors.black)),
-                      Text("Login"),
+                      Text("Remember Password? ", style: TextStyle(color: Color(0xFF1E232C))),
+                      Text("Login", style: TextStyle(fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
@@ -121,6 +121,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           decoration: InputDecoration(
             contentPadding: EdgeInsets.all(12),
             hintText: hint,
+            hintStyle: TextStyle(color: Color(0xFF8391A1)),
             border: InputBorder.none,
           ),
         ),

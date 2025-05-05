@@ -39,6 +39,7 @@ class _NewPasswordState extends State<NewPassword> {
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
                           "Your new password must be unique from those previously used.",
+                          style: TextStyle(color: Color(0xFF8391A1)),
                         ),
                       ),
                       SizedBox(height: 20),
@@ -101,6 +102,7 @@ class _NewPasswordState extends State<NewPassword> {
           decoration: InputDecoration(
             contentPadding: EdgeInsets.all(12),
             hintText: hint,
+            hintStyle: TextStyle(color: Color(0xFF8391A1)),
             border: InputBorder.none,
           ),
         ),
