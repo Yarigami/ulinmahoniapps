@@ -210,7 +210,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                           borderRadius: BorderRadius.circular(20),
                           selectedColor: Colors.white,
-                          fillColor: Colors.green,
+                          fillColor: Color(0xFF0d9488),
                           constraints: BoxConstraints(
                             minWidth: buttonWidth,
                           ),
