@@ -2,38 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/widgets/productcard.dart';
 import '../../../../core/widgets/backbutton.dart';
-import '../../data/housing_data.dart';
+import '../../../../core/layout/mainlayout.dart'; // pastikan path ini benar
+import '../../data/searchresult_data.dart';
 
-class HousingPage extends StatefulWidget {
-  const HousingPage({Key? key});
+class SearchResult extends StatefulWidget {
+  const SearchResult({Key? key});
 
   @override
-  State<HousingPage> createState() => _HousingPageState();
+  State<SearchResult> createState() => _SearchResultState();
 }
 
-class _HousingPageState extends State<HousingPage> {
+class _SearchResultState extends State<SearchResult> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
+    return MainLayout(
+      currentIndex: 4,
+      showBottomNav: false,
+      showNavBar: false,
+      showContactBar: true,
+      pesansekarangbutton: false,
+      child: SafeArea(
         child: Column(
           children: [
-            Container( // Bungkus dengan Container
-              decoration: const BoxDecoration( // Atur dekorasi
-                color: Color(0xFF005F21), // Warna latar belakang hijau gelap
+            Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFF005F21),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
                 children: [
-                  CustomBackButton(iconColor: Colors.white,),
+                  CustomBackButton(iconColor: Colors.white),
                   const SizedBox(width: 8),
                   const Text(
                     'Housing',
-                    style: TextStyle( // Atur style untuk teks
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w300,
-                      color: Colors.white, // Warna teks putih
+                      color: Colors.white,
                     ),
                   ),
                 ],

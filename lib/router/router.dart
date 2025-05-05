@@ -1,8 +1,16 @@
 import 'package:go_router/go_router.dart';
+import 'package:ulinmahoniapps/features/auth/presentation/pages/createnewpassword_page.dart';
+import 'package:ulinmahoniapps/features/auth/presentation/pages/forgotpassword_page.dart';
+import 'package:ulinmahoniapps/features/auth/presentation/pages/login_page.dart';
+import 'package:ulinmahoniapps/features/auth/presentation/pages/otpverify_page.dart';
+import 'package:ulinmahoniapps/features/auth/presentation/pages/passwordchanged_page.dart';
+import 'package:ulinmahoniapps/features/auth/presentation/pages/register_page.dart';
+import 'package:ulinmahoniapps/features/auth/presentation/pages/welcoming_page.dart';
 import 'package:ulinmahoniapps/features/book/presentation/pages/bookhousepage.dart';
 import 'package:ulinmahoniapps/features/detailproperty/presentation/pages/detailhousepage.dart';
-import 'package:ulinmahoniapps/features/housing/presentation/pages/housingpage.dart';
-import 'package:ulinmahoniapps/features/UM/presentation/pages/UMpage.dart';
+import 'package:ulinmahoniapps/features/help/presentation/pages/help_page.dart';
+import 'package:ulinmahoniapps/features/housing/presentation/pages/searchresult_page.dart';
+import 'package:ulinmahoniapps/features/UM/presentation/pages/um_page.dart';
 import 'package:ulinmahoniapps/features/comingsoon/presentation/pages/comingsoon.dart';
 import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybookingdetailspage.dart';
 import 'package:ulinmahoniapps/features/payment/presentation/paymentpage.dart';
@@ -45,11 +53,17 @@ final GoRouter appRouter = GoRouter(
           path: '/comingsoon',
           builder: (context, state) => const ComingSoonPage(),
         ),
+        GoRoute(
+          path: '/profile',
+          builder: (context, state) => const ProfilePage(),
+        ),
+        GoRoute(
+          path: '/mybookingdetails',
+          builder: (context, GoRouterState state) {
+            return const MyBookingDetail();
+          },
+        ),
       ],
-    ),
-    GoRoute(
-      path: '/profile',
-      builder: (context, state) => const ProfilePage(),
     ),
     GoRoute(
       path: '/browse-all',
@@ -60,8 +74,8 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const BookHousePage(),
     ),
     GoRoute(
-      path: '/housing',
-      builder: (context, state) => const HousingPage(),
+      path: '/search',
+      builder: (context, state) => const SearchResult(),
     ),
     GoRoute(
       path: '/detailhouse',
@@ -72,14 +86,40 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => PaymentPage(),
     ),
     GoRoute(
-      path: '/mybookingdetails',
-      builder: (context, GoRouterState state) {
-        return const MyBookingDetail();
-      },
-    ),
-    GoRoute(
       path: '/updateprofile',
       builder: (context, state) => UpdateProfile(),
+    ),
+    GoRoute(
+      path: '/welcome',
+      builder: (context, state) => WelcomePage(),
+    ),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => Registerpage(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => LoginPage(),
+    ),
+    GoRoute(
+      path: '/forgetpassword',
+      builder: (context, state) => ForgotPassword(),
+    ),
+    GoRoute(
+      path: '/otp',
+      builder: (context, state) => OTP_VerifyPage(),
+    ),
+    GoRoute(
+      path: '/createnewpassword',
+      builder: (context, state) => CreateNewPassword(),
+    ),
+    GoRoute(
+      path: '/passwordchanged',
+      builder: (context, state) => PasswordChanged(),
+    ),
+    GoRoute(
+      path: '/help',
+      builder: (context, state) => HelpPage(),
     ),
   ],
 );

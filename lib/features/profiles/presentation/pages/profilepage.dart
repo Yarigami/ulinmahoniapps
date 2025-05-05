@@ -17,8 +17,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return MainLayout(
-      showBottomNav: true,
-      showNavBar: true,
+      showBottomNav: false,
+      showNavBar: false,
       currentIndex: 3,
       child: SafeArea(
         child: Column(
@@ -89,14 +89,18 @@ class _ProfilePageState extends State<ProfilePage> {
                         text: "My Account",
                         subText: "Make changes to your account",
                         trailing: Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
-                        onTap: () {},
+                        onTap: () {
+                          context.push('/updateprofile');
+                        },
                       ),
                       _buildMenuItem(
                         icon: Icons.people_outline,
                         text: "Saved Beneficiary",
                         subText: "Manage your saved account",
                         trailing: Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
-                        onTap: () {},
+                        onTap: () {
+                          context.push('/comingsoon');
+                        },
                       ),
                       _buildMenuItem(
                         icon: Icons.lock_outline,
@@ -111,21 +115,27 @@ class _ProfilePageState extends State<ProfilePage> {
                             });
                           },
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          context.push('/comingsoon');
+                        },
                       ),
                       _buildMenuItem(
                         icon: Icons.security_outlined,
                         text: "Two-Factor Authentication",
                         subText: "Further secure your account for safety",
                         trailing: Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
-                        onTap: () {},
+                        onTap: () {
+                          context.push('/comingsoon');
+                        },
                       ),
                       _buildMenuItem(
                         icon: Icons.logout,
                         text: "Log out",
                         subText: "Further secure your account for safety",
                         trailing: Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
-                        onTap: () {},
+                        onTap: () {
+                          context.push('/welcome');
+                        },
                       ),
                       SizedBox(height: 32),
                       Padding(
@@ -144,13 +154,17 @@ class _ProfilePageState extends State<ProfilePage> {
                         icon: Icons.help_outline,
                         text: "Help & Support",
                         trailing: Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
-                        onTap: () {},
+                        onTap: () {
+                          context.push('/help');
+                        },
                       ),
                       _buildMenuItem(
                         icon: Icons.info_outline,
                         text: "About App",
                         trailing: Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
-                        onTap: () {},
+                        onTap: () {
+                          context.push('/comingsoon');
+                        },
                       ),
                     ],
                   ),

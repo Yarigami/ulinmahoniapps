@@ -40,6 +40,10 @@ dependencies:
   intl: ^0.20.2
   url_launcher: ^6.3.1
   intl_phone_field: ^3.2.0
+  link_text: ^0.2.1
+  grouped_list: ^6.0.0
+  lottie: ^3.3.1
+  flutter_riverpod: ^2.6.1
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +72,15 @@ flutter:
     - assets/images/ulinhouse.jpg
     - assets/images/ulinmahonilogo.png
     - assets/images/whatsapplogo.png
+    - assets/images/login_bg.png
+    - assets/images/placeholder.png
+    - assets/images/apple.png
+    - assets/images/facebook.png
+    - assets/images/google.png
+    - assets/images/logo.png
+    - assets/images/login_bg.png
+    - assets/images/Successmark.png
+    - assets/images/house.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -36,8 +36,8 @@ class _MyBookingDetailState extends State<MyBookingDetail> {
   Widget build(BuildContext context) {
     return MainLayout(
       currentIndex: 1,
-      showNavBar: true,
-      showBottomNav: true,
+      showNavBar: false,
+      showBottomNav: false,
       child: SafeArea( // Mengganti Scaffold dengan SafeArea
         child: Column(
           children: [

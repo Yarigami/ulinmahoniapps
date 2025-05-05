@@ -44,13 +44,13 @@ class _DetailHousePageState extends State<DetailHousePage> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return MainLayout(
       currentIndex: 0,
       showNavBar: false,
       showBottomNav: false,
       showContactBar: true,
+      pesansekarangbutton: false,
       child: SafeArea(
         child: _isLoading
             ? Center(child: CircularProgressIndicator())
@@ -181,7 +181,6 @@ class _DetailHousePageState extends State<DetailHousePage> {
       ),
     );
   }
-
 
   // Widget pembantu untuk membuat ikon fasilitas
   Widget _buildFacilityIcon(IconData icon, String label) {

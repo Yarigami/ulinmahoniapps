@@ -12,13 +12,13 @@ const Map<String, dynamic> dummyPropertyData = {
 const List<Map<String, dynamic>> dummyRoomTypes = [
   {
     'name': 'Alpha Room',
-    'price': 'Rp 200.000/malam',
+    'price': 'Mulai dari Rp 200.000',
     'image': 'assets/images/ulinhouse.jpg',
     'description': 'Kamar nyaman dengan desain modern',
   },
   {
     'name': 'Beta Room',
-    'price': 'Rp 250.000/malam',
+    'price': 'Mulai dari Rp 2.5000.000',
     'image': 'assets/images/ulinhouse.jpg',
     'description': 'Kamar luas dengan fasilitas lengkap',
   },

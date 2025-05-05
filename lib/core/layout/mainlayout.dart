@@ -9,6 +9,7 @@ class MainLayout extends StatelessWidget {
   final bool showBottomNav;
   final bool showNavBar;
   final bool showContactBar;
+  final bool pesansekarangbutton; // 👈 Tambahan di sini
   final Color backgroundColor;
 
   const MainLayout({
@@ -17,7 +18,8 @@ class MainLayout extends StatelessWidget {
     required this.child,
     this.showBottomNav = true,
     this.showNavBar = true,
-    this.showContactBar = false, // <- Nilai default true
+    this.showContactBar = false,
+    this.pesansekarangbutton = true, // 👈 Default true agar backward compatible
     this.backgroundColor = const Color(0xFFF5F2EA),
   }) : super(key: key);
 
@@ -30,10 +32,13 @@ class MainLayout extends StatelessWidget {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (showContactBar) BottomContactBar(), // Tambahkan bottomContactBar jika showContactBar true
-          if (showBottomNav) BottomNavBar(currentIndex: currentIndex), //bottomNavBar
+          if (showContactBar)
+            BottomContactBar(isAvailable: pesansekarangbutton), // 👈 Diteruskan ke widget
+          if (showBottomNav)
+            BottomNavBar(currentIndex: currentIndex),
         ],
       ),
     );
   }
 }
+

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl/intl.dart';
+import 'package:ulinmahoniapps/core/widgets/appbar.dart';
+import '../../../../core/layout/mainlayout.dart';
 
 class UpdateProfile extends StatefulWidget {
   const UpdateProfile({super.key});
@@ -17,135 +19,145 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text("Bio-data"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage("assets/images/ulinhouse.jpg"),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 12, 0, 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("User"),
-                ],
+    return MainLayout(
+      currentIndex: 3,
+      showBottomNav: true,
+      showNavBar: false,
+      backgroundColor: Colors.white,
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              CustomAppBar(title: "Bio-data", showBackButton: true),
+              const SizedBox(height: 16),
+              CircleAvatar(
+                radius: 40,
+                backgroundImage: AssetImage("assets/images/ulinhouse.jpg"),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("User@gmail.com"),
-              ],
-            ),
-            SizedBox(height: 24,),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
-              // padding: const EdgeInsets.all(32.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "First Name",
+              const SizedBox(height: 12),
+              Text(
+                "Vincent",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+              Text(
+                "vincent@gmail.com",
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              ),
+              const SizedBox(height: 24),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("What’s your first name?", style: TextStyle(fontSize: 14)),
+                    SizedBox(height: 6),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "First Name",
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
-              // padding: const EdgeInsets.all(32.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Last Name",
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("And your last name?", style: TextStyle(fontSize: 14)),
+                    SizedBox(height: 6),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Last Name",
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
-              child: IntlPhoneField(
-                decoration: InputDecoration(
-                  labelText: "Phone Number",
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                  ),
-                  counterText: "",
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Phone number", style: TextStyle(fontSize: 14)),
+                    SizedBox(height: 6),
+                    IntlPhoneField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        counterText: "",
+                      ),
+                      initialCountryCode: "NG",
+                    ),
+                  ],
                 ),
-                initialCountryCode: "ID",
-                inputFormatters: [],// max number of input
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0 ),
-              child: DropdownButtonFormField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Gender",
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Select your gender", style: TextStyle(fontSize: 14)),
+                    SizedBox(height: 6),
+                    DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                      value: genderValue,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          genderValue = newValue!;
+                        });
+                      },
+                      items: gender
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value, child: Text(value));
+                      }).toList(),
+                    ),
+                  ],
                 ),
-                value: genderValue,
-                onChanged: (String? newValue){
-                  setState(() {
-                    genderValue = newValue!;
-                  });
-                },
-                // item list
-                items: gender.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value)
-                  );
-                }).toList(),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0 ,horizontal: 32.0),
-              child: TextField(
-                controller: _dateController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Date",
-                  prefixIcon: Icon(Icons.calendar_today),
-                  // enabledBorder: OutlineInputBorder(
-                  //   borderSide: BorderSide()
-                  // )
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("What is your date of birth?", style: TextStyle(fontSize: 14)),
+                    SizedBox(height: 6),
+                    TextField(
+                      controller: _dateController,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Date",
+                        prefixIcon: Icon(Icons.calendar_today),
+                      ),
+                      onTap: _selectDate,
+                    ),
+                  ],
                 ),
-                readOnly: true,
-                onTap: (){
-                  _selectDate();
-                },
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 32.0),
-              child: SizedBox(
+              const SizedBox(height: 32),
+              SizedBox(
                 width: 200,
-                height: 60,
-                child: TextButton(
-                  onPressed:  () {},
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green[400]),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                height: 52,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: forestGreenColor,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                  child: Text(
-                    "Update Profile",
-                    style: TextStyle(fontSize: 20),
-                  ),
+                  child: Text("Update Profile", style: TextStyle(fontSize: 16)),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       ),
     );
@@ -162,7 +174,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
       String dateFormat = DateFormat('dd-MM-yyyy').format(_picked);
       setState(() {
         _dateController.text = dateFormat;
-        // _dateController.text = DateFormat('yyyy-MM-dd').format(_picked);
       });
     }
   }

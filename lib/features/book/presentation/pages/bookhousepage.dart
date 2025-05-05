@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '../../../../../core/layout/mainlayout.dart';
 import '../../../../../core/widgets/backbutton.dart';
 import '../../data/bookhouse_data.dart';
+import '../widgets/roomfacility_section.dart';
+import 'package:go_router/go_router.dart'; // Import GoRouter untuk navigasi
 
 class BookHousePage extends StatefulWidget {
   const BookHousePage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class BookHousePage extends StatefulWidget {
 class _BookHousePageState extends State<BookHousePage> {
   // Variabel State
   bool _isLoading = false;
-  dynamic _propertyData = {}; // Inisialisasi dengan Map kosong
+  dynamic _propertyData = {};
   String? _errorMessage;
 
   // Controller untuk TextField tanggal
@@ -50,14 +51,27 @@ class _BookHousePageState extends State<BookHousePage> {
 
   Future<void> _selectDate(TextEditingController controller) async {
     DateTime initialDate = DateTime.now();
-    DateTime firstDate = DateTime(2000);
-    DateTime lastDate = DateTime.now();
+    DateTime firstDate = DateTime.now();
+    DateTime lastDate = DateTime(2030);
 
     DateTime? _picked = await showDatePicker(
       context: context,
       initialDate: initialDate,
       firstDate: firstDate,
       lastDate: lastDate,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xFF004D40), // Warna tombol OK dan header
+              onPrimary: Colors.white,     // Warna teks di header
+              onSurface: Colors.black,     // Warna teks di body
+            ),
+            dialogBackgroundColor: Colors.white, // Background putih
+          ),
+          child: child!,
+        );
+      },
     );
     if (_picked != null) {
       String dateFormat = DateFormat('dd-MM-yyyy').format(_picked);
@@ -68,13 +82,13 @@ class _BookHousePageState extends State<BookHousePage> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return MainLayout(
       currentIndex: 0,
       showNavBar: false,
       showBottomNav: false,
       showContactBar: true,
+      pesansekarangbutton: true,
       child: SafeArea(
         child: Container(
           child: _isLoading
@@ -120,6 +134,20 @@ class _BookHousePageState extends State<BookHousePage> {
                           Text(
                             _propertyData['type'] ?? '',
                             style: const TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Text(
+                                _propertyData['prices'][1]['price'],
+                                style: const TextStyle(fontSize: 14, color: Colors.white),
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                _propertyData['prices'][0]['price'],
+                                style: const TextStyle(fontSize: 14, color: Colors.white),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -184,17 +212,6 @@ class _BookHousePageState extends State<BookHousePage> {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            _buildFacilityIcon(Icons.tv, 'Lounge'),
-                            _buildFacilityIcon(Icons.camera_alt, 'CCTV Area'),
-                            _buildFacilityIcon(Icons.wifi, 'Free Wifi'),
-                            _buildFacilityIcon(Icons.fitness_center, 'GYM'),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-
                         // Date Fields
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
@@ -221,15 +238,9 @@ class _BookHousePageState extends State<BookHousePage> {
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 16),
-                        _buildRoomFacilitySection(),
-
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Price',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        Center(
+                          child: buildRoomFacilitySection(),
                         ),
-                        const SizedBox(height: 16),
-                        _buildPriceSection(context, _propertyData['prices']),
                       ],
                     ),
                   ),
@@ -263,141 +274,6 @@ class _BookHousePageState extends State<BookHousePage> {
     );
   }
 
-  // Widget untuk menampilkan bagian Room Facility
-  Widget _buildRoomFacilitySection() {
-    return Row(
-      children: [
-        Expanded(
-          child: _buildRoomFacilityContent('assets/images/ulinhouse.jpg', 'Bedroom'),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: _buildRoomFacilityContent('assets/images/ulinhouse.jpg', 'Inside Bathroom'),
-        ),
-      ],
-    );
-  }
-
-  // Widget untuk menampilkan bagian Price
-  Widget _buildPriceSection(BuildContext context, List<Map<String, String>> prices) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch, // agar tinggi ikut maksimal
-        children: prices.map((price) {
-          return Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: GestureDetector(
-                onTap: () {
-                  context.push('/payment');
-                },
-                child: _buildPriceContent(
-                  price['label'] ?? '',
-                  'assets/images/ulinhouse.jpg',
-                  price['price'] ?? '',
-                  discount: price['discount'],
-                  context: context,
-                ),
-              ),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-
-  // Widget pembantu untuk membuat ikon fasilitas
-  Widget _buildFacilityIcon(IconData icon, String label) {
-    return Column(
-      children: [
-        Icon(icon, color: Color(0xFF004D40)),
-        SizedBox(height: 4),
-        Text(label, style: TextStyle(color: Color(0xFF004D40))),
-      ],
-    );
-  }
-
-  Widget _buildRoomFacilityContent(String image, String label) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start, // Align keseluruhan konten ke kiri
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(5),
-          child: Image.asset(
-            image,
-            width: 150,
-            height: 150,
-            fit: BoxFit.cover,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            label,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-            textAlign: TextAlign.left, // Pastikan teks rata kiri
-          ),
-        ),
-      ],
-    );
-  }
-
-// Widget pembantu untuk membuat konten harga (tanpa card)
-  Widget _buildPriceContent(String label, String image, String price, {String? discount, required BuildContext context}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start, // Align keseluruhan konten ke kiri
-      children: [
-        Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: Image.asset(
-                image,
-                width: 150,
-                height: 150,
-                fit: BoxFit.cover,
-              ),
-            ),
-            if (discount != null)
-              Positioned(
-                top: 8,
-                left: 8,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF005F21),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(
-                    discount,
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
-              ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // Align teks dan subteks ke kiri
-            children: [
-              Text(
-                label,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-              ),
-              Text(
-                price,
-                style: const TextStyle(fontSize: 14),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(width: 8),
-      ],
-    );
-  }
-
   @override
   void dispose() {
     _checkInDateController.dispose();
@@ -405,5 +281,3 @@ class _BookHousePageState extends State<BookHousePage> {
     super.dispose();
   }
 }
-
-
