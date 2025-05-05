@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'booking_detail.dart';
 import 'package:ulinmahoniapps/profile/profile_page.dart';
 
@@ -11,6 +12,40 @@ class MyBooking extends StatefulWidget {
 
 class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
+  List<Map<String, dynamic>> _upcomingList =[
+  {
+    "name": "Ulin Mahoni West Jakarta",
+    "type": "Alpha Room",
+    "checkIn": DateTime(2025, 3, 15),
+    "checkOut": DateTime(2025, 3, 17),
+    "status": "On-going",
+  },
+  {
+  "name": "Ulin Mahoni West Jakarta",
+  "type": "Alpha Room",
+  "checkIn": DateTime(2025, 3, 19),
+  "checkOut": DateTime(2025, 3, 21),
+  "status": "Waiting",
+  },
+  {
+  "name": "Ulin Mahoni West Jakarta",
+  "type": "Alpha Room",
+  "checkIn": DateTime(2025, 3, 25),
+  "checkOut": DateTime(2025, 3, 28),
+  "status": "Upcoming",
+  }
+  ];
+
+  List<Map<String, dynamic>> _completedList = [
+    {
+      "name": "Ulin Mahoni West Jakarta",
+      "type": "Alpha Room",
+      "checkIn": DateTime(2025, 3, 10),
+      "checkOut": DateTime(2025, 3, 10),
+    }
+  ];
+  bool isOldest = true;
 
   @override
   void initState() {
@@ -28,6 +63,35 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
     Navigator.push(context, MaterialPageRoute(builder: (context) => const BookingDetail()));
   }
 
+  void _sort(){
+    setState(() {
+      isOldest = !isOldest;
+      _sortUpcoming();
+      _sortCompleted();
+    });
+  }
+
+  void _sortUpcoming(){
+    _upcomingList.sort((x, y){
+      int _compare = x['checkIn'].compareTo(y['checkin']);
+      return isOldest ? _compare : _compare * -1;
+    });
+  }
+
+  void _sortCompleted(){
+    _completedList.sort((x, y){
+      int _compare = x['checkIn'].compareTo(y['checkOut']);
+      return isOldest ? _compare : _compare * -1;
+    });
+  }
+
+  void toggleSort(){
+    setState(() {
+      isOldest = !isOldest;
+      _sortUpcoming();
+      _sortCompleted();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +132,22 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
                   ],
                 ),
               ),
+              Container(
+                color: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: ElevatedButton(
+                  onPressed: toggleSort,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF0d9488),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                  child: Text(
+                    isOldest ? "Sort: Oldest" : "Sort: Newest",
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+              )
             ],
           )
         ),
@@ -236,22 +316,22 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
         _upcomingCard(
           name: "Ulin Mahoni West Jakarta",
           type: "Alpha Room",
-          checkIn: "check in 15 Mar 2025",
-          checkOut: "check out 17 Mar 2025",
+          checkIn: "check in ${formattedDate(DateTime(2025, 3, 15))}" ,
+          checkOut: "check out ${formattedDate(DateTime(2025, 3, 17))}",
           status: "On-going",
         ),
         _upcomingCard(
           name: "Ulin Mahoni West Jakarta",
           type: "Alpha Room",
-          checkIn: "check in 19 Mar 2025",
-          checkOut: "check out 21 Mar 2025",
+          checkIn: "check in ${formattedDate(DateTime(2025, 3, 19))}",
+          checkOut: "check out ${formattedDate(DateTime(2025, 3, 21))}",
           status: "Waiting",
         ),
         _upcomingCard(
           name: "Ulin Mahoni West Jakarta",
           type: "Alpha Room",
-          checkIn: "check in 19 Mar 2025",
-          checkOut: "check out 21 Mar 2025",
+          checkIn: "check in ${formattedDate(DateTime(2025, 3, 25))}",
+          checkOut: "check out ${formattedDate(DateTime(2025, 3, 28))}",
           status: "Upcoming",
         ),
       ],
@@ -270,5 +350,9 @@ class _MyBookingState extends State<MyBooking> with SingleTickerProviderStateMix
         ),
       ],
     );
+  }
+
+  String formattedDate(DateTime date){
+    return DateFormat('dd MMM yyyy').format(date);
   }
 }

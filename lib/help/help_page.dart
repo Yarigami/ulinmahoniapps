@@ -11,6 +11,8 @@
 
   class _HelpPageState extends State<HelpPage> with SingleTickerProviderStateMixin{
     late TabController _tabController;
+    final TextEditingController _searchController = TextEditingController();
+    String _searchQuery = "";
 
     @override
     void initState() {
@@ -110,8 +112,23 @@
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Search for help",
-                  prefixIcon: Icon(Icons.search)
+                  prefixIcon: Icon(Icons.search),
+                  suffixIcon: _searchQuery.isNotEmpty
+                    ? IconButton(
+                      onPressed: (){
+                        _searchController.clear();
+                        setState(() {
+                          _searchQuery = "";
+                        });
+                      },
+                      icon: Icon(Icons.clear),
+                  ) : null,
                 ),
+                onChanged: (value){
+                  setState(() {
+                    _searchQuery = value.toLowerCase();
+                  });
+                },
               ),
             ),
             Expanded(child: _faqData()),
@@ -176,6 +193,8 @@
         style: ElevatedButton.styleFrom(
           backgroundColor: isSelected ? Color(0xFF0d9488) : Colors.grey[200],
           foregroundColor: isSelected ? Colors.white : Colors.black,
+          elevation: 4,
+          shadowColor: Colors.black
         ),
         child: Text(option),
       );
@@ -219,17 +238,70 @@
     }
 
     Widget _faqData(){
-      return ListView(
-        children: [
-          _faqCard(
-              questions: "Question 1",
-              answers: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed arcu suscipit, consectetur massa non, imperdiet dolor. Donec efficitur erat vel felis euismod aliquam. Nam iaculis malesuada diam a ultricies."
-          ),
-          _faqCard(
-              questions: "Question 2",
-              answers: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed arcu suscipit, consectetur massa non, imperdiet dolor. Donec efficitur erat vel felis euismod aliquam. Nam iaculis malesuada diam a ultricies."
-          ),
-        ],
+      final List<Map<String, String>> faqs = [
+        {
+          'option' : "",
+          'questions': "Question 1",
+          'answers': "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed arcu suscipit, consectetur massa non, imperdiet dolor. Donec efficitur erat vel felis euismod aliquam. Nam iaculis malesuada diam a ultricies."
+        },
+        {
+          'option' : "",
+          'questions': "Question 2",
+          'answers': "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed arcu suscipit, consectetur massa non, imperdiet dolor. Donec efficitur erat vel felis euismod aliquam. Nam iaculis malesuada diam a ultricies."
+        },
+        {
+          'option' : "",
+          'questions': "this is question 3",
+          'answers': "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed arcu suscipit, consectetur massa non, imperdiet dolor. Donec efficitur erat vel felis euismod aliquam. Nam iaculis malesuada diam a ultricies."
+        },
+        {
+          'option' : "",
+          'questions': "General",
+          'answers': "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed arcu suscipit, consectetur massa non, imperdiet dolor. Donec efficitur erat vel felis euismod aliquam. Nam iaculis malesuada diam a ultricies.",
+        },
+        {
+          'option' : "account",
+          'questions': "Account",
+          'answers': "Information answer",
+        },
+        {
+          'option' : "payment",
+          'questions': "Payment",
+          'answers': "payment answer",
+        },
+        {
+          'option' : "service",
+          'questions': "Service",
+          'answers': "service answer",
+        },
+      ];
+
+      final filtered = faqs.where((faq) {
+        final question = faq['questions']?.toLowerCase() ?? '';
+        final answer = faq['answers']?.toLowerCase() ?? '';
+        final option = faq['option']?. toLowerCase() ?? '';
+        final categoryMatch = selected.toLowerCase() == 'general' ||
+            (selected.toLowerCase() == 'account' && option.contains('account')) ||
+            (selected.toLowerCase() == 'payment' && option.contains('payment')) ||
+            (selected.toLowerCase() == 'services' && option.contains('service'));
+
+        final searchMatch = _searchQuery.isEmpty ||
+            question.contains(_searchQuery) ||
+            answer.contains(_searchQuery);
+
+        return categoryMatch && searchMatch;
+      }).toList();
+
+      return ListView.builder(
+        itemCount: filtered.length,
+        itemBuilder: (context, index){
+          final faq = filtered[index];
+          return _faqCard(questions: faq['questions']!, answers: faq['answers']!);
+        },
+        // children: filtered.map((faq) => _faqCard(
+        //   questions: faq['question']!,
+        //   answers: faq['answer']!,
+        // )).toList()
       );
     }
 
