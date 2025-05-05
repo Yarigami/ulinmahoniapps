@@ -78,7 +78,7 @@ class _CustSupportState extends State<CustSupport> {
                 child: Center(
                   child: Card(
                     // color: Theme.of(context).primaryColor,
-                    color: Color(0xFF0d9488),
+                    color: Color(0xFF124624),// 0xFF0d9488
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50),),
                     child: Padding(
                       padding: const EdgeInsets.all(8),
@@ -103,7 +103,7 @@ class _CustSupportState extends State<CustSupport> {
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     constraints: BoxConstraints(maxWidth: 250),
                     decoration: BoxDecoration(
-                      color: message.sentByMe ? Color(0xFF0d9488) : Colors.white,
+                      color: message.sentByMe ? Color(0xFF124624) : Colors.white, // 0xFF0d9488
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(16),
                         topLeft: Radius.circular(16),
@@ -185,7 +185,7 @@ class _CustSupportState extends State<CustSupport> {
                       }
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Color(0xFF0d9488)),
+                      backgroundColor: MaterialStateProperty.all(Color(0xFF124624)),// 0xFF0d9488
                     ),
                     icon: Icon(
                       Icons.send,
