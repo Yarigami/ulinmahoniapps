@@ -55,7 +55,7 @@ class _PasswordChangedState extends State<PasswordChanged> {
                                 MaterialPageRoute(builder: (context) => const LoginPage()));
                           },
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.green[800]),
+                            backgroundColor: MaterialStateProperty.all(Color(0xFF124624)),
                             foregroundColor: MaterialStateProperty.all(Colors.white),
                             shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(

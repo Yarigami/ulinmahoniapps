@@ -25,6 +25,12 @@ class _ProfilePageState extends State<ProfilePage> {
         MaterialPageRoute(builder: (context) => const HelpPage()));
   }
 
+  void _welcomPage(){
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const WelcomePage()));
+  }
+
   int language = 0; // eng = 0, indp = 1
   @override
   Widget build(BuildContext context) {
@@ -167,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(height: 8,),
                       _menuItem(icon: Icons.verified_user_outlined, title: "Two Factor Authentication", subtitle: "Further secure your account for safety"),
                       SizedBox(height: 8,),
-                      _menuItem(icon: Icons.logout, title: "Log out", subtitle: "Further Secure your Account for safety")
+                      _menuItem(icon: Icons.logout, title: "Log out", subtitle: "Further Secure your Account for safety", onTap: _welcomPage)
                     ],
                   ),
                 ),
