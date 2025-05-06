@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ulinmahoniapps/core/layout/mainlayout.dart';
 import 'package:ulinmahoniapps/core/widgets/backbutton.dart';
-import '../data/payment_data.dart';
+import '../../data/payment_data.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -9,7 +9,6 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-
   @override
   Widget build(BuildContext context) {
     return MainLayout(
@@ -53,7 +52,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           ),
                         ),
                         Text(
-                         roomData['type'] ?? '',
+                          roomData['type'] ?? '',
                           style: const TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ],
@@ -215,7 +214,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       // Tombol Bayar
                       Center(
                         child: FractionallySizedBox(
-                          widthFactor: 0.925, // 7/8 dari lebar layar
+                          widthFactor: 0.925,
                           alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () {
@@ -224,13 +223,29 @@ class _PaymentPageState extends State<PaymentPage> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF005F21),
                               foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              padding: const EdgeInsets.symmetric(vertical: 20),
                               textStyle: const TextStyle(fontSize: 18),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            child: const Center(child: Text('Bayar Sekarang')), // Memastikan teks terpusat
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.shopping_cart, size: 24, color: Colors.white),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Bayar Sekarang',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

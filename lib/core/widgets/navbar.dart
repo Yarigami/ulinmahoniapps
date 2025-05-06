@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Navbar extends StatefulWidget implements PreferredSizeWidget {
   final String initialLanguage;
@@ -108,10 +109,10 @@ class _NavbarState extends State<Navbar> {
                     height: 30, // Mengatur tinggi tombol
                     child: ElevatedButton(
                       onPressed: () {
-                        // Tambahkan logika untuk tombol Daftar di sini
+                        context.push('login');
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF006400),
+                        backgroundColor: const Color(0xFF134E3A),
                         textStyle: const TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Colors.white,

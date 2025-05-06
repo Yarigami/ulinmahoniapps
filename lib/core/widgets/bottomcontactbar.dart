@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 const Color firebrickColor = Color(0xFFB22222);
-const Color forestGreenColor = Color(0xFF005F21);
+const Color forestGreenColor = Color(0xFF134E3A);
 
 class BottomContactBar extends StatelessWidget {
   final bool isAvailable;
@@ -104,7 +104,6 @@ class BottomContactBar extends StatelessWidget {
 
           const SizedBox(width: 12),
 
-          // Kanan: tombol
           SizedBox(
             width: screenWidth * 0.5,
             height: buttonHeight,

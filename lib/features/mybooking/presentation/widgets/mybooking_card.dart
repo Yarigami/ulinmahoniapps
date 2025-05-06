@@ -10,6 +10,7 @@ class BookingCard extends StatefulWidget {
   final String checkOut;
   final String status;
   final String statusText;
+  final Map<String, dynamic> dataDetail; // Tambahkan data lengkap
 
   const BookingCard({
     Key? key,
@@ -21,6 +22,7 @@ class BookingCard extends StatefulWidget {
     required this.checkOut,
     required this.status,
     required this.statusText,
+    required this.dataDetail, // Terima data detail lengkap
   }) : super(key: key);
 
   @override
@@ -46,9 +48,7 @@ class _BookingCardState extends State<BookingCard> {
 
     return GestureDetector(
       onTap: () {
-        context.push(
-          '/mybookingdetails'
-        );
+        context.push('/mybookingdetails', extra: widget.dataDetail);
       },
       child: Card(
         color: Colors.white,

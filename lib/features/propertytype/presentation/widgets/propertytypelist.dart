@@ -1,5 +1,4 @@
 import '../widgets/propertyitem.dart';
-import '../../data/propertytype_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,7 +19,7 @@ class PropertyTypeList extends StatelessWidget {
           title: category['title']!,
           image: category['image']!,
           onTap: () {
-            final route = category['route'] ?? '/comingsoon';
+            final route =  '/search';
             context.push(route);
           },
         );

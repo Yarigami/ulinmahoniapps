@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/layout/mainlayout.dart';
 import '../../../../core/widgets/appbar.dart';
 import '../../data/profile_data.dart';
+import '../widgets/profile_menuitem_dart.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -84,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(height: 16),
-                      _buildMenuItem(
+                      MenuItem(
                         icon: Icons.person_outline,
                         text: "My Account",
                         subText: "Make changes to your account",
@@ -93,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           context.push('/updateprofile');
                         },
                       ),
-                      _buildMenuItem(
+                      MenuItem(
                         icon: Icons.people_outline,
                         text: "Saved Beneficiary",
                         subText: "Manage your saved account",
@@ -102,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           context.push('/comingsoon');
                         },
                       ),
-                      _buildMenuItem(
+                      MenuItem(
                         icon: Icons.lock_outline,
                         text: "Face ID/Touch ID",
                         subText: "Manage your device security",
@@ -119,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           context.push('/comingsoon');
                         },
                       ),
-                      _buildMenuItem(
+                      MenuItem(
                         icon: Icons.security_outlined,
                         text: "Two-Factor Authentication",
                         subText: "Further secure your account for safety",
@@ -128,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           context.push('/comingsoon');
                         },
                       ),
-                      _buildMenuItem(
+                      MenuItem(
                         icon: Icons.logout,
                         text: "Log out",
                         subText: "Further secure your account for safety",
@@ -150,7 +151,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(height: 8),
-                      _buildMenuItem(
+                      MenuItem(
                         icon: Icons.help_outline,
                         text: "Help & Support",
                         trailing: Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
@@ -158,7 +159,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           context.push('/help');
                         },
                       ),
-                      _buildMenuItem(
+                      MenuItem(
                         icon: Icons.info_outline,
                         text: "About App",
                         trailing: Icon(Icons.arrow_forward_ios, size: 20, color: Colors.grey),
@@ -172,62 +173,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMenuItem({
-    required IconData icon,
-    required String text,
-    String? subText,
-    Widget? trailing,
-    VoidCallback? onTap,
-  }) {
-    return Material(
-      color: Colors.white,
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey[300]!,
-                width: 1,
-              ),
-            ),
-          ),
-          child: Row(
-            children: [
-              Icon(icon, size: 28, color: Colors.grey[600]),
-              SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      text,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    if (subText != null)
-                      Text(
-                        subText,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              trailing ?? Container(),
-            ],
-          ),
         ),
       ),
     );

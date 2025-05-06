@@ -12,12 +12,12 @@ import 'package:ulinmahoniapps/features/help/presentation/pages/help_page.dart';
 import 'package:ulinmahoniapps/features/housing/presentation/pages/searchresult_page.dart';
 import 'package:ulinmahoniapps/features/UM/presentation/pages/um_page.dart';
 import 'package:ulinmahoniapps/features/comingsoon/presentation/pages/comingsoon.dart';
-import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybookingdetailspage.dart';
-import 'package:ulinmahoniapps/features/payment/presentation/paymentpage.dart';
+import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybookingdetails_page.dart';
+import 'package:ulinmahoniapps/features/payment/presentation/pages/paymentpage.dart';
 import 'package:ulinmahoniapps/features/profiles/presentation/pages/updateprofilepage.dart';
 import 'package:ulinmahoniapps/features/splashscreen/presentation/pages/splashscreen.dart';
 import 'package:ulinmahoniapps/features/home/presentation/pages/homepage.dart';
-import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybookingpage.dart';
+import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybooking_page.dart';
 import 'package:ulinmahoniapps/features/profiles/presentation/pages/profilepage.dart';
 import 'package:ulinmahoniapps/features/propertytype/presentation/pages/propertytypepage.dart';
 import 'package:ulinmahoniapps/core/layout/mainlayout.dart';
@@ -60,9 +60,13 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: '/mybookingdetails',
           builder: (context, GoRouterState state) {
-            return const MyBookingDetail();
+            // Menerima data extra yang dikirim dari halaman sebelumnya
+            final bookingData = state.extra as Map<String, dynamic>;
+            // Mengirimkan data ke MyBookingDetail
+            return MyBookingDetail(bookingData: bookingData);  // Tidak perlu null untuk bookingId
           },
         ),
+
       ],
     ),
     GoRoute(

@@ -11,7 +11,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     Key? key,
     this.title = 'Default', // Nilai default adalah "Default"
-    this.backgroundColor = const Color(0xFF005F21),
+    this.backgroundColor = const Color(0xFF134E3A),
     this.textColor = Colors.white,
     this.backButtonColor = Colors.white,
     this.showBackButton = true, // Nilai default: tampilkan back button

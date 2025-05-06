@@ -29,7 +29,7 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const maroon = Color(0xFF800000);
-    const darkGreen = Color(0xFF184D37);
+    const darkGreen = Color(0xFF134E3A);
 
     final List<Map<String, dynamic>> items = [
       {'icon': Icons.home, 'label': 'Home'},

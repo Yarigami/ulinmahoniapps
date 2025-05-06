@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../widgets/propertytypelist.dart';
+import '../../data/propertytype_data.dart';
 import '../../../../core/layout/mainlayout.dart';
 import '../../../../core/widgets/appbar.dart';
 
@@ -20,7 +20,7 @@ class PropertyTypePage extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBar(
-              title: 'Property Type',
+              title: 'Property Type',showBackButton: true,
             ),
             Expanded(
               child: PropertyTypeList(categories: categories),

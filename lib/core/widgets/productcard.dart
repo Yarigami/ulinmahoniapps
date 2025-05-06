@@ -13,7 +13,7 @@ class ProductCard extends StatefulWidget {
   final double imageHeight;
 
   final maroon = const Color(0xFF800000);
-  final darkGreen = const Color(0xFF184D37);
+  final darkGreen = const Color(0xFF134E3A);
 
   const ProductCard({
     super.key,

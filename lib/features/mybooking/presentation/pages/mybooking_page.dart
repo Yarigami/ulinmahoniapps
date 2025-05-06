@@ -28,26 +28,25 @@ class _MyBookingPageState extends State<MyBookingPage>
   }
 
   List<Widget> buildBookingList(String status) {
-    final filtered =
-    bookings.where((b) => b['status'] == status.toLowerCase()).toList();
+    final filtered = bookings.where((b) => b['status'].toLowerCase() == status.toLowerCase()).toList();
 
     return filtered
         .map(
-          (b) =>
-            BookingCard(
-                id: b['id'] as int,
-                image: b['image'] as String,
-                title: b['title'] as String,
-                location: b['location'] as String,
-                checkIn: b['checkIn'] as String,
-                checkOut: b['checkOut'] as String,
-                status: b['status'] as String,
-                statusText: b['statusText'] as String,
-          )
-
+          (b) => BookingCard(
+        id: b['id'] as int,
+        image: b['image'] as String,
+        title: b['title'] as String,
+        location: b['location'] as String,
+        checkIn: b['checkIn'] as String,
+        checkOut: b['checkOut'] as String,
+        status: b['status'] as String,
+        statusText: b['statusText'] as String,
+        dataDetail: b,
+      ),
     )
         .toList();
   }
+
 
   @override
   Widget build(BuildContext context) {
