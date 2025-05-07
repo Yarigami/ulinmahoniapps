@@ -6,7 +6,8 @@ import 'package:ulinmahoniapps/main.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class BookingDetail extends StatefulWidget {
-  const BookingDetail({super.key});
+  final Map<String, dynamic> booking;
+  const BookingDetail({super.key, required this.booking});
 
   @override
   State<BookingDetail> createState() => _BookingDetailState();
@@ -24,7 +25,7 @@ class _BookingDetailState extends State<BookingDetail> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Ulin Mahoni West Jakarta", style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text(widget.booking["name"], style: TextStyle(fontWeight: FontWeight.bold),),
         backgroundColor: Color(0xFFd2c8ae),
         elevation: 4,
         flexibleSpace: Container(
@@ -64,18 +65,17 @@ class _BookingDetailState extends State<BookingDetail> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Center(child: Icon(Icons.apartment),),
-                _info("Nama:", "Ulin Mahoni West Jakarta"),
-                _info("Jenis Ruangan:", "Alpha Room"),
-                _info("Check-in:", "${formattedDate(DateTime(2025, 3, 15))}"),
-                _info("Check-out:", "${formattedDate(DateTime(2025, 3, 17))}"),
+                _info("Nama:", widget.booking["name"]),
+                _info("Jenis Ruangan:", widget.booking["type"]),
+                _info("Check-in:", formattedDate(widget.booking["checkIn"])),
+                _info("Check-out:", formattedDate(widget.booking["checkOut"])),
                 Divider(height: 20, color: Colors.black,),
-                _info("Harga Per Malam:", "RP. 200.000"),
-                _info("Jumlah Malam:", "3"),
-                _info("Harga Per Malam:", "RP. 200.000"),
-                _info("Harga Total:", "RP. 600.000", labelColor: Colors.green),
-                _info("Diskon:", "10% (RP. 60.000)"),
+                _info("Harga Per Malam:", formatRP(widget.booking["hpm"])),
+                _info("Jumlah Malam:", widget.booking["duration"]),
+                _info("Harga Total:", formatRP(widget.booking["total"]), labelColor: Colors.green),
+                _info("Diskon:", formatRP(widget.booking["discount"])),
                 Divider(height: 20, color: Colors.black,),
-                _info("Harga Terakhir:", "RP. 540.000", isBold: true, labelColor: Color(0xFF0d9488),),
+                _info("Harga Terakhir:", formatRP(widget.booking["ftotal"]), isBold: true, labelColor: Color(0xFF0d9488),),
                 SizedBox(height: 16,),
               ],
             ),
@@ -141,7 +141,25 @@ class _BookingDetailState extends State<BookingDetail> {
     );
   }
 
-  Widget _info(String label, String value, {bool isBold = false, Color? labelColor}){
+  String formatRP(dynamic num){
+    if (num == null){
+      return "-";
+    }
+    final formatted = NumberFormat.currency(locale: 'id_ID', symbol: 'RP. ', decimalDigits: 0);
+    return formatted.format(num);
+  }
+
+  Widget _info(String label, dynamic value, {bool isBold = false, Color? labelColor}){
+    String display;
+    if (value == null){
+      display = '-';
+    }
+    else if (value is DateTime){
+      display = DateFormat('dd MMMM yyyy').format(value);
+    }
+    else{
+      display = value.toString();
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -153,7 +171,7 @@ class _BookingDetailState extends State<BookingDetail> {
           ),
         ),
         Text(
-          value,
+          display,
           style: TextStyle(
             fontWeight: isBold? FontWeight.bold : FontWeight.normal,
             color: labelColor ?? Colors.black,
