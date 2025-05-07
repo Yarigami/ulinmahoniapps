@@ -86,7 +86,7 @@ class BottomContactBar extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.local_offer, color: forestGreenColor, size: iconSize),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: 2),
                         Text(
                           "Diskon Sewa 1 bulan",
                           style: TextStyle(
@@ -113,7 +113,7 @@ class BottomContactBar extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: forestGreenColor,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../data/payment_data.dart';
 
 class PaymentSummary extends StatelessWidget {
   final List<Map<String, dynamic>> itemDetails;

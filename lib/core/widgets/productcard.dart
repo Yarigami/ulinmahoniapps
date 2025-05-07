@@ -101,38 +101,43 @@ class _ProductCardState extends State<ProductCard> {
               ),
             ),
             const SizedBox(height: 6),
-            if (widget.badgeText != null && widget.badgeText!.isNotEmpty)
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.green.shade100,
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.green.shade600,
-                    width: 1,
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.check_circle, size: 14, color: Colors.green[800]),
-                    const SizedBox(width: 4),
-                    Text(
-                      widget.badgeText!,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            const SizedBox(height: 6),
+    if (widget.badgeText != null && widget.badgeText!.isNotEmpty)
+
+          IntrinsicWidth( // Tambahkan IntrinsicWidth agar ukuran konten sesuai
+    child: Container(
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+    decoration: BoxDecoration(
+    color: Colors.green.shade100,
+    borderRadius: BorderRadius.circular(5),
+    border: Border.all(
+    color: Colors.green.shade600,
+    width: 1,
+    ),
+    ),
+    child: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+    Icon(Icons.check_circle, size: 14, color: Colors.green[800]),
+    const SizedBox(width: 4),
+    Text(
+    widget.badgeText!,
+    style: const TextStyle(
+    color: Colors.black,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    ),
+    overflow: TextOverflow.ellipsis,
+    maxLines: 1,
+    ),
+    ],
+    ),
+    ),
+    ),
+            const SizedBox(height: 4),
             Text(
               widget.price,
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: 12,
                 color: Color(0xFF800000),
                 fontWeight: FontWeight.w300,
               ),
@@ -143,3 +148,4 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 }
+

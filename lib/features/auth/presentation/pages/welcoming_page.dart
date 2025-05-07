@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
-import "package:link_text/link_text.dart";
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});

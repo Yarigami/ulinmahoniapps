@@ -8,8 +8,9 @@ import 'package:ulinmahoniapps/features/auth/presentation/pages/register_page.da
 import 'package:ulinmahoniapps/features/auth/presentation/pages/welcoming_page.dart';
 import 'package:ulinmahoniapps/features/book/presentation/pages/bookhousepage.dart';
 import 'package:ulinmahoniapps/features/detailproperty/presentation/pages/detailhousepage.dart';
+import 'package:ulinmahoniapps/features/error/presentation/pages/errorpage.dart';
 import 'package:ulinmahoniapps/features/help/presentation/pages/help_page.dart';
-import 'package:ulinmahoniapps/features/housing/presentation/pages/searchresult_page.dart';
+import 'package:ulinmahoniapps/features/searchresult/presentation/pages/searchresult_page.dart';
 import 'package:ulinmahoniapps/features/UM/presentation/pages/um_page.dart';
 import 'package:ulinmahoniapps/features/comingsoon/presentation/pages/comingsoon.dart';
 import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybookingdetails_page.dart';
@@ -66,7 +67,13 @@ final GoRouter appRouter = GoRouter(
             return MyBookingDetail(bookingData: bookingData);  // Tidak perlu null untuk bookingId
           },
         ),
-
+        GoRoute(
+          path: '/error',
+          builder: (context, state) {
+            final errorMessage = state.extra as String? ?? 'Unknown error';
+            return ErrorPage(errorMessage: errorMessage);
+          },
+        ),
       ],
     ),
     GoRoute(

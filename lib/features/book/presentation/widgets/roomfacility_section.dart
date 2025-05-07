@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../data/bookhouse_data.dart';
 
 Widget buildRoomFacilitySection() {
   return Wrap(

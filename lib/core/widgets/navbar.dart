@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/auth/provider/auth_providers.dart';
 
-class Navbar extends StatefulWidget implements PreferredSizeWidget {
+class Navbar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   final String initialLanguage;
 
   const Navbar({
@@ -10,13 +12,13 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
   }) : super(key: key);
 
   @override
-  State<Navbar> createState() => _NavbarState();
+  ConsumerState<Navbar> createState() => _NavbarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(80.0); // AppBar tinggi 80
 }
 
-class _NavbarState extends State<Navbar> {
+class _NavbarState extends ConsumerState<Navbar> {
   late String selectedLanguage;
   bool isDropdownOpen = false;
 
@@ -28,6 +30,8 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoggedIn = ref.watch(authProvider); // Mendapatkan status login dari Riverpod
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -91,46 +95,67 @@ class _NavbarState extends State<Navbar> {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Row(
                 children: [
-                  const Text(
-                    'Masuk',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const Text(
-                    ' / ',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30, // Mengatur tinggi tombol
-                    child: ElevatedButton(
+                  // Cek status login untuk menampilkan elemen yang sesuai
+                  if (!isLoggedIn) ...[
+                    TextButton(
                       onPressed: () {
-                        context.push('login');
+                        context.go('/login');
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF134E3A),
-                        textStyle: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.symmetric(horizontal: 10), // Mengatur padding horizontal
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero, // Tanpa border radius
-                        ),
-                      ),
                       child: const Text(
-                        'Daftar',
+                        'Masuk',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12, // Mengatur ukuran font
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
                         ),
                       ),
                     ),
-                  ),
+                    const Text(
+                      ' / ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30, // Mengatur tinggi tombol
+                      child: ElevatedButton(
+                        onPressed: () {
+                          context.push('/register');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF134E3A),
+                          textStyle: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero,
+                          ),
+                        ),
+                        child: const Text(
+                          'Daftar',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ] else ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: GestureDetector(
+                        onTap: () {
+                          context.push('/profile'); // Mengarahkan ke halaman profil saat CircleAvatar ditekan
+                        },
+                        child: CircleAvatar(
+                          radius: 20, // Ukuran lingkaran
+                          backgroundImage: AssetImage('assets/images/ulinhouse.jpg'), // Gambar profil pengguna
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),

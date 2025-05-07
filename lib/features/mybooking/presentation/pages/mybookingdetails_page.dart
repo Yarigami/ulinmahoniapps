@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/widgets/appbar.dart';
 import '../../../../core/layout/mainlayout.dart';
-import '../../data/mybooking_data.dart';
 import 'package:intl/intl.dart';
 
 class MyBookingDetail extends StatefulWidget {

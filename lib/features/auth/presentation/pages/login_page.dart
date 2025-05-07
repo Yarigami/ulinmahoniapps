@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../provider/auth_providers.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isLoginButtonEnabled = true;
+  bool _obscurePassword = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(12.0), // Only padding here like Registering
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
               Padding(
@@ -36,9 +43,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    _inputField("Enter your email"),
+                    _inputField("Enter your email", controller: _emailController),
                     SizedBox(height: 16),
-                    _inputField("Enter your password", obscure: true),
+                    _passwordField("Enter your password", controller: _passwordController),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -59,11 +66,43 @@ class _LoginPageState extends State<LoginPage> {
                       width: double.infinity,
                       height: 50,
                       child: TextButton(
-                        onPressed: () {
-                          context.go('/home');
-                        },
+                        onPressed: _isLoginButtonEnabled
+                            ? () async {
+                          setState(() {
+                            _isLoginButtonEnabled = false;
+                          });
+
+                          print('🔍 Tombol login ditekan');
+                          final email = _emailController.text;
+                          final password = _passwordController.text;
+
+                          try {
+                            await ref.read(authProvider.notifier).login(email, password);
+                            final isLoggedIn = ref.read(authProvider);
+
+                            if (isLoggedIn) {
+                              print('✅ Login berhasil');
+                              // Memeriksa status login
+                              checkIsLoggedIn();
+                              context.go('/home');
+                            } else {
+                              print('❌ Login gagal');
+                              _showErrorDialog('Login gagal. Periksa kembali data Anda.');
+                            }
+                          } catch (e) {
+                            print('❌ Exception: $e');
+                            _showErrorDialog('Terjadi kesalahan: $e');
+                          } finally {
+                            setState(() {
+                              _isLoginButtonEnabled = true;
+                            });
+                          }
+                        }
+                            : null,
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Color(0xFF124624)),
+                          backgroundColor: _isLoginButtonEnabled
+                              ? MaterialStateProperty.all(Color(0xFF124624))
+                              : MaterialStateProperty.all(Colors.grey),
                           foregroundColor: MaterialStateProperty.all(Colors.white),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
@@ -109,11 +148,9 @@ class _LoginPageState extends State<LoginPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          SizedBox(),
                           _socialMedia("assets/images/facebook.png"),
                           _socialMedia("assets/images/google.png"),
                           _socialMedia("assets/images/apple.png"),
-                          SizedBox(),
                         ],
                       ),
                     ),
@@ -147,16 +184,43 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _inputField(String hint, {bool obscure = false}) {
+  Widget _inputField(String hint, {required TextEditingController controller}) {
     return Container(
       width: double.infinity,
       color: Colors.grey[300],
       child: TextField(
-        obscureText: obscure,
+        controller: controller,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(12),
           hintText: hint,
           border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+
+  Widget _passwordField(String hint, {required TextEditingController controller}) {
+    return Container(
+      width: double.infinity,
+      color: Colors.grey[300],
+      child: TextField(
+        controller: controller,
+        obscureText: _obscurePassword,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(12),
+          hintText: hint,
+          border: InputBorder.none,
+          suffixIcon: IconButton(
+            icon: Icon(
+              _obscurePassword ? Icons.visibility_off : Icons.visibility,
+              color: Colors.grey,
+            ),
+            onPressed: () {
+              setState(() {
+                _obscurePassword = !_obscurePassword;
+              });
+            },
+          ),
         ),
       ),
     );
@@ -178,5 +242,30 @@ class _LoginPageState extends State<LoginPage> {
         child: Image.asset(imgPath),
       ),
     );
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Login Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void checkIsLoggedIn() {
+    final isLoggedIn = ref.read(authProvider); // Membaca status login dari provider
+    if (isLoggedIn) {
+      print('User is logged in.');
+    } else {
+      print('User is not logged in.');
+    }
   }
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // Import Riverpod
 import 'router/router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope( // Bungkus aplikasi dengan ProviderScope
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,12 +16,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Ulin Mahoni',
       theme: ThemeData(
-        // Menggunakan ColorScheme untuk tema dengan warna dasar dari deepPurple
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true, // Optional: Mengaktifkan Material 3
+        useMaterial3: true,
       ),
-      debugShowCheckedModeBanner: false, // Menyembunyikan banner debug
-      routerConfig: appRouter, // Menentukan konfigurasi router
+      debugShowCheckedModeBanner: false,
+      routerConfig: appRouter,
     );
   }
 }
