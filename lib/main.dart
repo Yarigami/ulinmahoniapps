@@ -40,7 +40,7 @@ final GoRouter _router = GoRouter(
         ),
         GoRoute(
           path: '/booking',
-          builder: (context, state) => const BookingPage(),
+          builder: (context, state) => const Bookingpage(),
         ),
         GoRoute(
           path: '/smart-home',
