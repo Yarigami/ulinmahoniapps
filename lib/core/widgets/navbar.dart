@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/auth/provider/auth_providers.dart';
+import '../../features/auth/login/provider/auth_providers.dart';
 
 class Navbar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   final String initialLanguage;
@@ -30,7 +30,8 @@ class _NavbarState extends ConsumerState<Navbar> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoggedIn = ref.watch(authProvider); // Mendapatkan status login dari Riverpod
+    final authState = ref.watch(authProvider);
+    final user = authState.user.value;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -51,55 +52,55 @@ class _NavbarState extends ConsumerState<Navbar> {
           actions: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: DropdownButtonHideUnderline(
-                child: StatefulBuilder(
-                  builder: (context, setInnerState) {
-                    return DropdownButton<String>(
-                      value: selectedLanguage,
-                      onChanged: (String? newValue) {
-                        if (newValue != null) {
-                          setState(() {
-                            selectedLanguage = newValue;
-                            isDropdownOpen = false;
-                          });
-                        }
-                      },
-                      onTap: () {
-                        setInnerState(() {
-                          isDropdownOpen = !isDropdownOpen;
-                        });
-                      },
-                      items: const [
-                        DropdownMenuItem(
-                          value: 'ID',
-                          child: Text('ID'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'EN',
-                          child: Text('EN'),
-                        ),
-                      ],
-                      icon: Icon(
-                        isDropdownOpen
-                            ? Icons.arrow_drop_up
-                            : Icons.arrow_drop_down,
-                        color: const Color(0xFF006400),
-                      ),
-                      dropdownColor: Colors.white,
-                    );
-                  },
-                ),
-              ),
+              // child: DropdownButtonHideUnderline(
+              //   child: StatefulBuilder(
+              //     builder: (context, setInnerState) {
+              //       return DropdownButton<String>(
+              //         value: selectedLanguage,
+              //         onChanged: (String? newValue) {
+              //           if (newValue != null) {
+              //             setState(() {
+              //               selectedLanguage = newValue;
+              //               isDropdownOpen = false;
+              //             });
+              //           }
+              //         },
+              //         onTap: () {
+              //           setInnerState(() {
+              //             isDropdownOpen = !isDropdownOpen;
+              //           });
+              //         },
+              //         items: const [
+              //           DropdownMenuItem(
+              //             value: 'ID',
+              //             child: Text('ID'),
+              //           ),
+              //           DropdownMenuItem(
+              //             value: 'EN',
+              //             child: Text('EN'),
+              //           ),
+              //         ],
+              //         icon: Icon(
+              //           isDropdownOpen
+              //               ? Icons.arrow_drop_up
+              //               : Icons.arrow_drop_down,
+              //           color: const Color(0xFF006400),
+              //         ),
+              //         dropdownColor: Colors.white,
+              //       );
+              //     },
+              //   ),
+              // ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
                   // Cek status login untuk menampilkan elemen yang sesuai
-                  if (!isLoggedIn) ...[
+                  if (!authState.isLoggedIn) ...[
                     TextButton(
                       onPressed: () {
-                        context.go('/login');
+                        context.push('/login');
                       },
                       child: const Text(
                         'Masuk',
@@ -143,18 +144,28 @@ class _NavbarState extends ConsumerState<Navbar> {
                       ),
                     ),
                   ] else ...[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: GestureDetector(
-                        onTap: () {
-                          context.push('/profile'); // Mengarahkan ke halaman profil saat CircleAvatar ditekan
-                        },
-                        child: CircleAvatar(
-                          radius: 20, // Ukuran lingkaran
-                          backgroundImage: AssetImage('assets/images/ulinhouse.jpg'), // Gambar profil pengguna
+                    if (user != null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: GestureDetector(
+                          onTap: () {
+                            context.go('/profile'); // Mengarahkan ke halaman profil saat CircleAvatar ditekan
+                          },
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 20, // Ukuran lingkaran
+                                backgroundImage: NetworkImage(user.profilePhotoUrl), // Gambar profil pengguna
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                user.username, // Menampilkan username
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ],
               ),

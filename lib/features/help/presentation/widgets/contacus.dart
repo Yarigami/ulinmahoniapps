@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../../controller/launchurl_controller.dart';
 
 Widget _helpCard({
   required IconData icons,
@@ -57,57 +56,39 @@ Widget help(BuildContext context) {
         icons: Icons.phone_rounded,
         name: "WhatsApp",
         onTap: () {
-          _launchWhatsApp();
+          launchWhatsApp();
         },
       ),
       _helpCard(
         icons: Icons.language,
         name: "Website",
         onTap: () {
-          _launchUrl("https://example.com"); // Ganti dengan URL Website
+          launchCustomUrl("https://example.com"); // Ganti dengan URL Website
         },
       ),
       _helpCard(
         icons: Icons.facebook,
         name: "Facebook",
         onTap: () {
-          _launchUrl("https://facebook.com/yourpage"); // Ganti dengan URL Facebook
+          launchCustomUrl("https://facebook.com/yourpage"); // Ganti dengan URL Facebook
         },
       ),
       _helpCard(
         icons: FontAwesomeIcons.twitter,
         name: "Twitter",
         onTap: () {
-          _launchUrl("https://twitter.com/yourhandle"); // Ganti dengan URL Twitter
+          launchCustomUrl("https://twitter.com/yourhandle"); // Ganti dengan URL Twitter
         },
       ),
       _helpCard(
         icons: FontAwesomeIcons.instagram,
         name: "Instagram",
         onTap: () {
-          _launchUrl("https://instagram.com/yourhandle"); // Ganti dengan URL Instagram
+          launchCustomUrl("https://instagram.com/yourhandle"); // Ganti dengan URL Instagram
         },
       ),
     ],
   );
 }
 
-void _launchWhatsApp() async {
-  final phone = '6285694608028';
-  final message = Uri.encodeComponent('Halo, saya tertarik');
-  final url = 'https://wa.me/$phone?text=$message';
-  _launchUrl(url);
-}
 
-void _launchUrl(String url) async {
-  final uri = Uri.parse(url);
-  try {
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      debugPrint('Could not launch $url');
-    }
-  } catch (e) {
-    debugPrint('Error launching $url: $e');
-  }
-}

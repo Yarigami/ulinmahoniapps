@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/auth/login/provider/auth_providers.dart';
+import '../controller/launchwhatsapp_controller.dart';
 
-class BottomNavBar extends StatelessWidget {
+class BottomNavBar extends ConsumerWidget {
   final int currentIndex;
 
   const BottomNavBar({
@@ -9,7 +12,7 @@ class BottomNavBar extends StatelessWidget {
     required this.currentIndex,
   });
 
-  void _onTap(BuildContext context, int index) {
+  void _onTap(BuildContext context, int index, bool isLoggedIn) {
     switch (index) {
       case 0:
         context.go('/home');
@@ -18,25 +21,51 @@ class BottomNavBar extends StatelessWidget {
         context.go('/mybooking');
         break;
       case 2:
-        context.go('/um');
+        launchWhatsApp();
         break;
       case 3:
-        context.go('/profile');
+        if (isLoggedIn) {
+          context.go('/profile');
+        } else {
+          context.push('/login');
+        }
         break;
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const maroon = Color(0xFF800000);
     const darkGreen = Color(0xFF134E3A);
 
+    final authState = ref.watch(authProvider);
+    final bool isLoggedIn = authState.isLoggedIn;
+    final user = authState.user.value;
+
     final List<Map<String, dynamic>> items = [
-      {'icon': Icons.home, 'label': 'Home'},
-      {'icon': Icons.calendar_today, 'label': 'My Booking'},
-      {'icon': Icons.phone, 'label': 'UM'}, // UMI diganti dengan logo telepon
-      {'icon': Icons.person, 'label': 'Login'},
+      {'icon': Icons.home, 'label': 'Utama'},
+      {'icon': Icons.calendar_today, 'label': 'Pesanan Saya'},
+      {'icon': Icons.phone, 'label': 'UM'},
+      {
+        'icon': isLoggedIn
+            ? null
+            : Icons.person, // hanya berikan IconData di sini
+        'avatar': isLoggedIn
+            ? CircleAvatar(
+          radius: 12,
+          backgroundImage: user?.profilePhotoUrl.isNotEmpty == true
+              ? NetworkImage(user!.profilePhotoUrl)
+              : null,
+          child: user?.profilePhotoUrl.isEmpty == true
+              ? const Icon(Icons.person, size: 16)
+              : null,
+        )
+            : null,
+        'label': isLoggedIn ? 'Profile' : 'Login',
+        'isAvatar': isLoggedIn,
+      },
     ];
+
 
     return Container(
       decoration: const BoxDecoration(
@@ -46,7 +75,6 @@ class BottomNavBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: List.generate(items.length * 2 - 1, (i) {
-          // Odd index: separator
           if (i.isOdd) {
             return Container(
               width: 1,
@@ -61,13 +89,15 @@ class BottomNavBar extends StatelessWidget {
 
           return Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3), // tambahkan padding di sini
+              padding: const EdgeInsets.symmetric(horizontal: 3),
               child: InkWell(
-                onTap: () => _onTap(context, index),
+                onTap: () => _onTap(context, index , isLoggedIn),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
+                    item['isAvatar'] == true
+                        ? item['avatar'] // gunakan avatar khusus
+                        : Icon(
                       item['icon'],
                       color: isSelected ? darkGreen : maroon,
                     ),
@@ -78,7 +108,7 @@ class BottomNavBar extends StatelessWidget {
                         color: isSelected ? darkGreen : maroon,
                         fontSize: 11,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

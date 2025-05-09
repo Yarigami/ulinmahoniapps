@@ -1,25 +1,25 @@
 import 'package:go_router/go_router.dart';
-import 'package:ulinmahoniapps/features/auth/presentation/pages/createnewpassword_page.dart';
-import 'package:ulinmahoniapps/features/auth/presentation/pages/forgotpassword_page.dart';
-import 'package:ulinmahoniapps/features/auth/presentation/pages/login_page.dart';
-import 'package:ulinmahoniapps/features/auth/presentation/pages/otpverify_page.dart';
-import 'package:ulinmahoniapps/features/auth/presentation/pages/passwordchanged_page.dart';
-import 'package:ulinmahoniapps/features/auth/presentation/pages/register_page.dart';
-import 'package:ulinmahoniapps/features/auth/presentation/pages/welcoming_page.dart';
-import 'package:ulinmahoniapps/features/book/presentation/pages/bookhousepage.dart';
-import 'package:ulinmahoniapps/features/detailproperty/presentation/pages/detailhousepage.dart';
+import 'package:ulinmahoniapps/features/auth/createnewpassword/presentation/pages/createnewpassword_page.dart';
+import 'package:ulinmahoniapps/features/auth/forgotpassword/presentation/pages/forgotpassword_page.dart';
+import 'package:ulinmahoniapps/features/auth/login/presentation/pages/login_page.dart';
+import 'package:ulinmahoniapps/features/auth/otpverify/presentation/pages/otpverify_page.dart';
+import 'package:ulinmahoniapps/features/auth/passwordchanged/presentation/pages/passwordchanged_page.dart';
+import 'package:ulinmahoniapps/features/auth/register/presentation/pages/register_page.dart';
+import 'package:ulinmahoniapps/features/auth/welcoming/presentation/pages/welcoming_page.dart';
+import 'package:ulinmahoniapps/features/book/book/presentation/pages/bookhousepage.dart';
+import 'package:ulinmahoniapps/features/book/detailproperty/presentation/pages/detailhousepage.dart';
 import 'package:ulinmahoniapps/features/error/presentation/pages/errorpage.dart';
 import 'package:ulinmahoniapps/features/help/presentation/pages/help_page.dart';
 import 'package:ulinmahoniapps/features/searchresult/presentation/pages/searchresult_page.dart';
 import 'package:ulinmahoniapps/features/UM/presentation/pages/um_page.dart';
 import 'package:ulinmahoniapps/features/comingsoon/presentation/pages/comingsoon.dart';
-import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybookingdetails_page.dart';
-import 'package:ulinmahoniapps/features/payment/presentation/pages/paymentpage.dart';
-import 'package:ulinmahoniapps/features/profiles/presentation/pages/updateprofilepage.dart';
+import 'package:ulinmahoniapps/features/mybooking/mybookingdetails/presentation/pages/mybookingdetails_page.dart';
+import 'package:ulinmahoniapps/features/book/payment/presentation/pages/paymentpage.dart';
+import 'package:ulinmahoniapps/features/profiles/updateprofile/presentation/pages/updateprofilepage.dart';
 import 'package:ulinmahoniapps/features/splashscreen/presentation/pages/splashscreen.dart';
 import 'package:ulinmahoniapps/features/home/presentation/pages/homepage.dart';
-import 'package:ulinmahoniapps/features/mybooking/presentation/pages/mybooking_page.dart';
-import 'package:ulinmahoniapps/features/profiles/presentation/pages/profilepage.dart';
+import 'package:ulinmahoniapps/features/mybooking/mybooking/presentation/pages/mybooking_page.dart';
+import 'package:ulinmahoniapps/features/profiles/viewprofile/presentation/pages/profilepage.dart';
 import 'package:ulinmahoniapps/features/propertytype/presentation/pages/propertytypepage.dart';
 import 'package:ulinmahoniapps/core/layout/mainlayout.dart';
 
@@ -106,7 +106,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/register',
-      builder: (context, state) => Registerpage(),
+      builder: (context, state) => RegisterPage(),
     ),
     GoRoute(
       path: '/login',
