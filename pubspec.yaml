@@ -39,6 +39,7 @@ dependencies:
   grouped_list: ^4.2.0
   link_text: ^0.2.1
   social_login_buttons: ^1.0.7
+  http: ^0.13.6
 #  simple_icons: ^6.0.0
 #  auth_buttons: ^3.0.0
 #  flutter_signin_button: ^2.0.0
@@ -69,6 +70,7 @@ flutter:
     - assets/images/login_bg.png
     - assets/images/Successmark.png
     - assets/images/house.png
+    - assets/response.json
   #    - assets/videos/intro.mp4
   #    - assets/images/ulinhouse.jpg
 

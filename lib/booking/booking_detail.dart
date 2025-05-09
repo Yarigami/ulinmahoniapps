@@ -4,6 +4,8 @@ import 'my_booking.dart';
 import 'package:ulinmahoniapps/profile/profile_page.dart';
 import 'package:ulinmahoniapps/main.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:ulinmahoniapps/api/api_service.dart';
+import 'package:ulinmahoniapps/api/transaction_model.dart';
 
 class BookingDetail extends StatefulWidget {
   final Map<String, dynamic> booking;
@@ -15,6 +17,30 @@ class BookingDetail extends StatefulWidget {
 
 class _BookingDetailState extends State<BookingDetail> {
   int _currentIndex = 1;
+  late Future<List<Transaction>> transactions;
+  // late List<Map<String, dynamic>> _historyList;
+
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   transactions = ApiService().fetchTransactions();
+  //   transactions.then((history){
+  //     setState(() {
+  //       _historyList = history.map((hist) => {
+  //         "image": "assets/images/house.png",
+  //         "name": hist.propertyName,
+  //         "type": hist.propertyType,
+  //         "checkIn": hist.checkIn,
+  //         "checkOut": hist.checkOut,
+  //         "hpm": hist.dailyPrice,
+  //         "duration": hist.bookingDays,
+  //         "total": hist.grandTotalPrice,
+  //         // "discount" =
+  //         // "ftotal" =
+  //       }).toList();
+  //     });
+  //   });
+  // }
 
   void myBooking(){
     Navigator.pop(context);
@@ -67,15 +93,21 @@ class _BookingDetailState extends State<BookingDetail> {
                 Center(child: Icon(Icons.apartment),),
                 _info("Nama:", widget.booking["name"]),
                 _info("Jenis Ruangan:", widget.booking["type"]),
-                _info("Check-in:", formattedDate(widget.booking["checkIn"])),
-                _info("Check-out:", formattedDate(widget.booking["checkOut"])),
+                // _info("Check-in:", formattedDate(widget.booking["checkIn"])),
+                _info("Check-in:", formattedDate(DateTime.parse(widget.booking["checkIn"]))),
+                // _info("Check-out:", formattedDate(widget.booking["checkOut"])),
+                _info("Check-out:", formattedDate(DateTime.parse(widget.booking["checkOut"]))),
                 Divider(height: 20, color: Colors.black,),
-                _info("Harga Per Malam:", formatRP(widget.booking["hpm"])),
+                // _info("Harga Per Malam:", formatRP(widget.booking["hpm"])),
+                _info("Harga Per Malam:", widget.booking["hpm"]),
                 _info("Jumlah Malam:", widget.booking["duration"]),
-                _info("Harga Total:", formatRP(widget.booking["total"]), labelColor: Colors.green),
-                _info("Diskon:", formatRP(widget.booking["discount"])),
+                // _info("Harga Total:", formatRP(widget.booking["total"]), labelColor: Colors.green),
+                _info("Harga Total:", widget.booking["total"], labelColor: Colors.green),
+                // _info("Diskon:", formatRP(widget.booking["discount"])),
+                _info("Diskon:", widget.booking["discount"]),
                 Divider(height: 20, color: Colors.black,),
-                _info("Harga Terakhir:", formatRP(widget.booking["ftotal"]), isBold: true, labelColor: Color(0xFF0d9488),),
+                // _info("Harga Terakhir:", formatRP(widget.booking["ftotal"]), isBold: true, labelColor: Color(0xFF0d9488),),
+                _info("Harga Terakhir:", widget.booking["ftotal"], isBold: true, labelColor: Color(0xFF0d9488),),
                 SizedBox(height: 16,),
               ],
             ),

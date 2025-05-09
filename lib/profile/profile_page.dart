@@ -31,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
         MaterialPageRoute(builder: (context) => const WelcomePage()));
   }
 
-  int language = 0; // eng = 0, indp = 1
+  int language = 0; // eng = 0, indo = 1
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -111,69 +111,69 @@ class _ProfilePageState extends State<ProfilePage> {
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
                     children: [
-                      _menuItem(icon: Icons.person_outline, title: "My Account", subtitle: "Make changes to your account", onTap: _profilePage),
+                      _menuItem(icon: Icons.person_outline, title: language == 0 ? "My Account" : "Akun Saya", subtitle: language == 0 ? "Make changes to your account" : "Buat perubahan pada akun anda", onTap: _profilePage),
                       SizedBox(height: 8,),
-                      _menuItem(icon: Icons.supervisor_account_outlined, title: "Saved Beneficiary", subtitle: "Manage your saved account"),
+                      _menuItem(icon: Icons.supervisor_account_outlined, title: language == 0 ? "Saved Beneficiary" : "Penerima Tersimpan", subtitle: language == 0 ? "Manage your saved account" : "Atur akun anda"),
                       SizedBox(height: 8,),
-                      Material(
-                        color: Colors.white,
-                        elevation: 4,
-                        borderRadius: BorderRadius.circular(4),
-                        child: InkWell(
-                          onTap: (){},
-                          child: Container(
-                            width: double.infinity,
-                            height: 80,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor: Colors.white,
-                                    child: Icon(Icons.lock_outline,
-                                      color: Colors.black,
-                                      size: 25,
-                                    ),
-                                    // backgroundImage: AssetImage("assets/images/placeholder.png"),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 12.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Face ID/Touch ID", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis,),
-                                          SizedBox(height: 4),
-                                          Flexible(child: Text("Manage your device security", style: TextStyle(fontSize: 12, color: Colors.grey[600]), overflow: TextOverflow.ellipsis, maxLines: 2,)),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Switch(
-                                      value: idvalue,
-                                      activeColor: Colors.green,
-                                      thumbColor: WidgetStatePropertyAll(Colors.black),
-                                      onChanged: (bool value){
-                                        setState(() {
-                                          idvalue = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 8,),
-                      _menuItem(icon: Icons.verified_user_outlined, title: "Two Factor Authentication", subtitle: "Further secure your account for safety"),
-                      SizedBox(height: 8,),
-                      _menuItem(icon: Icons.logout, title: "Log out", subtitle: "Further Secure your Account for safety", onTap: _welcomPage)
+                      // Material(
+                      //   color: Colors.white,
+                      //   elevation: 4,
+                      //   borderRadius: BorderRadius.circular(4),
+                      //   child: InkWell(
+                      //     onTap: (){},
+                      //     child: Container(
+                      //       width: double.infinity,
+                      //       height: 80,
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                      //         child: Row(
+                      //           mainAxisAlignment: MainAxisAlignment.start,
+                      //           crossAxisAlignment: CrossAxisAlignment.start,
+                      //           children: <Widget>[
+                      //             CircleAvatar(
+                      //               radius: 30,
+                      //               backgroundColor: Colors.white,
+                      //               child: Icon(Icons.lock_outline,
+                      //                 color: Colors.black,
+                      //                 size: 25,
+                      //               ),
+                      //               // backgroundImage: AssetImage("assets/images/placeholder.png"),
+                      //             ),
+                      //             Expanded(
+                      //               child: Padding(
+                      //                 padding: const EdgeInsets.only(left: 12.0),
+                      //                 child: Column(
+                      //                   crossAxisAlignment: CrossAxisAlignment.start,
+                      //                   children: [
+                      //                     Text(language == 0 ? "Face ID/Touch ID" : "ID Wajah/ID Sentuh", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis,),
+                      //                     SizedBox(height: 4),
+                      //                     Flexible(child: Text(language == 0 ? "Manage your device security" : "mengelola keamanan perangkat anda", style: TextStyle(fontSize: 12, color: Colors.grey[600]), overflow: TextOverflow.ellipsis, maxLines: 2,)),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             Center(
+                      //               child: Switch(
+                      //                 value: idvalue,
+                      //                 activeColor: Colors.green,
+                      //                 thumbColor: WidgetStatePropertyAll(Colors.black),
+                      //                 onChanged: (bool value){
+                      //                   setState(() {
+                      //                     idvalue = value;
+                      //                   });
+                      //                 },
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(height: 8,),
+                      // _menuItem(icon: Icons.verified_user_outlined, title: language == 0 ? "Two Factor Authentication" : "Autentikasi Dua Faktor", subtitle: language == 0 ? "Further secure your account for safety" : "Tingkatkan keamanan akun Anda"),
+                      // SizedBox(height: 8,),
+                      _menuItem(icon: Icons.logout, title: language == 0 ? "Log out" : "keluar", subtitle: language == 0 ? "Log out of your account" : "Keluar dari akun anda", onTap: _welcomPage)
                     ],
                   ),
                 ),
@@ -188,13 +188,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("More",textAlign: TextAlign.left,),
+                          Text(language == 0 ? "More" : "Opsi lainnya" ,textAlign: TextAlign.left,),
                         ],
                       ),
                       SizedBox(height: 8,),
-                      _menuItem(icon: Icons.support_agent, title: "Help & Support", onTap: _helpPage),
+                      _menuItem(icon: Icons.support_agent, title: language == 0 ? "Help & Support" : "Bantuan", onTap: _helpPage),
                       SizedBox(height: 8,),
-                      _menuItem(icon: Icons.phone_android, title: "About App"),
+                      _menuItem(icon: Icons.phone_android, title: language == 0 ? "About App" : "Tentang aplikasi"),
                       SizedBox(height: 12,),
                       Container(
                         decoration: BoxDecoration(

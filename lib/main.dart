@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ulinmahoniapps/data_test.dart';
+import 'package:ulinmahoniapps/listData.dart';
 import 'booking/my_booking.dart';
 import 'smart_controller.dart';
 import 'smart_home.dart';
@@ -25,9 +27,11 @@ class MainHomePage extends StatefulWidget {
 
 class _MainHomePageState extends State<MainHomePage> {
   int _currentIndex = 0; // START IN HOME
+  // final int language;
   final List<Widget> _pages = [
     Center(child: Text("Home", style: TextStyle(fontSize: 24))),
-    MyBooking(),
+    MyBooking(data: myList,),
+    // DataTest(),
     // SmartHome(),
     Center(child: Text("UMI", style: TextStyle(fontSize: 24))),
     ProfilePage(),
@@ -63,7 +67,7 @@ class _MainHomePageState extends State<MainHomePage> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "My Booking"),
-            // BottomNavigationBarItem(icon: Icon(Icons.home_work), label: "Smart Home"),
+            // BottomNavigationBarItem(icon: Icon(Icons.home_work), label: "TESTING"),
             BottomNavigationBarItem(icon: Icon(Icons.call), label: "UMI"),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "My Profile"),
           ],

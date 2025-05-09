@@ -50,6 +50,14 @@ html
 3.2
 file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.6/
 file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.6/lib/
+http
+2.19
+file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.6/
+file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.6/lib/
+http_parser
+3.4
+file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.1.2/
+file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.1.2/lib/
 intl
 2.12
 file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.1/
@@ -130,6 +138,10 @@ test_api
 3.5
 file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.7.4/
 file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.7.4/lib/
+typed_data
+3.5
+file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.4.0/
+file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.4.0/lib/
 url_launcher
 3.3
 file:///C:/Users/yarig/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher-6.3.1/
