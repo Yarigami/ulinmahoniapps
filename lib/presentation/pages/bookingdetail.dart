@@ -65,54 +65,61 @@ class _BookingdetailState extends State<Bookingdetail> {
         ),
         foregroundColor: Colors.black,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 300,
-            child: Image.asset(
-              "assets/images/ulinhouse.jpg",
-              fit: BoxFit.cover,
-            ),
-          ),
-          Container(
-            // margin: EdgeInsets.all(16),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFFF5F2EA), Color(0xFFF5F2EA)],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              height: 300,
+              child: Image.asset(
+                "assets/images/ulinhouse.jpg",
+                fit: BoxFit.cover,
               ),
             ),
-            padding: EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Center(child: Icon(Icons.apartment),),
-                _info("Nama:", widget.booking["name"]),
-                _info("Jenis Ruangan:", widget.booking["type"]),
-                // _info("Check-in:", formattedDate(widget.booking["checkIn"])),
-                _info("Check-in:", formattedDate(DateTime.parse(widget.booking["checkIn"]))),
-                // _info("Check-out:", formattedDate(widget.booking["checkOut"])),
-                _info("Check-out:", formattedDate(DateTime.parse(widget.booking["checkOut"]))),
-                Divider(height: 20, color: Colors.black,),
-                // _info("Harga Per Malam:", formatRP(widget.booking["hpm"])),
-                _info("Harga Per Malam:", widget.booking["hpm"]),
-                _info("Jumlah Malam:", widget.booking["duration"]),
-                // _info("Harga Total:", formatRP(widget.booking["total"]), labelColor: Colors.green),
-                _info("Harga Total:", widget.booking["total"], labelColor: Colors.green),
-                // _info("Diskon:", formatRP(widget.booking["discount"])),
-                _info("Diskon:", widget.booking["discount"]),
-                Divider(height: 20, color: Colors.black,),
-                // _info("Harga Terakhir:", formatRP(widget.booking["ftotal"]), isBold: true, labelColor: Color(0xFF0d9488),),
-                _info("Harga Terakhir:", widget.booking["ftotal"], isBold: true, labelColor: Color(0xFF0d9488),),
-                SizedBox(height: 16,),
-              ],
-            ),
-          )
-        ],
+            Container(
+              // margin: EdgeInsets.all(16),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFFF5F2EA), Color(0xFFF5F2EA)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              padding: EdgeInsets.all(24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Center(child: Icon(Icons.apartment),),
+                  _info("Nama:", widget.booking["name"]),
+                  _info("Jenis Ruangan:", widget.booking["type"]),
+                  _info("Nama Ruangan", widget.booking["roomName"]),
+                  _info("ID Ruangan", widget.booking["orderId"]),
+                  // _info("Check-in:", formattedDate(widget.booking["checkIn"])),
+                  _info("Check-in:", formattedDate(DateTime.parse(widget.booking["checkIn"]))),
+                  // _info("Check-out:", formattedDate(widget.booking["checkOut"])),
+                  _info("Check-out:", formattedDate(DateTime.parse(widget.booking["checkOut"]))),
+                  _info("Tanggal Transaksi", formattedDate(DateTime.parse(widget.booking["trDate"]))),
+                  _info("Tipe Transaksi", widget.booking["trType"]),
+                  Divider(height: 20, color: Colors.black,),
+                  // _info("Harga Per Malam:", formatRP(widget.booking["hpm"])),
+                  _info("Jumlah Malam:", widget.booking["duration"]),
+                  _info("Harga Per Malam:", widget.booking["hpm"]),
+                  _info("Harga Ruangan", widget.booking["roomPrice"]),
+                  _info("Biaya Admin", widget.booking["adminFees"]),
+                  // _info("Harga Total:", formatRP(widget.booking["total"]), labelColor: Colors.green),
+                  // _info("Diskon:", formatRP(widget.booking["discount"])),
+                  _info("Diskon:", widget.booking["discount"]),
+                  Divider(height: 20, color: Colors.black,),
+                  // _info("Harga Terakhir:", formatRP(widget.booking["ftotal"]), isBold: true, labelColor: Color(0xFF0d9488),),
+                  _info("Harga Terakhir:", widget.booking["grandTotal"], isBold: true, labelColor: Color(0xFF0d9488),),
+                  SizedBox(height: 16,),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
       // bottomNavigationBar: Container(
       //   decoration: BoxDecoration(

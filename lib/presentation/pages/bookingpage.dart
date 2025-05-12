@@ -101,21 +101,41 @@ class _BookingpageState extends State<Bookingpage> with SingleTickerProviderStat
           "checkOut": tr.checkOut,
           "status": tr.status,
           "trStatus": tr.transactionStatus,
+          "orderId": tr.orderId,
+          "trDate": tr.transactionDate,
+          "trType": tr.transactionType,
+          "roomName": tr.roomName,
+          "hpm": tr.dailyPrice,
+          "roomPrice": tr.roomPrice,
+          "adminFees": tr.adminFees,
+          "grandTotal": tr.grandTotalPrice,
           // "hpm": tr.dailyPrice ?? 0.0,
           // "duration": tr.bookingDays ?? 0.0,
           // "total": tr.grandTotalPrice ?? 0.0,
         }).toList();
         _completedList = transaction.map((tr) => {
-          "image": "assets/images/ulinhouse.jpg",
+          // Descriptive info first
           "name": tr.propertyName ?? "-",
-          "type": tr.propertyType  ?? "-",
+          "type": tr.propertyType ?? "-",
+          "image": "assets/images/ulinhouse.jpg",
+          "roomName": tr.roomName,
+
+          // Pricing and numeric values
+          "hpm": tr.dailyPrice ?? 0.0,
+          "roomPrice": tr.roomPrice,
+          "adminFees": tr.adminFees,
+          "duration": tr.bookingDays ?? 0.0,
+          "grandTotal": tr.grandTotalPrice ?? 0.0,
+
+          // Date and status info
           "checkIn": tr.checkIn,
           "checkOut": tr.checkOut,
-          "hpm": tr.dailyPrice ?? 0.0,
-          "duration": tr.bookingDays ?? 0.0,
-          "total": tr.grandTotalPrice ?? 0.0,
           "status": tr.status,
           "trStatus": tr.transactionStatus,
+          "orderId": tr.orderId,
+          "trDate": tr.transactionDate,
+          "trType": tr.transactionType,
+
           // "discount" =
           // "ftotal" =
         }).toList();
@@ -273,7 +293,7 @@ class _BookingpageState extends State<Bookingpage> with SingleTickerProviderStat
   }
 
   Widget _upcomingCard({required Map<String, dynamic> booking}) {
-    if (booking['status'] == 'completed'){
+    if (booking['status'] == '0' || booking['trStatus'] == 'completed'){
       return SizedBox.shrink();
     }
     else{
@@ -313,40 +333,25 @@ class _BookingpageState extends State<Bookingpage> with SingleTickerProviderStat
                           children: [
                             Text(booking['type']),
                             SizedBox(width: 6,),
-                            booking['trStatus'] != 'pending' ?
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 2, vertical: 0),
                               decoration: BoxDecoration(
-                                color: booking['status'].toLowerCase() == "upcoming" ? Colors.red[100]
-                                    : booking['status'].toLowerCase() == "waiting" ? Colors.yellow[100] : Colors.green[100],
-                                border: Border.all(color: booking['status'].toLowerCase() == "upcoming" ? Colors.red[800]!
-                                    : booking['status'].toLowerCase() == "waiting" ? Colors.yellow[800]! : Colors.green[800]!),
+                                color: booking['trStatus'].toLowerCase() == "upcoming" ? Colors.red[100]
+                                    : booking['trStatus'].toLowerCase() == "waiting" ? Colors.yellow[100] : Colors.green[100],
+                                border: Border.all(color: booking['trStatus'].toLowerCase() == "upcoming" ? Colors.red[800]!
+                                    : booking['trStatus'].toLowerCase() == "waiting" ? Colors.yellow[800]! : Colors.green[800]!),
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
-                                booking['status'] == "upcoming" ? "Upcoming" : booking['status'] == "active" ? "On-going" : booking['status'],
+                                booking['trStatus'] == "upcoming" ? "Upcoming" : booking['trStatus'] == "active" ? "On-going" :
+                                booking['trStatus'] == "waiting" ? "Waiting" : "not detected",
                                 style: TextStyle(
-                                    color: booking['status'].toLowerCase() == "upcoming" ? Colors.red[900]
-                                        : booking['status'].toLowerCase() == "waiting" ? Colors.yellow[900] : Colors.green[900],
+                                    color: booking['trStatus'].toLowerCase() == "upcoming" ? Colors.red[900]
+                                        : booking['trStatus'].toLowerCase() == "waiting" ? Colors.yellow[900] : Colors.green[900],
                                     fontSize: 10
                                 ),
                               ),
                             )
-                                : Container(
-                              padding: EdgeInsets.symmetric(horizontal: 2, vertical: 0),
-                              decoration: BoxDecoration(
-                                color: Colors.yellow[100],
-                                border: Border.all(color: Colors.yellow[800]!),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Text(
-                                "Waiting",
-                                style: TextStyle(
-                                    color: Colors.yellow[900],
-                                    fontSize: 10
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -372,7 +377,7 @@ class _BookingpageState extends State<Bookingpage> with SingleTickerProviderStat
   }
 
   Widget _completedCard({required Map<String, dynamic> booking}) {
-    if (booking['status'] != 'completed' || booking['trStatus'] != 'success'){
+    if (booking['status'] == '0' || booking['trStatus'] != 'completed'){
       return SizedBox.shrink();
     }
     return Card(
