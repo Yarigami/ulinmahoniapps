@@ -9,7 +9,7 @@ import 'package:ulinmahoniapps/presentation/pages/umi.dart';
 import 'package:ulinmahoniapps/presentation/pages/profilepage.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyApp());//test
 }
 
 /// Routing config
