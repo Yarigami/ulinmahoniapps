@@ -9,6 +9,8 @@ import '../widgets/filter.dart';
 import '../widgets/bestseller.dart';
 import '../widgets/budget.dart';
 import '../widgets/browseallbutton.dart';
+import '../../data/properties_api_services.dart';
+import '../../model/properties_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,6 +22,44 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedSubCategoryIndex = 0;
   int _selectedFilterTabIndex = 0;
+  late Future<List<Property>> properties;
+  late List<Map<String, dynamic>> propList = [];
+
+  @override
+  void initState(){
+    super.initState();
+    properties = PropertiesApiService().fetchProperties();
+
+    properties.then((property){
+      setState(() {
+        propList = property.where((x) => x.tags.toLowerCase().contains("house"))
+            .map((x) => {
+          'idrec': x.idrec,
+          'slug': x.slug,
+          'tags': x.tags,
+          'name': x.name,
+          'description': x.description,
+          'province': x.province,
+          'city': x.city,
+          'subdistrict': x.subdistrict,
+          'village': x.village,
+          'postal_code': x.postalCode,
+          'address': x.address,
+          'location': x.location,
+          'distance': x.distance,
+          'price': x.price.toJson(),
+          'features': x.features.toJson(),
+          'attributes': x.attributes.toJson(),
+          'image': 'assets/images/ulinhouse.jpg',
+          'status': x.status,
+          'created_at': x.createdAt,
+          'updated_at': x.updatedAt,
+          'created_by': x.createdBy,
+          'updated_by': x.updatedBy,
+        }).toList();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,36 +106,75 @@ class _HomePageState extends State<HomePage> {
 
               SizedBox(
                 height: 300,
-                child: ListView(
+                child: propList.isEmpty ? const Center(child: CircularProgressIndicator(),)
+                    : ListView.separated(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: [
-                    ProductCard(
-                        image: 'assets/images/ulinhouse.jpg',
-                        title: 'Jelambar',
-                        onTap: () {
-                          context.push('/detailhouse');
+                  itemCount: propList.length,
+                  separatorBuilder: (_, __) => const SizedBox(width: 0.0),
+                  itemBuilder: (context, index){
+                    final property = propList[index];
+                    return ProductCard(
+                        image: property['image'],
+                        title: property['name'],
+                        location: property['location'],
+                        detail: property['tags'],
+                        price: property['price']['original'].toString(),
+                        // badgeText: property['features'].values.first,
+                        onTap: (){
+                          context.push('/detailhouse', extra: property);
+                          print("==================================================\n $property");
                         }
-                    ),
-                    SizedBox(width: 16),
-                    ProductCard(
-                        image: 'assets/images/ulinhouse.jpg',
-                        title: 'Jelambar',
-                        onTap: () {
-                          context.push('/detailhouse');
-                        }
-                    ),
-                    SizedBox(width: 16),
-                    ProductCard(
-                        image: 'assets/images/ulinhouse.jpg',
-                        title: 'Jelambar',
-                        onTap: () {
-                          context.push('/detailhouse');
-                        }
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ),
+
+              // SizedBox(
+              //   height: 300,
+              //   child: ListView(
+              //     scrollDirection: Axis.horizontal,
+              //     padding: const EdgeInsets.symmetric(horizontal: 16),
+              //     children: [
+              //       ProductCard(
+              //         image: 'assets/images/ulinhouse.jpg',
+              //         title: 'Jelambar',
+              //         onTap: () {
+              //           context.push(
+              //             '/detailhouse',
+              //             extra: {
+              //               "data": {
+              //                 "idrec": 1,
+              //                 "slug": "hou_umhj_1",
+              //                 "tags": "House",
+              //                 "name": "Ulin Mahoni House Jaksel",
+              //                 "description": "Experience modern coliving at its finest in this strategically located property. Featuring well-designed spaces, community areas, and all the amenities you need for comfortable urban living.",
+              //                 "location": "Kemang, Jakarta Selatan",
+              //                 "image": null // karena kamu pakai asset sementara, bisa null atau base64
+              //               }
+              //             },
+              //           );
+              //         },
+              //       ),
+              //       SizedBox(width: 16),
+              //       ProductCard(
+              //           image: 'assets/images/ulinhouse.jpg',
+              //           title: 'Jelambar',
+              //           onTap: () {
+              //             context.push('/detailhouse');
+              //           }
+              //       ),
+              //       SizedBox(width: 16),
+              //       ProductCard(
+              //           image: 'assets/images/ulinhouse.jpg',
+              //           title: 'Jelambar',
+              //           onTap: () {
+              //             context.push('/detailhouse');
+              //           }
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
               BrowseAllButton(),
 

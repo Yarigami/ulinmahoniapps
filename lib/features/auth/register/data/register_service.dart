@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../model/register_model.dart';
+import '../../../../core/constants/api_baseurl.dart';
 
 class RegisterService {
-  final String _baseUrl = 'http://demo-ulinmahoni.integrated-os.cloud/api';
 
   Future<Register> register({
     required String username,
     required String email,
     required String password,
   }) async {
-    final url = Uri.parse('$_baseUrl/register');
+    final url = Uri.parse('${ApiConfig.baseUrl}/register');
     http.Response response;
 
     try {

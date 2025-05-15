@@ -11,6 +11,7 @@ class MainLayout extends StatelessWidget {
   final bool showContactBar;
   final bool pesansekarangbutton; // 👈 Tambahan di sini
   final Color backgroundColor;
+  final Map<String, dynamic>? contactBarData;
 
   const MainLayout({
     Key? key,
@@ -21,6 +22,7 @@ class MainLayout extends StatelessWidget {
     this.showContactBar = false,
     this.pesansekarangbutton = true, // 👈 Default true agar backward compatible
     this.backgroundColor = const Color(0xFFF5F2EA),
+    this.contactBarData
   }) : super(key: key);
 
   @override
@@ -33,7 +35,7 @@ class MainLayout extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (showContactBar)
-            BottomContactBar(isAvailable: pesansekarangbutton), // 👈 Diteruskan ke widget
+            BottomContactBar(isAvailable: pesansekarangbutton,roomData: contactBarData, ), // 👈 Diteruskan ke widget
           if (showBottomNav)
             BottomNavBar(currentIndex: currentIndex),
         ],

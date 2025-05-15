@@ -3,14 +3,17 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import '../model/auth_model.dart';
+import '../../../../core/constants/api_baseurl.dart';
 
 class AuthService {
-  static const String baseUrl = 'http://demo-ulinmahoni.integrated-os.cloud';
   final Dio dio;
   final CookieJar cookieJar;
 
   AuthService()
-      : dio = Dio(BaseOptions(baseUrl: baseUrl)),
+      : dio = Dio(BaseOptions(baseUrl: ApiConfig.baseUrl)),
         cookieJar = CookieJar() {
     dio.interceptors.add(CookieManager(cookieJar));
   }
@@ -18,7 +21,7 @@ class AuthService {
   Future<Map<String, dynamic>?> login(String email, String password) async {
     try {
       final response = await dio.post(
-        '/api/login',
+        '/login',
         data: jsonEncode({'email': email, 'password': password}),
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -70,11 +73,10 @@ class AuthService {
 
   Future<void> _saveTokenToCookies(String token) async {
     try {
-      final uri = Uri.parse('$baseUrl/api/login'); // KEMBALIKAN KE ASLI
+      final uri = Uri.parse('${ApiConfig.baseUrl}/api/login');
       final cookie = Cookie('auth_token', token)
         ..domain = uri.host
-        ..path = '/'; // Hapus ..httpOnly = true jika ingin diakses dari JavaScript
-
+        ..path = '/';
       await cookieJar.saveFromResponse(uri, [cookie]);
     } catch (e) {
       print('Error saving cookie: $e');
@@ -83,7 +85,7 @@ class AuthService {
 
   Future<String?> getTokenFromCookies() async {
     try {
-      final uri = Uri.parse('$baseUrl/api/login'); //Perbaiki URI
+      final uri = Uri.parse('${ApiConfig.baseUrl}/api/login');
       final cookies = await cookieJar.loadForRequest(uri);
       final tokenCookie = cookies.firstWhere(
             (cookie) => cookie.name == 'auth_token',
@@ -98,8 +100,8 @@ class AuthService {
 
   Future<void> logout() async {
     try {
-      final uri = Uri.parse('$baseUrl/api/login');  //Perbaiki URI
-      await cookieJar.delete(uri); // Hapus cookie saat logout
+      final uri = Uri.parse('${ApiConfig.baseUrl}/api/login');
+      await cookieJar.delete(uri);
     } catch (e) {
       print('Error deleting cookies: $e');
     }

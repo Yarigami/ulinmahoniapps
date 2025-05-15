@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../controller/register_controller.dart';
-import '../widgets/errordialog.dart';
+import '../../../../../core/widgets/errordialog.dart';
 import '../widgets/inputfield.dart';
 import '../widgets/passwordfield.dart';
 import '../widgets/socialmedi.dart';

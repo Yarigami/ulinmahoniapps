@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../../../../core/widgets/appbar.dart';
 import '../../../../../core/layout/mainlayout.dart';
-import 'package:intl/intl.dart';
+import '../widgets/widgets.dart';
+import '../../data/mybookingdetails_service.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:convert';
+import 'dart:io';
 
 class MyBookingDetail extends StatefulWidget {
   final Map<String, dynamic> bookingData;
+
   const MyBookingDetail({Key? key, required this.bookingData}) : super(key: key);
 
   @override
@@ -14,6 +19,8 @@ class MyBookingDetail extends StatefulWidget {
 class _MyBookingDetailState extends State<MyBookingDetail> {
   Map<String, dynamic> bookingData = {};
   String? errorMessage;
+  File? _selectedImage; // Simpan file gambar yang dipilih
+  String? _base64Image; // Simpan gambar dalam format Base64
 
   @override
   void initState() {
@@ -23,137 +30,255 @@ class _MyBookingDetailState extends State<MyBookingDetail> {
 
   void fetchData() {
     try {
-      // Cek jika bookingData kosong atau null
       if (widget.bookingData.isEmpty) {
         errorMessage = 'Booking data tidak ditemukan';
         bookingData = {};
       } else {
         bookingData = widget.bookingData;
+        print(widget.bookingData);
       }
     } catch (e) {
       errorMessage = 'Terjadi kesalahan saat mengambil data: $e';
       bookingData = {};
     }
-    setState(() {}); // Trigger a rebuild to display the data
+    setState(() {});
   }
 
+  // Fungsi untuk memilih gambar dari galeri
+  Future<void> _pickImage() async {
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile == null) return;
+
+      final file = File(pickedFile.path);
+      setState(() {
+        _selectedImage = file;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("❌ Gagal memilih gambar: $e")),
+      );
+      print('Error Memilih Gambar: $e');
+    }
+  }
+
+  // Fungsi untuk mengunggah gambar
+  Future<void> _uploadImage() async {
+    if (_selectedImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("ℹ️ Pilih gambar terlebih dahulu")),
+      );
+      return;
+    }
+
+    try {
+      // Konversi gambar ke Base64
+      List<int> imageBytes = await _selectedImage!.readAsBytes();
+      String base64Image = base64Encode(imageBytes);
+
+      final service = MyBookingDetailsService();
+      final success = await service.uploadImageAsBase64(widget.bookingData['id'].toString(), base64Image);
+
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("✅ Gambar berhasil diupload")),
+        );
+        print('✅ Berhasil diupload');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("❌ Gagal upload gambar")),
+        );
+        print('❌ Gagal upload gambar');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("❌ Gagal upload gambar: $e")),
+      );
+      print('❌ Error Upload Gambar: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final bookingType = bookingData['booking_type'] ?? 'daily'; // default daily
+
     return MainLayout(
       currentIndex: 1,
       showNavBar: false,
       showBottomNav: false,
-      child: SafeArea(
-        child: Column(
-          children: [
-            CustomAppBar(title: "My Booking Details"),
-            Expanded(
-              child: errorMessage != null
-                  ? Center(
-                child: Text(
-                  'Error: $errorMessage',
-                  style: const TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              )
-                  : SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: 300,
-                      child: Image.asset(
-                        bookingData['image'] ?? "assets/images/ulinhouse.jpg",
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.image_not_supported, size: 40);
-                        },
+      child: Stack(
+        children: [
+          // Konten utama scrollable
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Stack untuk gambar & teks
+                  Stack(
+                    children: [
+                      // Gambar background
+                      Container(
+                        height: 400,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/ulinhouse.jpg'),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topCenter,
+                          ),
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(24),
+                      // Nama properti dan kamar
+                      Positioned(
+                        bottom: 60,
+                        left: 20,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              bookingData['property_name'] ?? "Nama Kos",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                shadows: [Shadow(color: Colors.black, blurRadius: 4)],
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              bookingData['room_name'] ?? "Nama Kamar",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                shadows: [Shadow(color: Colors.black, blurRadius: 4)],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // Card putih naik ke atas
+                  Transform.translate(
+                    offset: const Offset(0, -50),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(24),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 2,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Center(child: Icon(Icons.apartment)),
-                          _info("Nama:", bookingData['title'] ?? "Judul Tidak Tersedia"),
-                          _info("Jenis Ruangan:", bookingData['location'] ?? "Lokasi Tidak Tersedia"),
-                          _info("Check-In:", _formatDate(bookingData['checkIn']) ?? "Tanggal Check-In Tidak Tersedia"),
-                          _info("Check-Out:", _formatDate(bookingData['checkOut']) ?? "Tanggal Check-Out Tidak Tersedia"),
-                          const Divider(height: 20, color: Colors.black),
-                          _info("Harga Per Malam:", _formatCurrency(bookingData['hargaPerMalam']) ?? "0"),
-                          _info("Jumlah Malam:", bookingData['jumlahMalam'] ?? "0"),
-                          _info("Harga Total:", _formatCurrency(bookingData['totalHarga']) ?? "0"),
-                          _info("Diskon:", "${_formatCurrency(bookingData['hargaDiskon']) ?? "0"} (${_calculateDiscountPercentage(bookingData['totalHarga'], bookingData['hargaDiskon'])})"),
-                          const Divider(height: 20, color: Colors.black),
-                          _info("Harga Terakhir:", _formatCurrency(bookingData['totalHargaSetelahDiskon']) ?? "0", isBold: true, color: Color(0xFF005F21)),
-                          const SizedBox(height: 16),
+                          sectionTitle('Detail Pemesanan'),
+                          info("Id Pemesanan:", bookingData['order_id'] ?? "-"),
+                          info("Kode Transaksi:", bookingData['transaction_code'] ?? "-"),
+                          info("Nomor Telepon", bookingData['user_phone_number'] ?? "-"),
+                          info("Tipe Pemesanan", bookingData['booking_type'] ?? "-"),
+                          const Divider(height: 30),
+                          sectionTitle("Detail Waktu"),
+                          info("Daftar Masuk:", formatDate(bookingData['check_in']) ?? "-"),
+                          info("Daftar Keluar:", formatDate(bookingData['check_out']) ?? "-"),
+                          const Divider(height: 30),
+                          sectionTitle("Harga Booking"),
+                          info(
+                              "Harga : ",bookingData['room_price'].toString() ?? '-',
+                          ),
+                          info(
+                            bookingType == 'daily'
+                                ? "Jumlah Malam:"
+                                : "Jumlah Bulan:",
+                            bookingData['booking_days']?.toString() ?? "0",
+                          ),
+                          info("Pajak:", formatCurrency(bookingData['admin_fees']) ?? "0"),
+                          const Divider(height: 30),
+                          info(
+                            "Harga Total:",
+                            formatCurrency(bookingData['grandtotal_price']) ?? "0",
+                            isBold: true,
+                            color: const Color(0xFF005F21),
+                          ),
                         ],
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+
+                  // Tampilkan gambar yang dipilih
+                  if (_selectedImage != null)
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Image.file(
+                        _selectedImage!,
+                        height: 150,
+                      ),
+                    ),
+
+                  // Tombol untuk memilih gambar
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
+                      child: ElevatedButton.icon(
+                        onPressed: _pickImage,
+                        icon: const Icon(Icons.image),
+                        label: const Text("Pilih Gambar"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF005F21),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          textStyle: const TextStyle(fontSize: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Tombol untuk mengunggah gambar
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
+                      child: ElevatedButton.icon(
+                        onPressed: _selectedImage != null ? _uploadImage : null,
+                        icon: const Icon(Icons.upload),
+                        label: const Text("Upload Gambar"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF005F21),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          textStyle: const TextStyle(fontSize: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  String? _formatDate(String? dateString) {
-    if (dateString == null) return null;
-
-    try {
-      DateFormat inputFormat = DateFormat("EEE, dd/MM/yy (HH:mm - HH:mm)");
-      DateTime dateTime = inputFormat.parse(dateString);
-      DateFormat outputFormat = DateFormat("EEE, dd MMM yyyy (HH:mm - HH:mm)");
-      return outputFormat.format(dateTime);
-    } catch (e) {
-      print("Error formatting date: $e");
-      return dateString;
-    }
-  }
-
-  String? _formatCurrency(dynamic amount) {
-    if (amount == null) return null;
-    final formatCurrency = NumberFormat.currency(locale: 'id_ID', symbol: 'RP. ', decimalDigits: 0);
-    return formatCurrency.format(amount);
-  }
-
-  String _calculateDiscountPercentage(dynamic totalHarga, dynamic hargaDiskon) {
-    if (totalHarga == null || hargaDiskon == null) return '0%';
-    double discountPercentage = (hargaDiskon / totalHarga) * 100;
-    return '${discountPercentage.toStringAsFixed(0)}%';
-  }
-
-  Widget _info(String label, String value, {bool isBold = false, Color? color}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: color ?? Colors.black,
-              fontSize: 16,
-            ),
           ),
-          Text(
-            value,
-            style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: color ?? Colors.black,
-              fontSize: 16,
-            ),
+          // ✅ Fixed AppBar di atas semua
+          const Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: CustomAppBar(title: "My Booking Details"),
           ),
         ],
       ),
     );
   }
 }
-

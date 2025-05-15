@@ -33,7 +33,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 const Positioned(
                   top: 8,
                   left: 8,
-                  child: CustomBackButton(),
+                  child: CustomBackButton(iconColor: Colors.black),
                 ),
 
                 // Konten utama tetap dalam scroll

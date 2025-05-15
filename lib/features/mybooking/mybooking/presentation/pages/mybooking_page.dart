@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../data/mybooking_data.dart';
-import '../widgets/mybooking_card.dart';
-import '../../../../../core/widgets/appbar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../core/layout/mainlayout.dart';
+import '../../../../../core/widgets/appbar.dart';
+import '../../provider/mybooking_provider.dart';
+import '../../controller/mybooking_controller.dart';
 
-class MyBookingPage extends StatefulWidget {
+class MyBookingPage extends ConsumerStatefulWidget {
   const MyBookingPage({super.key});
 
   @override
-  State<MyBookingPage> createState() => _MyBookingPageState();
+  ConsumerState<MyBookingPage> createState() => _MyBookingPageState();
 }
 
-class _MyBookingPageState extends State<MyBookingPage>
+class _MyBookingPageState extends ConsumerState<MyBookingPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -19,6 +20,10 @@ class _MyBookingPageState extends State<MyBookingPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    // Pakai postFrameCallback supaya context dan ref sudah siap
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.invalidate(userBookingsProvider);
+    });
   }
 
   @override
@@ -27,74 +32,61 @@ class _MyBookingPageState extends State<MyBookingPage>
     super.dispose();
   }
 
-  List<Widget> buildBookingList(String status) {
-    final filtered = bookings.where((b) => b['status'].toLowerCase() == status.toLowerCase()).toList();
-
-    return filtered
-        .map(
-          (b) => BookingCard(
-        id: b['id'] as int,
-        image: b['image'] as String,
-        title: b['title'] as String,
-        location: b['location'] as String,
-        checkIn: b['checkIn'] as String,
-        checkOut: b['checkOut'] as String,
-        status: b['status'] as String,
-        statusText: b['statusText'] as String,
-        dataDetail: b,
-      ),
-    )
-        .toList();
-  }
-
-
   @override
   Widget build(BuildContext context) {
+    if (!checkLoginAndRedirect(context, ref)) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    final bookingsAsync = ref.watch(userBookingsProvider);
+
     return MainLayout(
       showNavBar: false,
       showBottomNav: false,
       currentIndex: 1,
-      child: DefaultTabController(
-        length: 2,
-        child: Column(
-          children: [
-            CustomAppBar(title: "My Booking",showBackButton: false),
-            Material( // Tambahkan Material widget di sini
-              color: Colors.white, // Set warna latar belakang putih
-              child: TabBar(
-                controller: _tabController,
-                indicator: UnderlineTabIndicator(
-                  borderSide: BorderSide(color: Colors.black, width: 2.0),
-                  insets: EdgeInsets.symmetric(horizontal: 50.0),
-                ),
-                labelColor: Colors.black,
-                unselectedLabelColor: Colors.grey,
-                labelStyle: const TextStyle(
-                  fontWeight: FontWeight.w400,
-                ),
-                tabs: const [
-                  Tab(text: 'Pending'),
-                  Tab(text: 'Completed'),
-                ],
+      child: Column(
+        children: [
+          const CustomAppBar(title: "My Booking", showBackButton: false),
+          Material(
+            color: Colors.white,
+            child: TabBar(
+              controller: _tabController,
+              indicator: const UnderlineTabIndicator(
+                borderSide: BorderSide(color: Colors.black, width: 2.0),
+                insets: EdgeInsets.symmetric(horizontal: 50.0),
               ),
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey,
+              labelStyle: const TextStyle(fontWeight: FontWeight.w500),
+              tabs: const [
+                Tab(text: 'Pending'),
+                Tab(text: 'Completed'),
+              ],
             ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  ListView(
-                    padding: const EdgeInsets.all(10),
-                    children: buildBookingList("pending"),
-                  ),
-                  ListView(
-                    padding: const EdgeInsets.all(10),
-                    children: buildBookingList("completed"),
-                  ),
-                ],
-              ),
+          ),
+          Expanded(
+            child: bookingsAsync.when(
+              data: (bookings) {
+                return TabBarView(
+                  controller: _tabController,
+                  children: [
+                    ListView(
+                      padding: const EdgeInsets.all(10),
+                      children: buildBookingList(bookings, 'pending'),
+                    ),
+                    ListView(
+                      padding: const EdgeInsets.all(10),
+                      children: buildBookingList(bookings, 'completed'),
+                    ),
+                  ],
+                );
+              },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, _) => Center(child: Text("Error: $e")),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

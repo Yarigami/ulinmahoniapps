@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/auth/login/provider/auth_providers.dart';
+import '../../features/auth/login/provider/auth_provider.dart';
 
 class Navbar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   final String initialLanguage;
@@ -156,11 +156,6 @@ class _NavbarState extends ConsumerState<Navbar> {
                               CircleAvatar(
                                 radius: 20, // Ukuran lingkaran
                                 backgroundImage: NetworkImage(user.profilePhotoUrl), // Gambar profil pengguna
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                user.username, // Menampilkan username
-                                style: TextStyle(color: Colors.black),
                               ),
                             ],
                           ),

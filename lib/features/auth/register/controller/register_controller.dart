@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/register_services.dart'; // Import RegisterService
+import '../data/register_service.dart'; // Import RegisterService
 import '../model/register_model.dart'; // Import Register model
 
 //  Provider for the RegisterController

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ulinmahoniapps/core/widgets/appbar.dart';
 import '../../../../core/layout/mainlayout.dart';
 
 class ErrorPage extends StatelessWidget {
@@ -11,11 +12,10 @@ class ErrorPage extends StatelessWidget {
     return MainLayout(
       currentIndex: 4,
       showNavBar: false,
+      showBottomNav: false,
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text('Error'),
-        ),
+        appBar: CustomAppBar(title: "Error" ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),

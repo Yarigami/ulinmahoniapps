@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../features/auth/login/provider/auth_provider.dart';
+import 'errordialog.dart';
 
 const Color firebrickColor = Color(0xFFB22222);
 const Color forestGreenColor = Color(0xFF134E3A);
 
-class BottomContactBar extends StatelessWidget {
+class BottomContactBar extends ConsumerWidget {
   final bool isAvailable;
-  const BottomContactBar({super.key, this.isAvailable = false});
+  final dynamic roomData;
+  const BottomContactBar({super.key, this.isAvailable = false, this.roomData});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final buttonHeight = screenHeight * 0.055;
@@ -109,7 +113,21 @@ class BottomContactBar extends StatelessWidget {
             height: buttonHeight,
             child: ElevatedButton.icon(
               onPressed: () {
-                context.push(isAvailable ? '/payment' : '/browse-all');
+                if (isAvailable) {
+                  final authState = ref.read(authProvider);
+                  final user = authState.user.value;
+                  if (user != null) {
+                    // ref.read(roomDataProvider.notifier).state = roomData;
+                    context.push('/payment', extra: roomData);
+                    print('=bottomcontactbar=');
+                    print(roomData);
+                  } else {
+                    showErrorDialog(context, 'Silakan login terlebih dahulu untuk melanjutkan pembayaran.');
+                  }
+                }
+                else {
+                  context.push('/browse-all');
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: forestGreenColor,

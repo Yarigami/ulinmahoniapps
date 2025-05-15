@@ -22,7 +22,7 @@ class ProductCard extends StatefulWidget {
     this.location = 'Domisili',
     this.detail = 'Detail belum tersedia',
     this.price = 'Harga belum ditentukan',
-    this.badgeText = 'Diskon 100%',
+    this.badgeText = 'Diskon 10%',
     this.onTap,
     this.width = 300,
     this.height = 200,

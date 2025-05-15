@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/auth/login/provider/auth_providers.dart';
+import '../../features/auth/login/provider/auth_provider.dart';
 import '../controller/launchwhatsapp_controller.dart';
 
 class BottomNavBar extends ConsumerWidget {
   final int currentIndex;
+  final Map<String, dynamic>? extraData;
 
   const BottomNavBar({
     super.key,
     required this.currentIndex,
+    this.extraData
   });
 
   void _onTap(BuildContext context, int index, bool isLoggedIn) {
@@ -18,7 +20,11 @@ class BottomNavBar extends ConsumerWidget {
         context.go('/home');
         break;
       case 1:
-        context.go('/mybooking');
+        if (isLoggedIn) {
+          context.go('/mybooking');
+        } else {
+          context.push('/login');
+        }
         break;
       case 2:
         launchWhatsApp();

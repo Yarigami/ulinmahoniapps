@@ -7,18 +7,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color textColor;
   final Color backButtonColor;
   final bool showBackButton;
+  final String? redirectRoute; // 👈 Tambahkan ini
 
   const CustomAppBar({
     Key? key,
-    this.title = 'Default', // Nilai default adalah "Default"
+    this.title = 'Default',
     this.backgroundColor = const Color(0xFF134E3A),
     this.textColor = Colors.white,
     this.backButtonColor = Colors.white,
-    this.showBackButton = true, // Nilai default: tampilkan back button
+    this.showBackButton = true,
+    this.redirectRoute, // 👈 Tambahkan ke konstruktor
   }) : super(key: key);
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight); // Tinggi AppBar standar
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +28,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       elevation: 0,
       leading: showBackButton
-          ? CustomBackButton(iconColor: backButtonColor)
-          : null, // Tampilkan atau sembunyikan berdasarkan parameter
+          ? CustomBackButton(
+        iconColor: backButtonColor,
+        redirectRoute: redirectRoute, // 👈 Teruskan ke CustomBackButton
+      )
+          : null,
       title: Text(
         title,
-        style: TextStyle( // Atur style untuk teks
+        style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w300,
-          color: textColor, // Warna teks putih
+          color: textColor,
         ),
       ),
-      centerTitle: false, // Judul rata kiri
+      centerTitle: false,
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../login/provider/auth_providers.dart';
+import '../../login/provider/auth_provider.dart';
 
 final loginControllerProvider = StateNotifierProvider<LoginController, bool>((ref) {
   return LoginController(ref);
@@ -25,6 +25,7 @@ class LoginController extends StateNotifier<bool> {
       final authState = _ref.read(authProvider);
       if (authState.isLoggedIn) {
         print('✅ Login berhasil');
+        print("User ID yang login: ${authState.user.value?.id}");
         return null;
       } else {
         print('❌ Login gagal');

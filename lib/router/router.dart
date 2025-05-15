@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ulinmahoniapps/features/auth/createnewpassword/presentation/pages/createnewpassword_page.dart';
 import 'package:ulinmahoniapps/features/auth/forgotpassword/presentation/pages/forgotpassword_page.dart';
@@ -6,7 +7,8 @@ import 'package:ulinmahoniapps/features/auth/otpverify/presentation/pages/otpver
 import 'package:ulinmahoniapps/features/auth/passwordchanged/presentation/pages/passwordchanged_page.dart';
 import 'package:ulinmahoniapps/features/auth/register/presentation/pages/register_page.dart';
 import 'package:ulinmahoniapps/features/auth/welcoming/presentation/pages/welcoming_page.dart';
-import 'package:ulinmahoniapps/features/book/book/presentation/pages/bookhousepage.dart';
+import 'package:ulinmahoniapps/features/book/detailproperty/model/detailproperty_model.dart';
+import 'package:ulinmahoniapps/features/book/roomdetails/presentation/pages/roomdetails_page.dart';
 import 'package:ulinmahoniapps/features/book/detailproperty/presentation/pages/detailhousepage.dart';
 import 'package:ulinmahoniapps/features/error/presentation/pages/errorpage.dart';
 import 'package:ulinmahoniapps/features/help/presentation/pages/help_page.dart';
@@ -22,6 +24,7 @@ import 'package:ulinmahoniapps/features/mybooking/mybooking/presentation/pages/m
 import 'package:ulinmahoniapps/features/profiles/viewprofile/presentation/pages/profilepage.dart';
 import 'package:ulinmahoniapps/features/propertytype/presentation/pages/propertytypepage.dart';
 import 'package:ulinmahoniapps/core/layout/mainlayout.dart';
+import '../features/book/roomdetails/model/rooms_model.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/splash',
@@ -81,8 +84,23 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const PropertyTypePage(),
     ),
     GoRoute(
-      path: '/bookhouse',
-      builder: (context, state) => const BookHousePage(),
+      path: '/roomdetails',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        if (extra == null) {
+          return const Scaffold(
+            body: Center(child: Text('No data provided')),
+          );
+        }
+
+        final room = extra['room'] as RoomModel;
+        final property = extra['property'] as DetailPropertyModel;
+
+        return RoomDetailsPage(
+          room: room,
+          propertyData: property,
+        );
+      },
     ),
     GoRoute(
       path: '/search',
@@ -90,11 +108,28 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/detailhouse',
-      builder: (context, state) => const DetailHousePage(),
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>?; // ambil extra
+        if (data == null) {
+          return Scaffold(body: Center(child: Text('No data received')));
+        }
+        return DetailHousePage(data: data);
+      },
     ),
     GoRoute(
       path: '/payment',
-      builder: (context, state) => PaymentPage(),
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>;
+
+        return PaymentPage(
+          room: extra['room'] as RoomModel,
+          propertyData: extra['propertyData'] as DetailPropertyModel,
+          rentType: extra['rentType'] as String,
+          duration: extra['duration'] as int,
+          checkInDate: extra['checkInDate'] as DateTime,
+          checkOutDate: extra['checkOutDate'] as DateTime,
+        );
+      },
     ),
     GoRoute(
       path: '/updateprofile',
