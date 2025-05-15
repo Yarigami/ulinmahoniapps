@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ulinmahoniapps/core/widgets/backbutton.dart';
-import '../../../login/provider/auth_providers.dart';
+import '../../../login/provider/auth_provider.dart';
 import '../../../login/controller/login_controller.dart';
 import '../widgets/inputfield.dart';
 import '../widgets/passwordfield.dart';
@@ -117,7 +117,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           foregroundColor: MaterialStateProperty.all(Colors.white),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
                         ),

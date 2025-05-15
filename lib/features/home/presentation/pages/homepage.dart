@@ -71,11 +71,24 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   children: [
                     ProductCard(
-                        image: 'assets/images/ulinhouse.jpg',
-                        title: 'Jelambar',
-                        onTap: () {
-                          context.push('/detailhouse');
-                        }
+                      image: 'assets/images/ulinhouse.jpg',
+                      title: 'Jelambar',
+                      onTap: () {
+                        context.push(
+                          '/detailhouse',
+                          extra: {
+                            "data": {
+                              "idrec": 1,
+                              "slug": "hou_umhj_1",
+                              "tags": "House",
+                              "name": "Ulin Mahoni House Jaksel",
+                              "description": "Experience modern coliving at its finest in this strategically located property. Featuring well-designed spaces, community areas, and all the amenities you need for comfortable urban living.",
+                              "location": "Kemang, Jakarta Selatan",
+                              "image": null // karena kamu pakai asset sementara, bisa null atau base64
+                            }
+                          },
+                        );
+                      },
                     ),
                     SizedBox(width: 16),
                     ProductCard(

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/register_services.dart';
+import '../data/register_service.dart';
 
 // StateNotifier untuk mengelola status registrasi
 class RegisterNotifier extends StateNotifier<RegisterState> {

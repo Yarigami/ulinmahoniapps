@@ -4,7 +4,7 @@ import '../../../../../core/layout/mainlayout.dart';
 import '../../../../../core/widgets/appbar.dart';
 import '../widgets/profile_menuitem_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../auth/login/provider/auth_providers.dart';
+import '../../../../auth/login/provider/auth_provider.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -146,7 +146,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         onTap: () async {
                           await ref.read(authProvider.notifier).logout();
                           if (context.mounted) {
-                            context.go('/welcome');
+                            context.go('/login');
                           }
                         },
                       ),

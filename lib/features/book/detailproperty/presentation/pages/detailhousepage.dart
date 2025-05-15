@@ -1,50 +1,24 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../core/layout/mainlayout.dart';
 import '../../../../../core/widgets/backbutton.dart';
-import '../../data/detailhouse_data.dart';
-import '../widgets/roomtype.dart';
+import '../widgets/rooms.dart';
 
-class DetailHousePage extends StatefulWidget {
-  const DetailHousePage({Key? key}) : super(key: key);
+class DetailHousePage extends ConsumerStatefulWidget {
+  final Map<String, dynamic> data;
+
+  const DetailHousePage({Key? key, required this.data}) : super(key: key);
 
   @override
-  State<DetailHousePage> createState() => _DetailHousePageState();
+  ConsumerState<DetailHousePage> createState() => _DetailHousePageState();
 }
 
-class _DetailHousePageState extends State<DetailHousePage> {
-  // Variabel State
-  bool _isLoading = false;
-  dynamic _propertyData = {}; // Inisialisasi dengan Map kosong
-  String? _errorMessage;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadPropertyDetails();
-  }
-
-  // Metode untuk memuat data dari API (atau data dummy)
-  Future<void> _loadPropertyDetails() async {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    try {
-      // TODO: Ganti dengan kode untuk memanggil API Anda
-      await Future.delayed(Duration(seconds: 1)); // Simulasi loading API
-      _propertyData = dummyPropertyData; // Gunakan data dummy
-    } catch (error) {
-      _errorMessage = 'Failed to load property details.';
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
+class _DetailHousePageState extends ConsumerState<DetailHousePage> {
   @override
   Widget build(BuildContext context) {
+    final property = widget.data['data'];
+
     return MainLayout(
       currentIndex: 0,
       showNavBar: false,
@@ -52,28 +26,26 @@ class _DetailHousePageState extends State<DetailHousePage> {
       showContactBar: true,
       pesansekarangbutton: false,
       child: SafeArea(
-        child: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : _errorMessage != null
-            ? Center(child: Text('Error: $_errorMessage'))
-            : SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Stack untuk Gambar Utama dan Back Button
+              // Gambar + Header
               Stack(
                 children: [
                   Container(
                     height: 400,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/ulinhouse.jpg'),
+                        image: property['image'] != null
+                            ? MemoryImage(base64Decode(property['image']))
+                            : const AssetImage('assets/images/ulinhouse.jpg') as ImageProvider,
                         fit: BoxFit.cover,
                         alignment: Alignment.topCenter,
                       ),
                     ),
                   ),
-                  Positioned(
+                  const Positioned(
                     top: 16,
                     left: 16,
                     child: CustomBackButton(),
@@ -85,16 +57,16 @@ class _DetailHousePageState extends State<DetailHousePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _propertyData['name'] ?? 'Loading...',
-                          style: TextStyle(
+                          property['name'] ?? '',
+                          style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
                         Text(
-                          _propertyData['type'] ?? '',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
+                          property['tags'] ?? '',
+                          style: const TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ],
                     ),
@@ -102,11 +74,12 @@ class _DetailHousePageState extends State<DetailHousePage> {
                 ],
               ),
 
+              // Konten bawah
               Transform.translate(
-                offset: Offset(0, -50),
+                offset: const Offset(0, -50),
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16),
-                  padding: EdgeInsets.all(16.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
@@ -115,14 +88,14 @@ class _DetailHousePageState extends State<DetailHousePage> {
                         color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 2,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Tentang",
                         style: TextStyle(
                           fontSize: 16,
@@ -131,50 +104,58 @@ class _DetailHousePageState extends State<DetailHousePage> {
                         ),
                       ),
                       Text(
-                        _propertyData['description'] ?? '',
-                        style: TextStyle(fontSize: 14),
+                        property['description'] ?? '',
+                        style: const TextStyle(fontSize: 14),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Row(
                         children: [
-                          Icon(Icons.location_on, color: Color(0xFF004D40)),
-                          SizedBox(width: 4),
-                          Text(_propertyData['location'] ?? ''),
+                          const Icon(Icons.location_on, color: Color(0xFF004D40)),
+                          const SizedBox(width: 4),
+                          Text(property['location'] ?? ''),
                         ],
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Row(
                         children: [
-                          Icon(Icons.star, color: Color(0xFF004D40)),
-                          SizedBox(width: 4),
-                          Text('${_propertyData['rating']} (${_propertyData['reviews']} Reviews)'),
-                          Spacer(),
+                          const Icon(Icons.star, color: Color(0xFF004D40)),
+                          const SizedBox(width: 4),
+                          const Text('4.8 (128 Reviews)'), // Rating dummy
+                          const Spacer(),
                           TextButton(
                             onPressed: () {
-                              // Navigasi ke halaman komentar
+                              // Navigasi ke komentar
                             },
-                            child: Text(
+                            child: const Text(
                               'Lihat Komentar >',
                               style: TextStyle(color: Color(0xFF004D40)),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      const SizedBox(height: 16),
+                      Wrap(
+                        spacing: 16,
+                        runSpacing: 8,
                         children: [
-                          _buildFacilityIcon(Icons.tv, 'Lounge'),
-                          _buildFacilityIcon(Icons.camera_alt, 'CCTV Area'),
-                          _buildFacilityIcon(Icons.wifi, 'Free Wifi'),
-                          _buildFacilityIcon(Icons.fitness_center, 'GYM'),
+                          _buildFacilityIcon(Icons.wifi, 'WiFi'),
+                          _buildFacilityIcon(Icons.security, '24/7 Security'),
+                          _buildFacilityIcon(Icons.kitchen, 'Kitchen'),
+                          _buildFacilityIcon(Icons.local_laundry_service, 'Laundry'),
+                          _buildFacilityIcon(Icons.directions_car, 'Parking'),
+                          _buildFacilityIcon(Icons.people, 'Common Area'),
                         ],
                       ),
                     ],
                   ),
                 ),
               ),
-              RoomTypeSection(propertyData: _propertyData),
+        RoomTypeSection(propertyData: {
+          'id': property['idrec'], // ubah key jadi 'id'
+          'name': property['name'],
+          'description': property['description'],
+          'location': property['location'],
+        }),
             ],
           ),
         ),
@@ -182,13 +163,13 @@ class _DetailHousePageState extends State<DetailHousePage> {
     );
   }
 
-  // Widget pembantu untuk membuat ikon fasilitas
   Widget _buildFacilityIcon(IconData icon, String label) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: Color(0xFF004D40)),
-        SizedBox(height: 4),
-        Text(label, style: TextStyle(color: Color(0xFF004D40))),
+        Icon(icon, color: const Color(0xFF004D40)),
+        const SizedBox(height: 4),
+        Text(label, style: const TextStyle(color: Color(0xFF004D40))),
       ],
     );
   }

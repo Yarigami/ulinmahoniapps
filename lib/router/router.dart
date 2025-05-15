@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ulinmahoniapps/features/auth/createnewpassword/presentation/pages/createnewpassword_page.dart';
 import 'package:ulinmahoniapps/features/auth/forgotpassword/presentation/pages/forgotpassword_page.dart';
@@ -90,7 +91,18 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/detailhouse',
-      builder: (context, state) => const DetailHousePage(),
+      builder: (context, GoRouterState state) {
+        final data = state.extra;
+
+        // Validasi apakah data adalah Map<String, dynamic>
+        if (data is! Map<String, dynamic>) {
+          Future.microtask(() {
+            context.go('/error', extra: 'Invalid data for DetailHousePage');
+          });
+          return const SizedBox(); // Widget sementara sebelum redirect
+        }
+        return DetailHousePage(data: data);
+      },
     ),
     GoRoute(
       path: '/payment',
