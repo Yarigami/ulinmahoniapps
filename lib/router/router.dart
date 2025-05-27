@@ -13,7 +13,6 @@ import 'package:ulinmahoniapps/features/book/detailproperty/presentation/pages/d
 import 'package:ulinmahoniapps/features/error/presentation/pages/errorpage.dart';
 import 'package:ulinmahoniapps/features/help/presentation/pages/help_page.dart';
 import 'package:ulinmahoniapps/features/searchresult/presentation/pages/searchresult_page.dart';
-import 'package:ulinmahoniapps/features/UM/presentation/pages/um_page.dart';
 import 'package:ulinmahoniapps/features/comingsoon/presentation/pages/comingsoon.dart';
 import 'package:ulinmahoniapps/features/mybooking/mybookingdetails/presentation/pages/mybookingdetails_page.dart';
 import 'package:ulinmahoniapps/features/book/payment/presentation/pages/paymentpage.dart';
@@ -50,10 +49,6 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) => const MyBookingPage(),
         ),
         GoRoute(
-          path: '/um',
-          builder: (context, state) => const UMpage(),
-        ),
-        GoRoute(
           path: '/comingsoon',
           builder: (context, state) => const ComingSoonPage(),
         ),
@@ -84,8 +79,11 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const PropertyTypePage(),
     ),
     GoRoute(
-      path: '/roomdetails',
+      path: '/roomdetails/:id', // Menggunakan parameter :id
       builder: (context, state) {
+        // Ambil ID dari path
+        final roomId = state.pathParameters['id'];
+        print('Navigating to RoomDetails for ID: $roomId'); // Untuk debugging
         final extra = state.extra as Map<String, dynamic>?;
         if (extra == null) {
           return const Scaffold(
@@ -107,13 +105,15 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const SearchResult(),
     ),
     GoRoute(
-      path: '/detailhouse',
+      path: '/detailhouse/:id',
       builder: (context, state) {
-        final data = state.extra as Map<String, dynamic>?; // ambil extra
-        if (data == null) {
-          return Scaffold(body: Center(child: Text('No data received')));
+        final idString = state.pathParameters['id'];
+        print('Navigating to DetailProperty for ID: $idString'); // Untuk debugging
+        final id = int.tryParse(idString ?? '');
+        if (id == null) {
+          return const Scaffold(body: Center(child: Text('Invalid ID')));
         }
-        return DetailHousePage(data: data);
+        return DetailHousePage(id: id);
       },
     ),
     GoRoute(

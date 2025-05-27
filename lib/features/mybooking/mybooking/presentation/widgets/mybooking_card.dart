@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';  // Pastikan kamu mengimpor package intl
+import '../../../../../core/widgets/formatdate.dart';
 
 class BookingCard extends StatefulWidget {
   final int id;
@@ -50,7 +50,6 @@ class _BookingCardState extends State<BookingCard> {
     return GestureDetector(
       onTap: () {
         context.push('/mybookingdetails', extra: widget.dataDetail);
-        print(widget.id);
       },
       child: Card(
         color: Colors.white,
@@ -119,11 +118,11 @@ class _BookingCardState extends State<BookingCard> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Check-In: ${_formatDate(widget.checkIn) ?? widget.checkIn}',
+                      'Check-In: ${formatDate(widget.checkIn) ?? widget.checkIn}',
                       style: const TextStyle(fontSize: 12),
                     ),
                     Text(
-                      'Check-Out: ${_formatDate(widget.checkOut) ?? widget.checkOut}',
+                      'Check-Out: ${formatDate(widget.checkOut) ?? widget.checkOut}',
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
@@ -137,17 +136,3 @@ class _BookingCardState extends State<BookingCard> {
   }
 }
 
-String? _formatDate(String? dateString) {
-  if (dateString == null) return null;
-  try {
-    // Menggunakan format ISO 8601 untuk parsing
-    DateTime dateTime = DateTime.parse(dateString);
-
-    // Format output sesuai dengan format yang diinginkan
-    DateFormat outputFormat = DateFormat("EEE, dd MMM yyyy HH:mm");
-    return outputFormat.format(dateTime);
-  } catch (e) {
-    print("Error formatting date: $e");
-    return dateString;
-  }
-}

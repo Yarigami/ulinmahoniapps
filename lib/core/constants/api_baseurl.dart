@@ -1,3 +1,3 @@
 class ApiConfig {
-  static const String baseUrl = 'https://um-urgent.integrated-os.cloud/api';
+  static const String baseUrl = 'https://demo-ulinmahoni.integrated-os.cloud/api';
 }

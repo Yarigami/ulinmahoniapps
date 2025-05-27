@@ -36,12 +36,32 @@ class BookingService {
           throw Exception('Unexpected API response format.');
         }
       } else {
-        throw Exception('Failed to fetch booking data');
+        // Ini akan menangani status code 2xx lainnya yang mungkin tidak diharapkan
+        // atau jika server mengembalikan status non-200 tanpa DioException
+        throw Exception('Failed to fetch booking data with status code: ${response.statusCode}');
+      }
+    } on DioException catch (e) {
+      // Tangani DioException secara spesifik
+      if (e.response != null) {
+        // Jika status code adalah 404
+        if (e.response!.statusCode == 404) {
+          // Asumsikan 404 berarti "Tidak ada booking ditemukan untuk user ini"
+          print('Info: Tidak ada booking ditemukan untuk user ID $userId (status 404 dari server). Mengembalikan list kosong.');
+          return []; // Mengembalikan list kosong daripada melempar error
+        }
+        // Untuk DioException lainnya dengan respons (misal: 400, 401, 500)
+        print('Error fetching bookings (HTTP ${e.response!.statusCode}): ${e.response!.data}');
+        throw Exception('Gagal mengambil data booking: Status ${e.response!.statusCode}');
+      } else {
+        // DioException tanpa respons (misal: error jaringan, timeout)
+        print('Error jaringan atau Dio error tidak dikenal: ${e.message}');
+        throw Exception('Error jaringan: ${e.message}');
       }
     } catch (e, stackTrace) {
-      print('Error fetching bookings: $e');
+      // Tangani error tak terduga lainnya yang bukan DioException
+      print('Error tak terduga saat mengambil booking: $e');
       print('Stack trace: $stackTrace');
-      throw Exception('Failed to fetch booking data');
+      throw Exception('Terjadi error tak terduga saat mengambil data booking.');
     }
   }
 }

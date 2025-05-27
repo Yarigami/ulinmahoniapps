@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../roomdetails/model/rooms_model.dart';
-import '../../roomdetails/data/rooms_service.dart';
+import '../model/rooms_model.dart';
+import '../data/rooms_service.dart';
 
 // Provider untuk RoomService
 final roomServiceProvider = Provider((ref) => RoomService());
@@ -13,7 +13,9 @@ final roomListProvider = FutureProvider.family<List<RoomModel>, int>((ref, prope
 
     // Ambil daftar kamar berdasarkan propertyId
     return await service.getRoomsByPropertyId(propertyId);
-  } catch (e) {
+  } catch (e, stackTrace) {
+    print('Error fetching rooms for propertyId $propertyId: $e');
+    print('StackTrace: $stackTrace');
     throw Exception("Failed to fetch rooms: $e");
   }
 });

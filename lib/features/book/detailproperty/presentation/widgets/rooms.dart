@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/widgets/productcard.dart';
 import '../../../roomdetails/model/rooms_model.dart';
-import '../../provider/rooms_provider.dart';
+import '../../../roomdetails/provider/rooms_provider.dart';
 import '../../model/detailproperty_model.dart';
 
 class RoomTypeSection extends ConsumerWidget {
@@ -15,6 +15,7 @@ class RoomTypeSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final int propertyId = propertyData.id ?? 0;
+    print(propertyId);
     final roomsAsyncValue = ref.watch(roomListProvider(propertyId));
     print(propertyData);
     return Container(
@@ -47,10 +48,7 @@ class RoomTypeSection extends ConsumerWidget {
                         detail: room.descriptions ?? '-',
                         price: (room.price?['discounted']?['monthly'] ?? 0).toString(), // Konversi ke String
                         onTap: () {
-                          print("========room=======");
-                          print(propertyData);
-                          print(room);
-                          context.push('/roomdetails', extra: {
+                          context.push('/roomdetails/${room.id}', extra: {
                             'property': propertyData,
                             'room': room,
                           });

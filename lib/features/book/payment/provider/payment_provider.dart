@@ -15,6 +15,10 @@ class PaymentNotifier extends StateNotifier<AsyncValue<String>> {
   Future<void> postBooking(Map<String, dynamic> bookingData) async {
     state = const AsyncValue.loading();
 
+    print('--- Data Booking yang Akan Dikirim ---');
+    print(jsonEncode(bookingData)); // Menggunakan jsonEncode untuk format JSON yang rapi
+    print('-------------------------------------');
+
     try {
       final authState = ref.watch(authProvider);
       final user = authState.user.value;

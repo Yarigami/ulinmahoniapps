@@ -6,6 +6,7 @@ import 'package:ulinmahoniapps/features/book/detailproperty/model/detailproperty
 import '../../../roomdetails/model/rooms_model.dart';
 import '../../../../auth/login/provider/auth_provider.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../core/widgets/formatcurrency.dart';
 import '../widgets/payment_method.dart';
 import '../../provider/payment_provider.dart';
 import '../../model/payment_model.dart';
@@ -54,46 +55,103 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
   void fetchData() {
     final room = widget.room;
     final rentType = widget.rentType;
-    print('====rent====');
-    print(rentType);
-    print(widget.rentType);
     final duration = widget.duration;
     final property = widget.propertyData;
 
-    int parsePrice(dynamic price) {
-      if (price == null) return 0;
-      if (price is int) return price;
-      if (price is double) return price.toInt();
-      if (price is String) return int.tryParse(price) ?? 0;
-      return 0;
-    }
+    print("====FetchdataPayment====");
+    print(room.id);
+    print(rentType);
+    print(duration);
+    print(property.name);
 
-    final discountedDailyPrice = parsePrice(widget.room.priceDiscountedDaily);
-    final originalDailyPrice = parsePrice(widget.room.priceOriginalDaily);
+    // void debugPrintType(dynamic value) {
+    //   if (value is int) {
+    //     print('Tipe: int, Nilai: $value');
+    //   } else if (value is double) {
+    //     print('Tipe: double, Nilai: $value');
+    //   } else if (value is String) {
+    //     print('Tipe: String, Nilai: "$value"');
+    //   } else {
+    //     print('Tipe tidak dikenali: ${value.runtimeType}, Nilai: $value');
+    //   }
+    // }
+    // debugPrintType(widget.room.priceDiscountedDaily);
+    // debugPrintType(widget.room.priceOriginalDaily);
+    // debugPrintType(widget.room.priceDiscountedMonthly);
+    // debugPrintType(widget.room.priceOriginalMonthly);
 
-    final discountedMonthlyPrice = parsePrice(widget.room.priceDiscountedMonthly);
-    final originalMonthlyPrice = parsePrice(widget.room.priceOriginalMonthly);
+    double adminfees = 0;
 
+    int monthlyduration = 0;
+    int dailyduration = 0;
 
-    int originalTotal = 0;
-    int discountedTotal = 0;
+    final discountedDailyPrice = parseToDouble(widget.room.priceDiscountedDaily);
+    var originalDailyPrice = parseToDouble(widget.room.priceOriginalDaily);
+
+    final discountedMonthlyPrice = parseToDouble(widget.room.priceDiscountedMonthly);
+    var originalMonthlyPrice = parseToDouble(widget.room.priceOriginalMonthly);
+
+    print("====price====");
+    print(widget.room.priceOriginalMonthly);
+    print(widget.room.priceDiscountedMonthly);
+    print(widget.room.priceOriginalDaily);
+    print(widget.room.priceDiscountedDaily);
+    print(discountedDailyPrice);
+    print(originalDailyPrice);
+    print(discountedMonthlyPrice);
+    print(originalMonthlyPrice);
+
+    double originalTotal = 0;
+    double discountedTotal = 0;
 
     if (rentType == 'daily') {
-      originalTotal = originalDailyPrice * duration;  // duration dalam hari
-      discountedTotal = discountedDailyPrice * duration;
+      // Debugging untuk daily rental
+      print('--- Perhitungan Harian ---');
+      print('rentType: $rentType');
+      print('originalDailyPrice: $originalDailyPrice');
+      print('discountedDailyPrice: $discountedDailyPrice');
+
+      originalTotal = originalDailyPrice * duration;
+      dailyduration = duration;
+      originalMonthlyPrice = 0;
+      adminfees = originalTotal * 0.10;
+
+      print('duration (days): $dailyduration');
+      print('originalTotal (daily): $originalTotal (setelah $originalDailyPrice * $duration)');
+      print('discountedTotal (daily): $discountedTotal (setelah $discountedDailyPrice * $duration)');
+
     } else if (rentType == 'monthly') {
-      originalTotal = originalMonthlyPrice * duration;  // duration dalam bulan
-      discountedTotal = discountedMonthlyPrice * duration;
+      // Debugging untuk monthly rental
+      print('--- Perhitungan Bulanan ---');
+      print('rentType: $rentType');
+      print('originalMonthlyPrice: $originalMonthlyPrice');
+      print('discountedMonthlyPrice: $discountedMonthlyPrice');
+
+      originalTotal = originalMonthlyPrice * duration;
+      monthlyduration = duration;
+      originalDailyPrice = 0;
+      adminfees = originalTotal * 0.10;
+
+      print('duration (months): $monthlyduration');
+      print('originalTotal (monthly): $originalTotal (setelah $originalMonthlyPrice * $duration)');
+      print('discountedTotal (monthly): $discountedTotal (setelah $discountedMonthlyPrice * $duration)');
     }
+
+    print("====total===");
     print(originalTotal);
     print(discountedTotal);
 
     final originalFee = originalTotal * 0.10;
     final discountedFee = discountedTotal * 0.10;
 
+    print("====fee====");
+    print(originalFee);
+    print(discountedFee);
+
     setState(() {
       roomData = {
         'name': room.name ?? '-',
+        'id': room.id ?? '',
         'checkIn': widget.checkInDate.toString().substring(0, 10),
         'checkOut': widget.checkOutDate.toString().substring(0, 10),
         'type': room.type ?? '-',
@@ -101,6 +159,12 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
         'propertyId': property.id ?? '',
         'propertyType': property.tags ?? '-',
         'location': property.location ?? '-',
+        'daily_price': originalDailyPrice,
+        'monthly_price': originalMonthlyPrice,
+        'rentType': rentType,
+        'booking_months': monthlyduration,
+        'booking_days': dailyduration,
+        'admin_fee': adminfees,
       };
 
       itemDetails = [
@@ -110,16 +174,15 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
           'rawPrice': originalTotal,
           'type': 'original',
         },
-        {
-          'name': '$duration ${rentType == 'daily' ? 'Hari' : 'Bulan'} (Harga Diskon)',
-          'price': discountedTotal.toStringAsFixed(0),
-          'rawPrice': discountedTotal,
-          'type': 'discounted',
-        },
+        // {
+        //   'name': '$duration ${rentType == 'daily' ? 'Hari' : 'Bulan'} (Harga Diskon)',
+        //   'price': discountedTotal.toStringAsFixed(0),
+        //   'rawPrice': discountedTotal,
+        //   'type': 'discounted',
+        // },
       ];
 
       afterOriginalTotalFees = originalFee;
-      afterDiscountedTotalFees = discountedFee;
     });
   }
 
@@ -148,24 +211,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
       return false;
     }
 
-    int parsePrice(dynamic price) {
-      if (price == null) return 0;
-      if (price is int) return price;
-      if (price is double) return price.toInt();
-      if (price is String) return int.tryParse(price) ?? 0;
-      return 0;
-    }
-
-    final dailyPricedata = parsePrice(roomData!['price_discounted_daily']) != 0
-        ? parsePrice(roomData!['price_discounted_daily'])
-        : parsePrice(roomData!['price_original_daily']);
-
-    final monthlyPricedata = parsePrice(roomData!['price_discounted_monthly']) != 0
-        ? parsePrice(roomData!['price_discounted_monthly'])
-        : parsePrice(roomData!['price_original_monthly']);
-
-    int totalprice = (calculateTotalPrice(itemDetails, (afterDiscountedTotalFees ?? afterOriginalTotalFees) ?? 0)).toInt() ;
-
     final bookingRequest = BookingRequest(
       userId: user.id,
       userName: user.name,
@@ -175,10 +220,15 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
       checkIn: roomData!['checkIn'].toString(),
       checkOut: roomData!['checkOut'].toString(),
       roomName: roomData!['name'].toString(),
+      roomId: roomData!['id'].toString(),
       userEmail: user.email,
-      dailyPrice: roomData!['price_discounted_daily'],
-      monthlyPrice: roomData!['price_discounted_monthly'],
+      dailyPrice: parseToDouble(roomData!['daily_price']),
+      monthlyPrice: parseToDouble(roomData!['monthly_price']),
+      adminfee: parseToDouble(roomData!['admin_fee']),
       propertyType: roomData!['propertyType'].toString(),
+      bookingType: roomData!['rentType'].toString(),
+      bookingDays: roomData!['booking_days'],
+      bookingMonths: roomData!['booking_months'],
     );
 
     // Print semua variabel sebelum buat BookingRequest
@@ -190,11 +240,13 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     print('checkIn: ${roomData!['checkIn'].toString()}');
     print('checkOut: ${roomData!['checkOut'].toString()}');
     print('roomName: ${roomData!['name'].toString()}');
+    print('roomId: ${roomData!['id'].toString()}');
+    print('adminfees: ${parseToDouble(roomData!['admin_fee'])}');
     print('userEmail: ${user.email}');
-    print('dailyPrice (calculated): $totalprice');
-    print('monthlyPrice (calculated): $totalprice');
+    print('dailyPrice (calculated): ${parseToDouble(roomData!['daily_price'])}');
+    print('monthlyPrice (calculated): ${parseToDouble(roomData!['monthly_price'])}');
     print('propertyType: ${roomData!['propertyType'].toString()}');
-    print('rentType selected: ${widget.rentType}');
+    print('rentType selected: ${roomData!['rentType']}');
 
     try {
       await ref.read(paymentProvider.notifier).postBooking(bookingRequest.toJson());
@@ -316,7 +368,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Rent-Type'),
+                          const Text('Tipe Sewa'),
                           Text(widget.rentType.toString()),
                         ],
                       ),
@@ -324,15 +376,18 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Duration'),
-                          Text(widget.duration.toString()),
+                          const Text('Durasi'),
+                          // Ubah baris ini:
+                          Text(
+                              '${widget.duration} ${widget.rentType == 'daily' ? 'Hari' : 'Bulan'}'
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Check-In'),
+                          const Text('Tanggal Masuk'),
                           Text(widget.checkInDate.toString().substring(0, 10)),
                         ],
                       ),
@@ -340,57 +395,57 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Check-Out'),
+                          const Text('Tanggal Keluar'),
                           Text(widget.checkOutDate.toString().substring(0, 10)),
                         ],
                       ),
-                      const SizedBox(height: 24),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF0F0F0),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: const [
-                                Icon(Icons.email, color: Colors.grey),
-                                SizedBox(width: 8),
-                                Text.rich(
-                                  TextSpan(
-                                    text: 'Isi Data Pemesan ',
-                                    children: [
-                                      TextSpan(
-                                        text: '*',
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                    ],
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Icon(Icons.add, color: Colors.grey),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Metode Pembayaran',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Column(
-                        children: paymentMethods.map((method) => PaymentMethodItem(
-                          icon: method['icon'],
-                          text: method['text'],
-                        )).toList(),
-                      ),
+                      // const SizedBox(height: 24),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     color: const Color(0xFFF0F0F0),
+                      //     borderRadius: BorderRadius.circular(10),
+                      //   ),
+                      //   padding: const EdgeInsets.all(12),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       Row(
+                      //         children: const [
+                      //           Icon(Icons.email, color: Colors.grey),
+                      //           SizedBox(width: 8),
+                      //           Text.rich(
+                      //             TextSpan(
+                      //               text: 'Isi Data Pemesan ',
+                      //               children: [
+                      //                 TextSpan(
+                      //                   text: '*',
+                      //                   style: TextStyle(color: Colors.red),
+                      //                 ),
+                      //               ],
+                      //               style: TextStyle(color: Colors.grey),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       const Icon(Icons.add, color: Colors.grey),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 16),
+                      // const Text(
+                      //   'Metode Pembayaran',
+                      //   style: TextStyle(
+                      //     fontSize: 18,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 8),
+                      // Column(
+                      //   children: paymentMethods.map((method) => PaymentMethodItem(
+                      //     icon: method['icon'],
+                      //     text: method['text'],
+                      //   )).toList(),
+                      // ),
                       const SizedBox(height: 24),
                       const Text(
                         'Rincian Harga',
@@ -419,7 +474,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text('Pajak dan Biaya'),
-                          Text('Rp ${((afterDiscountedTotalFees ?? afterOriginalTotalFees) ?? 0).toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}'),
+                          Text('Rp ${((afterOriginalTotalFees) ?? 0).toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}'),
                         ],
                       ),
                       const Divider(height: 32, thickness: 1),
@@ -434,7 +489,8 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                             ),
                           ),
                           Text(
-                            'Rp ${calculateTotalPrice(itemDetails, (afterDiscountedTotalFees ?? afterOriginalTotalFees) ?? 0)}',
+                            // Panggil fungsi formatCurrency di sini
+                            formatCurrency(calculateTotalPrice(itemDetails, (afterOriginalTotalFees) ?? 0)),
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -497,14 +553,78 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     for (var item in items) {
       print('=========');
       print(item['type']);
-      if (item['type'] == 'discounted') {
-        totalPrice += (item['rawPrice'] as int);
+      if (item['type'] == 'original') {
+        totalPrice += item['rawPrice'];
       }
     }
 
     totalPrice += taxFee;
 
     return totalPrice;
+  }
+}
+
+double parseToDouble(dynamic value) {
+  if (value == null) {
+    print('DEBUG: Input value is null. Returning 0.0.');
+    return 0.0;
+  }
+
+  String stringValue = value.toString();
+  print('DEBUG: Original string value: "$stringValue" (type: ${value.runtimeType})');
+
+  // Bersihkan "Rp", spasi, dan pastikan hanya ada satu titik sebagai pemisah desimal
+  // dan tidak ada koma sebagai pemisah ribuan.
+  String cleanedValue = stringValue
+      .replaceAll('Rp', '')   // Hapus 'Rp'
+      .replaceAll(' ', '') ;   // Hapus spasi
+
+  // Ini juga penting jika angka awalnya tidak memiliki pemisah ribuan tetapi memiliki koma desimal,
+  // atau jika API mengembalikan angka sebagai double murni tanpa pemisah apapun.
+  // Contoh: "125000.0000" -> "125000." (jika titik terakhir dihilangkan)
+  // Pastikan trailing zeros setelah titik desimal dihilangkan secara efektif oleh double.tryParse
+
+  print('DEBUG: Cleaned string value for double: "$cleanedValue"');
+
+  double? parsedDouble = double.tryParse(cleanedValue);
+
+  if (parsedDouble != null) {
+    print('DEBUG: Successfully parsed to double: $parsedDouble');
+    return parsedDouble;
+  } else {
+    print('DEBUG: Failed to parse "$cleanedValue" to a double. Returning 0.0.');
+    return 0.0;
+  }
+}
+
+int parseToInt(dynamic value) {
+  if (value == null) {
+    print('DEBUG: Input value is null. Returning 0.');
+    return 0;
+  }
+
+  String stringValue = value.toString();
+  print('DEBUG: Original string value: "$stringValue" (type: ${value.runtimeType})');
+
+  // Gunakan logika pembersihan yang sama dengan parseToDouble
+  String cleanedValue = stringValue
+      .replaceAll('Rp', '')
+      .replaceAll(' ', '');
+
+
+  print('DEBUG: Cleaned string value for int (pre-parse): "$cleanedValue"');
+
+  // Parse sebagai double terlebih dahulu untuk menangani desimal jika ada
+  double? parsedDouble = double.tryParse(cleanedValue);
+
+  if (parsedDouble != null) {
+    // Konversi ke int
+    int result = parsedDouble.toInt(); // Ini akan membuang bagian desimal
+    print('DEBUG: Successfully parsed to int: $result');
+    return result;
+  } else {
+    print('DEBUG: Failed to parse "$cleanedValue" to a number. Returning 0.');
+    return 0;
   }
 }
 

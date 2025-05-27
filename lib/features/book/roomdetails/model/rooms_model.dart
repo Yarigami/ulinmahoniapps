@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class RoomModel {
-  final int id;
+  final int? id;
   final int? propertyId;
   final String? propertyName;
   final String? slug;
@@ -12,16 +12,16 @@ class RoomModel {
   final String? level;
   final Map<String, bool> facility;
   final Map<String, dynamic> price;
-  final double? priceOriginalDaily;
-  final double? priceDiscountedDaily;
-  final double? priceOriginalMonthly;
-  final double? priceDiscountedMonthly;
+  final String? priceOriginalDaily;
+  final String? priceDiscountedDaily;
+  final String? priceOriginalMonthly;
+  final String? priceDiscountedMonthly;
   final dynamic attachment;
   final DateTime createdAt;
   final DateTime updatedAt;
   final String? createdBy;
   final String? updatedBy;
-  final int status;
+  final int? status;
 
   RoomModel({
     required this.id,
@@ -50,7 +50,9 @@ class RoomModel {
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     return RoomModel(
       id: json['idrec'] ?? 0,
-      propertyId: json['property_id'],
+      propertyId: json['property_id'] is int
+          ? json['property_id']
+          : int.tryParse(json['property_id']?.toString() ?? '') ?? 0,
       propertyName: json['property_name'],
       slug: json['slug'],
       name: json['name'],
@@ -60,10 +62,10 @@ class RoomModel {
       level: json['level']?.toString(),
       facility: parseMapBool(json['facility']),
       price: parseMapDynamic(json['price']),
-      priceOriginalDaily: parseDouble(json['price_original_daily']),
-      priceDiscountedDaily: parseDouble(json['price_discounted_daily']),
-      priceOriginalMonthly: parseDouble(json['price_original_monthly']),
-      priceDiscountedMonthly: parseDouble(json['price_discounted_monthly']),
+      priceOriginalDaily: json['price_original_daily'],
+      priceDiscountedDaily: json['price_discounted_daily'],
+      priceOriginalMonthly: json['price_original_monthly'],
+      priceDiscountedMonthly: json['price_discounted_monthly'],
       attachment: json['attachment'],
       createdAt: parseDate(json['created_at']),
       updatedAt: parseDate(json['updated_at']),

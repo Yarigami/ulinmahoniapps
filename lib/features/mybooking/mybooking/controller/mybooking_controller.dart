@@ -9,24 +9,29 @@ List<Widget> buildBookingList(List bookings, String status) {
 
   return bookings
       .where((booking) {
-    final bookingStatus = booking.transactionStatus.toLowerCase();
-    return lowerStatus == 'pending'
-        ? bookingStatus == 'pending'
-        : (bookingStatus == 'settled' || bookingStatus == 'success');
+    final bookingStatus = booking.transactionStatus?.toLowerCase() ?? '';
+
+    if (lowerStatus == 'all bookings') {
+      return bookingStatus == 'pending' ||
+          bookingStatus == 'waiting' ||
+          bookingStatus == 'canceled';
+    } else {
+      return bookingStatus == 'completed' ||
+          bookingStatus == 'success';
+    }
   })
       .map((booking) => BookingCard(
     id: booking.idrec,
     image: 'assets/images/ulinhouse.jpg',
-    title: booking.propertyName,
-    roomName: booking.roomName,
+    title: booking.propertyName ?? '-',
+    roomName: booking.roomName ?? '-',
     checkIn: booking.checkIn ?? '-',
     checkOut: booking.checkOut ?? '-',
-    status: booking.transactionStatus,
+    status: booking.transactionStatus ?? '-',
     dataDetail: booking.toJson(),
   ))
       .toList();
 }
-
 
 bool checkLoginAndRedirect(BuildContext context, WidgetRef ref) {
   final authState = ref.read(authProvider);

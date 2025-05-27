@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../../../core/widgets/appbar.dart';
 import '../../../../../core/layout/mainlayout.dart';
+import '../../../../../core/widgets/formatdate.dart';
+import '../../../../../core/widgets/formatcurrency.dart';
 import '../widgets/widgets.dart';
 import '../../data/mybookingdetails_service.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,8 +21,8 @@ class MyBookingDetail extends StatefulWidget {
 class _MyBookingDetailState extends State<MyBookingDetail> {
   Map<String, dynamic> bookingData = {};
   String? errorMessage;
-  File? _selectedImage; // Simpan file gambar yang dipilih
-  String? _base64Image; // Simpan gambar dalam format Base64
+  File? _selectedImage;
+  String? _base64Image;
 
   @override
   void initState() {
@@ -35,6 +37,7 @@ class _MyBookingDetailState extends State<MyBookingDetail> {
         bookingData = {};
       } else {
         bookingData = widget.bookingData;
+        print("✅ Booking data ");
         print(widget.bookingData);
       }
     } catch (e) {
@@ -102,8 +105,9 @@ class _MyBookingDetailState extends State<MyBookingDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final bookingType = bookingData['booking_type'] ?? 'daily'; // default daily
-
+    final bookingType = bookingData['booking_type']; // default daily
+    print("✅ Booking Type:");
+    print(bookingType);
     return MainLayout(
       currentIndex: 1,
       showNavBar: false,
@@ -185,8 +189,8 @@ class _MyBookingDetailState extends State<MyBookingDetail> {
                           sectionTitle('Detail Pemesanan'),
                           info("Id Pemesanan:", bookingData['order_id'] ?? "-"),
                           info("Kode Transaksi:", bookingData['transaction_code'] ?? "-"),
-                          info("Nomor Telepon", bookingData['user_phone_number'] ?? "-"),
-                          info("Tipe Pemesanan", bookingData['booking_type'] ?? "-"),
+                          info("Nomor Telepon:", bookingData['user_phone_number'] ?? "-"),
+                          info("Tipe Pemesanan:", bookingData['booking_type'] ?? "-"),
                           const Divider(height: 30),
                           sectionTitle("Detail Waktu"),
                           info("Daftar Masuk:", formatDate(bookingData['check_in']) ?? "-"),
@@ -194,18 +198,22 @@ class _MyBookingDetailState extends State<MyBookingDetail> {
                           const Divider(height: 30),
                           sectionTitle("Harga Booking"),
                           info(
-                              "Harga : ",bookingData['room_price'].toString() ?? '-',
-                          ),
-                          info(
+                            bookingType == 'daily' ? "Harga per hari:" : "Harga per bulan:",
                             bookingType == 'daily'
-                                ? "Jumlah Malam:"
-                                : "Jumlah Bulan:",
-                            bookingData['booking_days']?.toString() ?? "0",
+                                ? formatCurrency(bookingData['daily_price']) ?? "0"
+                                : formatCurrency(bookingData['monthly_price']) ?? "0",
                           ),
-                          info("Pajak:", formatCurrency(bookingData['admin_fees']) ?? "0"),
+                          info("Subtotal : ", formatCurrency(bookingData['room_price']) ?? "-"),
+                          info(
+                            bookingType == 'daily'  ? "Jumlah Malam:" : "Jumlah Bulan:",
+                            bookingType == 'daily'
+                                ? bookingData['booking_days']?.toString() ?? "0"
+                                : bookingData['booking_months']?.toString() ?? "0",
+                          ),
+                          info("Pajak(10%):", formatCurrency(bookingData['admin_fees']) ?? "0"),
                           const Divider(height: 30),
                           info(
-                            "Harga Total:",
+                            "Total Pembayaran:",
                             formatCurrency(bookingData['grandtotal_price']) ?? "0",
                             isBold: true,
                             color: const Color(0xFF005F21),

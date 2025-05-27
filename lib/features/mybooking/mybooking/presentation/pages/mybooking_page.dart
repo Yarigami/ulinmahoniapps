@@ -60,7 +60,7 @@ class _MyBookingPageState extends ConsumerState<MyBookingPage>
               unselectedLabelColor: Colors.grey,
               labelStyle: const TextStyle(fontWeight: FontWeight.w500),
               tabs: const [
-                Tab(text: 'Pending'),
+                Tab(text: 'All Bookings'),
                 Tab(text: 'Completed'),
               ],
             ),
@@ -73,7 +73,7 @@ class _MyBookingPageState extends ConsumerState<MyBookingPage>
                   children: [
                     ListView(
                       padding: const EdgeInsets.all(10),
-                      children: buildBookingList(bookings, 'pending'),
+                      children: buildBookingList(bookings, 'all bookings'),
                     ),
                     ListView(
                       padding: const EdgeInsets.all(10),
