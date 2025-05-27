@@ -11,7 +11,7 @@ class PropertyModel {
   final String? postalCode;
   final String? address;
   final String location;
-  final String? distance;
+  final String distance;
   final String priceDiscountedDaily;
   final String priceDiscountedMonthly;
   final String priceOriginalDaily;

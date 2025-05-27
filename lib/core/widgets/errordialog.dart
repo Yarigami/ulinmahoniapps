@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-void showErrorDialog(BuildContext context, String message) {
+void showErrorDialog(
+    BuildContext context,
+    String message, {
+      String? routeName, // Tetap opsional untuk memungkinkan dialog tanpa tombol navigasi
+      String? buttonText, // Tetap opsional
+    }) {
+  // Assert untuk memastikan jika routeName ada, buttonText juga ada
+  // Ini akan menghasilkan error di debug mode jika salah satu tidak ada
+  assert(
+  (routeName == null && buttonText == null) ||
+      (routeName != null && buttonText != null),
+  'Jika routeName disediakan, buttonText juga harus disediakan, dan sebaliknya.',
+  );
+
   showDialog(
     context: context,
     builder: (ctx) => AlertDialog(
@@ -9,18 +23,15 @@ void showErrorDialog(BuildContext context, String message) {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Gambar/logo di atas
           Image.asset(
             'assets/images/ulinmahonilogo.png', // Ganti dengan path gambar kamu
             width: 80,
             height: 80,
           ),
           const SizedBox(height: 16),
-
-          // Pesan Error
           Text(
             message,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               color: Colors.black87,
             ),
@@ -32,14 +43,29 @@ void showErrorDialog(BuildContext context, String message) {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(ctx).pop(),
-          child: Text(
+          child: const Text(
             'OK',
             style: TextStyle(
-              color: Colors.black, // Warna teks hitam
+              color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
+        // Tombol Opsional: Hanya tampilkan jika kedua parameter ada
+        if (routeName != null && buttonText != null)
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop(); // Tutup dialog
+              context.push(routeName);    // Navigasi ke rute
+            },
+            child: Text(
+              buttonText,
+              style: const TextStyle(
+                color: Color(0xFF005F21),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
       ],
     ),
   );

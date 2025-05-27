@@ -119,10 +119,8 @@ class BottomContactBar extends ConsumerWidget {
                   if (user != null) {
                     // ref.read(roomDataProvider.notifier).state = roomData;
                     context.push('/payment', extra: roomData);
-                    print('=bottomcontactbar=');
-                    print(roomData);
                   } else {
-                    showErrorDialog(context, 'Silakan login terlebih dahulu untuk melanjutkan pembayaran.');
+                    showErrorDialog(context, 'Silakan login terlebih dahulu untuk melanjutkan pembayaran.', routeName: '/login' , buttonText: 'Login');
                   }
                 }
                 else {

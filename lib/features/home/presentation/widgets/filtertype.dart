@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:ulinmahoniapps/features/home/data/filtertype_data.dart';
 
 class Filtertype extends StatefulWidget {
-  final int selectedIndex;
-  final ValueChanged<int> onTabSelected;
+  // Ubah tipe ValueChanged dari int ke String
+  final String selectedLabel; // Menyimpan label yang sedang dipilih
+  final ValueChanged<String> onTabSelected; // Mengirimkan label yang dipilih
   final Color activeColor;
   final Color inactiveColor;
 
   const Filtertype({
     Key? key,
-    required this.selectedIndex,
+    required this.selectedLabel, // Ubah dari selectedIndex ke selectedLabel
     required this.onTabSelected,
     this.activeColor = const Color(0xFF004D40), // default darkGreen
     this.inactiveColor = Colors.black,
@@ -37,15 +38,17 @@ class _FiltertypeState extends State<Filtertype> {
           itemCount: filtertypedata.length,
           itemBuilder: (context, index) {
             final tab = filtertypedata[index];
-            final isActive = widget.selectedIndex == index;
+            // Bandingkan dengan label yang disimpan di widget.selectedLabel
+            final isActive = widget.selectedLabel.toLowerCase() == tab['label'].toLowerCase();
 
             return GestureDetector(
-              onTap: () => widget.onTabSelected(index),
+              // Kirim label saat tab dipilih
+              onTap: () => widget.onTabSelected(tab['label'].toString()),
               child: Container(
                 margin: const EdgeInsets.only(right: 10),
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
-                  color: isActive ? Color(0xFFF5F2EA) : Colors.white,
+                  color: isActive ? const Color(0xFFF5F2EA) : Colors.white,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),

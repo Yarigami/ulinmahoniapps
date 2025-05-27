@@ -22,11 +22,11 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   int _selectedSubCategoryIndex = 0;
-  int _selectedFilterTabIndex = 0;
+  String _selectedFilterLabel = 'rumah';
 
   @override
   Widget build(BuildContext context) {
-    final propertiesAsync = ref.watch(propertiesProvider);
+    final propertiesAsync = ref.watch(propertiesProvider(_selectedFilterLabel));
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -45,10 +45,12 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
 
               Filtertype(
-                selectedIndex: _selectedFilterTabIndex,
-                onTabSelected: (index) {
+                // Kirim selectedLabel ke Filtertype
+                selectedLabel: _selectedFilterLabel,
+                // Terima label yang dipilih
+                onTabSelected: (label) {
                   setState(() {
-                    _selectedFilterTabIndex = index;
+                    _selectedFilterLabel = label.toLowerCase();
                   });
                 },
               ),
@@ -68,34 +70,53 @@ class _HomePageState extends ConsumerState<HomePage> {
 
               propertiesAsync.when(
                 data: (propertyList) {
-                  final filteredProperties = propertyList
-                      .where((property) => property.tags.toLowerCase().contains('house'))
+                  print("✅selectedfilterlabel : ${_selectedFilterLabel}");
+                  // Filter properti yang statusnya BUKAN 0 terlebih dahulu
+                  // Ini adalah filter dasar untuk properti yang 'aktif' atau 'tersedia'
+
+                  final activeProperties = propertyList
+                      .where((property) => property.status == 1)
                       .toList();
-                  if (filteredProperties.isEmpty) {
-                    return const Center(child: Text('No properties found.'));
+
+                  // Terapkan filter berdasarkan label yang dipilih dari Filtertype
+                  final displayableProperties = activeProperties
+                      .where((property) {
+                    // Jika _selectedFilterLabel kosong, artinya tidak ada filter tipe yang aktif,
+                    // jadi tampilkan semua properti yang aktif.
+                    if (_selectedFilterLabel.isEmpty) {
+                      return true;
+                    }
+                    print("✅status : ${property.status}");
+                    print("✅databasefilterlabel : ${property.tags.toLowerCase()}");
+                    // Jika _selectedFilterLabel tidak kosong, filter berdasarkan tags properti.
+                    return property.tags.toLowerCase().contains(_selectedFilterLabel);
+                  })
+                      .toList();
+
+                  if (displayableProperties.isEmpty) {
+                    return const Center(child: Text('No properties found for this type.'));
                   }
                   return SizedBox(
                     height: 300,
                     child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
+                      scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    itemCount: filteredProperties.length,
-                    itemBuilder: (context, index) {
-                      final property = filteredProperties[index];
-                      return ProductCard(
-                        image: 'assets/images/ulinhouse.jpg',
-                        title: property.name,
-                        location: property.location,
-                        detail: property.tags,
-                        price: formatCurrency(property.priceOriginalDaily ?? 0),
-                        onTap: () {
-                          print(property);
-                          print(property.idrec);
-                          context.push('/detailhouse/${property.idrec}');
-                        },
-                      );
-                    },
-                  ),
+                      itemCount: displayableProperties.length,
+                      itemBuilder: (context, index) {
+                        final property = displayableProperties[index];
+                        return ProductCard(
+                          image: 'assets/images/ulinhouse.jpg', // Ganti dengan property.imageUrl jika ada
+                          title: property.name,
+                          location: property.location,
+                          detail: property.distance,
+                          price: 'Mulai dari ${formatCurrency(property.priceOriginalDaily ?? 0)}/hari',
+                          onTap: () {
+                            print('Navigating to detail for: ${property.name}');
+                            context.push('/detailhouse/${property.idrec}');
+                          },
+                        );
+                      },
+                    ),
                   );
                 },
                 loading: () => const Center(child: CircularProgressIndicator()),

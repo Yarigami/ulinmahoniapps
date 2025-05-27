@@ -7,6 +7,7 @@ import '../../../../../core/widgets/productcard.dart';
 import '../../../roomdetails/model/rooms_model.dart';
 import '../../../roomdetails/provider/rooms_provider.dart';
 import '../../model/detailproperty_model.dart';
+import '../../../../../core/widgets/formatcurrency.dart';
 
 class RoomTypeSection extends ConsumerWidget {
   final DetailPropertyModel propertyData;
@@ -39,6 +40,9 @@ class RoomTypeSection extends ConsumerWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: rooms.map((RoomModel room) {
+                    if(room.status == 0){
+                      return const SizedBox.shrink();
+                    }
                     return Padding(
                       padding: const EdgeInsets.only(right: 16.0),
                       child: ProductCard(
@@ -46,7 +50,7 @@ class RoomTypeSection extends ConsumerWidget {
                         title: room.name ?? '-',
                         location: propertyData.location?? '-',
                         detail: room.descriptions ?? '-',
-                        price: (room.price?['discounted']?['monthly'] ?? 0).toString(), // Konversi ke String
+                        price: '${(formatCurrency(room.price?['discounted']?['monthly'] ?? 0).toString())}/Bulan', // Konversi ke String
                         onTap: () {
                           context.push('/roomdetails/${room.id}', extra: {
                             'property': propertyData,

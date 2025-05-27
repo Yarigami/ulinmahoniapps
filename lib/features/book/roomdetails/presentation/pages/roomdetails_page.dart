@@ -222,7 +222,7 @@ class _RoomDetailsPageState extends ConsumerState<RoomDetailsPage> {
                                 const Text("Rp.",
                                     style: TextStyle(fontSize: 14, color: Colors.white)),
                                 Text(
-                                  (_roomData.priceDiscountedMonthly ?? 'N/A').toString(),
+                                  formatPriceNoTrailingZeros(_roomData.priceOriginalMonthly).toString(), // Panggil fungsi di sini
                                   style: const TextStyle(fontSize: 14, color: Colors.white),
                                 ),
                                 const Text("/Bulan",
@@ -231,7 +231,7 @@ class _RoomDetailsPageState extends ConsumerState<RoomDetailsPage> {
                                 const Text("Rp.",
                                     style: TextStyle(fontSize: 14, color: Colors.white)),
                                 Text(
-                                  (_roomData.priceOriginalDaily ?? 'N/A').toString(),
+                                  formatPriceNoTrailingZeros(_roomData.priceOriginalDaily).toString(), // Panggil fungsi di sini
                                   style: const TextStyle(fontSize: 14, color: Colors.white),
                                 ),
                                 const Text("/Hari",
@@ -316,4 +316,24 @@ class _RoomDetailsPageState extends ConsumerState<RoomDetailsPage> {
       },
     );
   }
+}
+
+int parseToInt(dynamic value) {
+  if (value == null) return 0;
+  String stringValue = value.toString().replaceAll('Rp', '').replaceAll(' ', '');
+  return double.tryParse(stringValue)?.toInt() ?? 0;
+}
+
+String formatPriceNoTrailingZeros(dynamic price) {
+  if (price == null) {
+    return 'N/A';
+  }
+  double? parsedPrice = double.tryParse(price.toString());
+  if (parsedPrice == null) {
+    return 'N/A';
+  }
+
+  // Menggunakan toStringAsFixed(0) untuk memformat sebagai string tanpa desimal
+  // Ini akan membulatkan angka (misal 150.99 jadi 151, 150.00 jadi 150)
+  return parsedPrice.toStringAsFixed(0);
 }
