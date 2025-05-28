@@ -116,9 +116,19 @@ class BottomContactBar extends ConsumerWidget {
                 if (isAvailable) {
                   final authState = ref.read(authProvider);
                   final user = authState.user.value;
+                  final rentType = roomData['rentType'];
+                  final duration = roomData['duration'];
+                  final checkInDate = roomData['checkInDate'];
+                  final checkOutDate = roomData['checkOutDate'];
+
                   if (user != null) {
-                    // ref.read(roomDataProvider.notifier).state = roomData;
-                    context.push('/payment', extra: roomData);
+                    if (rentType != null && duration != null && checkInDate != null && checkOutDate != null){
+                      // ref.read(roomDataProvider.notifier).state = roomData;
+                      context.push('/payment', extra: roomData);
+                    }
+                    else{
+                      showErrorDialog(context, 'Tolong memasuki seluruh data',);
+                    }
                   } else {
                     showErrorDialog(context, 'Silakan login terlebih dahulu untuk melanjutkan pembayaran.', routeName: '/login' , buttonText: 'Login');
                   }

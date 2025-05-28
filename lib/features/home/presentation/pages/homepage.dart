@@ -22,7 +22,8 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   int _selectedSubCategoryIndex = 0;
-  String _selectedFilterLabel = 'rumah';
+  // String _selectedFilterLabel = 'rumah';
+  String _selectedFilterLabel = 'house';
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +134,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
               const BestSellerSection(backgroundColor: Color(0xFFE8E3D9)),
 
-              const PromotionSection(),
+              PromotionSection(selectedFilterLabel: _selectedFilterLabel),
 
               Container(
                 height: 5,
@@ -147,7 +148,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 color: const Color(0xFFECE8E1),
               ),
 
-              const BudgetSection(),
+              BudgetSection(selectedFilterLabel: _selectedFilterLabel),
             ],
           ),
         ),

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/widgets/productcard.dart'; // Pastikan path sesuai dengan file Anda
-import '../../data/promotion_data.dart';
+import '../../../../core/widgets/productcard.dart';
+import '../../provider/property_provider.dart';
+import '../../../../core/widgets/formatcurrency.dart';
 
-class PromotionSection extends StatefulWidget {
-  final Color? backgroundColor; // Properti backgroundColor nullable
-  const PromotionSection({Key? key, this.backgroundColor}) : super(key: key);
+class PromotionSection extends ConsumerWidget {
+  final Color? backgroundColor;
+  final String selectedFilterLabel;
+  const PromotionSection({Key? key, this.backgroundColor, required this.selectedFilterLabel}) : super(key: key);
 
   @override
-  State<PromotionSection> createState() => _PromotionSectionState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final propertiesAsync = ref.watch(propertiesProvider(selectedFilterLabel));
 
-class _PromotionSectionState extends State<PromotionSection> {
-  @override
-  Widget build(BuildContext context) {
     return Container(
-      color: widget.backgroundColor, // Menggunakan backgroundColor tanpa nilai default
+      color: backgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,22 +28,47 @@ class _PromotionSectionState extends State<PromotionSection> {
             ),
           ),
           const SizedBox(height: 15),
-          SizedBox(
-            height: 325, // Atur tinggi sesuai desain
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: promotionData.length,
-              itemBuilder: (context, index) {
-                return ProductCard(
-                  image: promotionData[index]['image']!,
-                  title: promotionData[index]['title']!,
-                  onTap: () {
-                    context.push('/detailhouse');
+
+          propertiesAsync.when(
+            data: (propertyList) {
+              final promoProperties = propertyList
+                  .where((property) =>
+              property.status == 1 &&
+                  (property.priceDiscountedDaily != null || property.priceDiscountedMonthly != null))
+                  .toList();
+
+              if (promoProperties.isEmpty) {
+                return const Center(child: Text('Tidak ada promo saat ini.'));
+              }
+
+              return SizedBox(
+                height: 325,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: promoProperties.length,
+                  itemBuilder: (context, index) {
+                    final property = promoProperties[index];
+                    final promoPrice = property.priceDiscountedDaily ?? property.priceDiscountedMonthly;
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: ProductCard(
+                        image: 'assets/images/ulinhouse.jpg', // Replace with property.imageUrl if available
+                        title: property.name,
+                        location: property.location,
+                        detail: property.distance,
+                        price: 'Promo ${formatCurrency(promoPrice!)}/hari',
+                        onTap: () {
+                          context.push('/detailhouse/${property.idrec}');
+                        },
+                      ),
+                    );
                   },
-                );
-              },
-            ),
+                ),
+              );
+            },
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stack) => Center(child: Text('Error: $error')),
           ),
         ],
       ),
